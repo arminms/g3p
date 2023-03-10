@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14...3.26)
 
 project(
   g3p
-  VERSION 0.1
+  VERSION 0.2
   DESCRIPTION "The most natural, efficient and simple way to add gnuplot support into C++ programs"
   LANGUAGES CXX
 )
@@ -24,6 +24,7 @@ add_definitions(-DGNUPLOT="${GNUPLOT_EXECUTABLE}")
 include(GNUInstallDirs)
 
 add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 add_subdirectory(include)
 
