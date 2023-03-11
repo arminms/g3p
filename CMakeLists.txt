@@ -52,7 +52,7 @@ install(
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
-## generate the config file that is includes the exports
+## generate the config file that includes the exports
 #
 include(CMakePackageConfigHelpers)
 configure_package_config_file(

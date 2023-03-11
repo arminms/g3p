@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 
+namespace g3p {
 class gnuplot
 {
     FILE* _gp;
@@ -122,5 +123,7 @@ public:
         return *this;
     }
 };
+
+} // end g3p namespace
 
 #endif  // _G3P_GNUPLOT_HPP_
