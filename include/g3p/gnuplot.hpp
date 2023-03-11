@@ -5,6 +5,9 @@
 #include <stdexcept>
 #include <string>
 
+#ifndef GNUPLOT
+#   define GNUPLOT "gnuplot"
+#endif  // GNUPLOT
 namespace g3p {
 class gnuplot
 {
