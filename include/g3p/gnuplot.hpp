@@ -39,9 +39,6 @@ public:
     {
 #ifdef _MSC_VER
         _gp = _popen
-#else
-        _gp = popen
-#endif
         (   persist
         ?   "GNUPLOT -persist"
         :   "GNUPLOT"
@@ -49,6 +46,16 @@ public:
         );
         if (nullptr == _gp)
             throw std::domain_error("GNUPLOT -- failed");
+#else
+        _gp = popen
+        (   persist
+        ?   GNUPLOT" -persist"
+        :   GNUPLOT
+        ,   "w"
+        );
+        if (nullptr == _gp)
+            throw std::domain_error(GNUPLOT" -- failed");
+#endif
     }
 
     ~gnuplot()
