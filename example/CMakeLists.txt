@@ -19,5 +19,4 @@ if(NOT g3p_DIR)
 endif()
 
 add_executable(bessel bessel.cpp)
-target_compile_features(bessel PUBLIC cxx_std_11)
 target_link_libraries(bessel PRIVATE g3p::g3p)

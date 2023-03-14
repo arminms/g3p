@@ -37,28 +37,40 @@ class gnuplot
 public:
     gnuplot(bool persist = true)
     {
+#ifdef _MSC_VER
+        _gp = _popen
+#else
         _gp = popen
+#endif
         (   persist
-        ?   GNUPLOT" -persist"
-        :   GNUPLOT
+        ?   "GNUPLOT -persist"
+        :   "GNUPLOT"
         ,   "w"
         );
         if (nullptr == _gp)
-            throw std::domain_error("gnuplot -- failed");
+            throw std::domain_error("GNUPLOT -- failed");
     }
 
     ~gnuplot()
+#ifdef _MSC_VER
+    {   if (_gp) _pclose(_gp);   }
+#else
     {   if (_gp) pclose(_gp);   }
+#endif
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-security"
+#ifdef __GNUG__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wformat-security"
+#endif
     template<typename... Args>
     gnuplot& operator() (Args&&... args)
     {   fprintf(_gp, std::forward<Args>(args)...);
         fprintf(_gp, "\n");
         return *this;
     }
-#pragma GCC diagnostic pop
+#ifdef __GNUG__
+#   pragma GCC diagnostic pop
+#endif
 
     template<typename T>
     gnuplot& operator<< (T arg)
