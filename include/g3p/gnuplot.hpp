@@ -29,7 +29,9 @@
 #ifndef GNUPLOT
 #   define GNUPLOT "gnuplot"
 #endif  // GNUPLOT
+
 namespace g3p {
+
 class gnuplot
 {
     FILE* _gp;
@@ -37,7 +39,7 @@ class gnuplot
 public:
     gnuplot(bool persist = true)
     {
-#ifdef _MSC_VER
+#ifdef _MSC_VER // possibly _WIN32 for MingW-64?
         _gp = _popen
         (   persist
         ?   "GNUPLOT -persist"
@@ -55,7 +57,7 @@ public:
         );
         if (nullptr == _gp)
             throw std::domain_error(GNUPLOT" -- failed");
-#endif
+#endif //_MSC_VER
     }
 
     ~gnuplot()
@@ -63,12 +65,12 @@ public:
     {   if (_gp) _pclose(_gp);   }
 #else
     {   if (_gp) pclose(_gp);   }
-#endif
+#endif //_MSC_VER
 
 #ifdef __GNUG__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat-security"
-#endif
+#endif //__GNUG__
     template<typename... Args>
     gnuplot& operator() (Args&&... args)
     {   fprintf(_gp, std::forward<Args>(args)...);
@@ -77,7 +79,7 @@ public:
     }
 #ifdef __GNUG__
 #   pragma GCC diagnostic pop
-#endif
+#endif //__GNUG__
 
     template<typename T>
     gnuplot& operator<< (T arg)
