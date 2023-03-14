@@ -13,7 +13,7 @@ if(NOT g3p_DIR)
     FetchContent_Declare(
       g3p
       GIT_REPOSITORY https://github.com/arminms/g3p.git
-      GIT_TAG v0.3
+      GIT_TAG v0.4
     )
     FetchContent_MakeAvailable(g3p)
 endif()
