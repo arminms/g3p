@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 3.14...3.26)
 
 project(
   g3p
-  VERSION 0.4
+  VERSION 0.5
   DESCRIPTION "The most natural, efficient and simple way to add gnuplot support into C++ programs"
   LANGUAGES CXX
 )

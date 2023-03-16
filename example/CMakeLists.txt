@@ -20,3 +20,6 @@ endif()
 
 add_executable(bessel bessel.cpp)
 target_link_libraries(bessel PRIVATE g3p::g3p)
+
+include(GNUInstallDirs)
+install(TARGETS bessel RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
