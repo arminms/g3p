@@ -100,6 +100,6 @@ endif()
 ```
 The above approach first tries to find an installed version of `g3p` and if not
 then tries to fetch it from the repository. You can find a complete
-example of the above approach in the [`example`](example/README.md) folder.
+example of the above approach in the [`example`](example/) folder.
 
 <!-- https://sourceforge.net/projects/gnuplot/files/gnuplot/ -->

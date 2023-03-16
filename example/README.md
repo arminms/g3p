@@ -5,8 +5,7 @@ folder:
 ```bash
 cmake -S . -B build
 cmake --build build
-cmake --install build
-bessel
+build/bessel
 ```
 Here's the output:
 
