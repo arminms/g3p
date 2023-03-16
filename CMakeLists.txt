@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 3.14...3.26)
 
 project(
   g3p
-  VERSION 0.5
+  VERSION 0.6
   DESCRIPTION "The most natural, efficient and simple way to add gnuplot support into C++ programs"
   LANGUAGES CXX
 )
@@ -38,34 +38,39 @@ endif()
 ## find gnuplot
 #
 find_package(Gnuplot REQUIRED)
-add_definitions(-DGNUPLOT="${GNUPLOT_EXECUTABLE}")
 
 ## make cache variables for install destinations
 #
 include(GNUInstallDirs)
 
+## defining g3p target
+#
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-
-add_subdirectory(include)
-
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 target_compile_definitions(${PROJECT_NAME} INTERFACE GNUPLOT="${GNUPLOT_EXECUTABLE}")
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${g3p_VERSION}
   SOVERSION ${g3p_VERSION_MAJOR}
 )
 
+## specifying the export name for the targets
+#
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}-targets
-  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
+## installing g3p header files
+#
+add_subdirectory(include)
+
+## installing g3p export target file
+#
 install(
   EXPORT ${PROJECT_NAME}-targets
   FILE ${PROJECT_NAME}-targets.cmake
@@ -80,25 +85,29 @@ configure_package_config_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
   INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  NO_SET_AND_CHECK_MACRO
-  NO_CHECK_REQUIRED_COMPONENTS_MACRO
 )
 
+## creating version file
+#
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
   VERSION "${g3p_VERSION_MAJOR}.${g3p_VERSION_MINOR}"
   COMPATIBILITY AnyNewerVersion
 )
 
+## installing g3p export config files
+#
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
   ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
+## make export target available from the build tree
+#
 export(EXPORT ${PROJECT_NAME}-targets
   FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-targets.cmake"
   NAMESPACE ${PROJECT_NAME}::
 )
 
-add_subdirectory(src)
+# add_subdirectory(src)
