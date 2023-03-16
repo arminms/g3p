@@ -34,6 +34,10 @@ namespace g3p {
 
 class gnuplot
 {
+    // disabling copy constructor and assignment operator
+    gnuplot(const gnuplot&) = delete;
+    void operator= (const gnuplot&) = delete;
+
     FILE* _gp;
 
 public:
