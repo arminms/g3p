@@ -24,8 +24,8 @@ cmake_minimum_required(VERSION 3.14...3.26)
 project(
   g3p
   VERSION 0.6
-  DESCRIPTION "The most natural, efficient and simple way to add gnuplot support into C++ programs"
   LANGUAGES CXX
+  DESCRIPTION "The most intuitive header-only modern C++ interface library for gnuplot."
 )
 
 ## prevent in-source builds
