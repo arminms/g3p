@@ -29,6 +29,8 @@ else()
   set(NOT_SUBPROJECT OFF)
 endif()
 
+## finally our project...
+#
 project(
   g3p
   VERSION 0.6
@@ -65,7 +67,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
   SOVERSION ${g3p_VERSION_MAJOR}
 )
 
-## only perform the installation g3p is not being used as a subproject
+## only perform the installation when g3p is not being used as a subproject
 #
 if (NOT_SUBPROJECT)
   ## specifying the export name for the targets
