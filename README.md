@@ -3,13 +3,16 @@
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
 intuitive way of adding `gnuplot` support into any C++ program.
 ## Features
-- Easy to use (CMake configs)
-- Automatic detection of `gnuplot` path
-- Header-only
+- Multiplatform (Linux/macOS/Windows)
+- No dependencies (except [gnuplot](http://www.gnuplot.info/))
+- Header-only (only one header file)
 - Lightweight (~100 lines of code)
-- Supports [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
+- Easy to use (via CMake configs)
+- Automatic detection of `gnuplot` path
+- Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
+- Use C++ exceptions
 <!-- - Provides Unit tests -->
-
+<!-- - Well documented -->
 ## Example usage
 ```c++
 #include <g3p/gnuplot.hpp>
@@ -48,8 +51,8 @@ Here's the output:
 ## How to use it
 `g3p` is a header only library. That means you can just copy
 [`include/g3p/gnuplot.hpp`](include/g3p/gnuplot.hpp)
-to your project or one of the system designeated folders for headers that is in
-the search path (e.g. `/usr/include` or `/usr/local/include` on Linux systems)
+to your project or one of the designated system folders for headers (e.g.
+`/usr/include` or `/usr/local/include` on Linux systems)
 and start using by including it. That being said, this approach doesn't
 benefit from `g3p` ability to find the right path to `gnuplot` program on
 different platforms.
@@ -64,7 +67,7 @@ cmake --build build
 sudo cmake --install build
 ```
 *The last command on Linux/macOS must be preceded by `sudo` and on Windows
-must be run as administrator.*
+must be run as an administrator.*
 
 Ideally you should be using `g3p` through its CMake integration. `g3p` exports
 a (namespaced) CMake target (`g3p::g3p`) and also CMake config
