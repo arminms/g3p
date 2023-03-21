@@ -1,3 +1,5 @@
+<img src="artwork/g3p_logo.svg" width="256" height="256">
+
 # What is g3p?
 `g3p` (**G**nu**P**lot **P**lus **P**lus) is a modern header-only C++ interface
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
@@ -10,6 +12,7 @@ intuitive way of adding `gnuplot` support into any C++ program.
 - Easy to use (via CMake configs)
 - Automatic detection of `gnuplot` path
 - Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
+<!-- - Both C and C++ format for passing arguments are supported -->
 - Use C++ exceptions
 <!-- - Provides Unit tests -->
 <!-- - Well documented -->
