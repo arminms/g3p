@@ -121,6 +121,10 @@ if (NOT_SUBPROJECT)
     FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-targets.cmake"
     NAMESPACE ${PROJECT_NAME}::
   )
+
+  ## adding artwork
+  #
+  add_subdirectory(artwork)
 endif(NOT_SUBPROJECT)
 
 # add_subdirectory(src)

@@ -1,0 +1,75 @@
+//
+// Copyright (c) 2023 Armin Sobhani
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+#include <iostream>
+#include <vector>
+
+#include <g3p/gnuplot.hpp>
+
+int main(int argc, char* argv[])
+{
+    g3p::gnuplot gp;
+    std::vector<float>
+        gx{ 1, 8.3, 8.3, 1, 1, 8.3 }
+    ,   gy{ 1, 1, 1, 1, 1, 1 }
+    ,   gz{ 1, 1, 9, 9, 4.5, 4.5 }
+    ,   ex{ 1, 1, 4.5, 4.5, 4.5, 8, 8 }
+    ,   ey{ 2.5, 9, 9, 2.5, 9, 9, 2.5 }
+    ,   ez{ 9, 9, 9, 9, 9, 9, 9 }
+    ,   px{ 9.3, 9.3, 9.3, 9.3, 9.3 }
+    ,   py{ 1, 1, 9, 9, 1 }
+    ,   pz{ 1, 9, 9, 4.5, 4.5 }
+    ;
+    gp
+    ( "set view ,,,1.45" )
+    ( "set border linecolor \"grey\"" )
+    ( "set xrange [0:10]" )
+    ( "set yrange [0:10]" )
+    ( "set zrange [0:10]" )
+    ( "set grid x y z" )
+    ( "unset key; unset xtics; unset ytics;" )
+    ( "set style line 1 lt rgb \"red\" lw 20" )
+    ( "set style line 2 lt rgb \"green\" lw 20" )
+    ( "set style line 3 lt rgb \"blue\" lw 20" )
+    ( "set ticslevel 0" )
+    ;
+    gp
+    ( "splot '-' u 1:2:3 w l ls 1"
+      ", '' u 1:2:3 w l ls 2"
+      ", '' u 1:2:3 w l ls 3"
+    ).interleave
+    (   std::begin(gx)
+    ,   std::begin(gy)
+    ,   std::begin(gz)
+    ,   gx.size()
+    ).end().interleave
+    (   std::begin(ex)
+    ,   std::begin(ey)
+    ,   std::begin(ez)
+    ,   ex.size()
+    ).end().interleave
+    (   std::begin(px)
+    ,   std::begin(py)
+    ,   std::begin(pz)
+    ,   px.size()
+    )
+    ;
+}
