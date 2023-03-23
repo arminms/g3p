@@ -9,11 +9,12 @@ intuitive way of adding `gnuplot` support into any C++ program.
 - No dependencies (except [gnuplot](http://www.gnuplot.info/))
 - Header-only (only one header file)
 - Lightweight (~100 lines of code)
-- Easy to use (via CMake configs)
-- Automatic detection of `gnuplot` path
-- Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
-- Use C++ exceptions
-<!-- - Both C and C++ format for passing arguments are supported -->
+- Easy to use (via smart use of `templates` and `type traits` magic)
+- Easy to deploy (via CMake configs)
+- Automatic detection of `gnuplot` path and version
+- Has [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
+- C++ exceptions are supported
+- Both C (`%d`,`%f`, ...) and C++ (`<<`) conventions for passing arguments to gnuplot are supported
 <!-- - Provides Unit tests -->
 <!-- - Well documented -->
 ## Example usage
@@ -57,8 +58,8 @@ Here's the output:
 to your project or one of the designated system folders for headers (e.g.
 `/usr/include` or `/usr/local/include` on Linux systems)
 and start using by including it. That being said, this approach doesn't
-benefit from `g3p` ability to find the right path to `gnuplot` program on
-different platforms.
+benefit from `g3p` ability to find the right path to `gnuplot` program and
+version on different platforms.
 
 A better approach but not ideal is to build and install `g3p` using the
 following commands on any platform and then including `<g3p/gnuplot.hpp>`: 
@@ -81,7 +82,7 @@ find_package(g3p REQUIRED)
 add_executable(test test.cpp)
 target_link_libraries(test PRIVATE g3p::g3p)
 ```
-*There is no need to add `find_package(Gnuplot)` as CMake config provided by
+*There is no need to add `find_package(Gnuplot)` because CMake config provided by
 `g3p` will take care of that.*
 
 Another possibility is to mix `find_package()` with
