@@ -27,32 +27,30 @@ int main(int argc, char* argv[])
     try
     {
         g3p::gnuplot gp;
-        gp
-        // based on https://gnuplotting.org/animation-gif/
-        ("set palette rgb 3,9,9")
-        ("unset key; unset colorbox; unset border; unset tics")
-        ("set lmargin at screen 0.03")
-        ("set bmargin at screen 0")
-        ("set rmargin at screen 0.97")
-        ("set tmargin at screen 1")
-        ("set parametric")
-
+        gp  // based on https://gnuplotting.org/animation-gif/
+        ( "set palette rgb 3,9,9" )
+        ( "unset key; unset colorbox; unset border; unset tics" )
+        ( "set lmargin at screen 0.03" )
+        ( "set bmargin at screen 0" )
+        ( "set rmargin at screen 0.97" )
+        ( "set tmargin at screen 1" )
+        ( "set parametric" )
         // Bessel function, which is moving in time
-        ("bessel(x,t) = besj0(x) * cos(2*pi*t)")
-
+        ( "bessel(x,t) = besj0(x) * cos(2*pi*t)" )
         // calculate the zeros for the bessel function (see Watson,
         // "A Treatise on the heory of Bessel Functions", 1966, page 505)
-        ("n = 6 # number of zeros")
-        ("k = (n*pi-1.0/4*pi)")
-        ("u_0 = k + 1/(8*k) - 31/(384*k)**3 + 3779/(15360*k)**5")
-        ("set urange [0:u_0]")
-        ("set vrange[0:1.5*pi]")
-        ("set cbrange [-1:1]")
-        ("set zrange[-1:1]")
-        ("set isosamples 200,100")
-        ("set pm3d depthorder")
-        ("set view 40,200");
-
+        ( "n = 6 # number of zeros" )
+        ( "k = (n*pi-1.0/4*pi)" )
+        ( "u_0 = k + 1/(8*k) - 31/(384*k)**3 + 3779/(15360*k)**5" )
+        ( "set urange [0:u_0]" )
+        ( "set vrange[0:1.5*pi]" )
+        ( "set cbrange [-1:1]" )
+        ( "set zrange[-1:1]" )
+        ( "set isosamples 200,100" )
+        ( "set pm3d depthorder" )
+        ( "set view 40,200" )
+        ;
+        // using C convention for passing `t` to gnuplot
         for (float t = 0.0f; t < 2.0f; t += 0.02f)
             gp("splot u*sin(v),u*cos(v),bessel(u,%f) w pm3d ls 1", t);
     }
