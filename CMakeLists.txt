@@ -33,7 +33,7 @@ endif()
 #
 project(
   g3p
-  VERSION 0.6
+  VERSION 0.7
   LANGUAGES CXX
   DESCRIPTION "The most intuitive header-only modern C++ interface library for gnuplot."
 )

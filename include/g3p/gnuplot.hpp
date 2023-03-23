@@ -25,6 +25,7 @@
 #include <cstdio>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 
 #ifndef GNUPLOT
 #   define GNUPLOT "gnuplot"
@@ -37,6 +38,16 @@ class gnuplot
     // disabling copy constructor and assignment operator
     gnuplot(const gnuplot&) = delete;
     void operator= (const gnuplot&) = delete;
+
+    template<typename T>
+    void ostream_opr_impl(T arg, std::true_type)
+    {   std::string s(arg);
+        fprintf(_gp, " %s", s.c_str());
+    }
+
+    template<typename T>
+    void ostream_opr_impl(T arg, std::false_type)
+    {   fprintf(_gp, " %s", std::to_string(arg).c_str());   }
 
     FILE* _gp;
 
@@ -87,7 +98,7 @@ public:
 
     template<typename T>
     gnuplot& operator<< (T arg)
-    {   fprintf(_gp, " %s", std::to_string(arg).c_str());
+    {   ostream_opr_impl(arg, std::is_compound<T>());
         return *this;
     }
 
