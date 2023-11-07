@@ -1,7 +1,7 @@
 <p align="center"><img src="artwork/g3p_logo.svg" width="256" height="200"></p>
 
 # What is g3p?
-`g3p` (**G**nu**P**lot **P**lus **P**lus) is a modern header-only C++ interface
+`g3p` (`G`nu`P`lot `P`lus `P`lus) is a header-only Modern C++ interface
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
 intuitive way of adding `gnuplot` support into any C++ program.
 ## Features
@@ -58,12 +58,10 @@ Here's the output:
 [`include/g3p/gnuplot.hpp`](include/g3p/gnuplot.hpp)
 to your project or one of the designated system folders for headers (e.g.
 `/usr/include` or `/usr/local/include` on Linux systems)
-and start using by including it. That being said, this approach doesn't
-benefit from `g3p` ability to find the right path to `gnuplot` program and
-version on different platforms.
+and start using it.
 
 A better approach but not ideal is to build and install `g3p` using the
-following commands on any platform and then including `<g3p/gnuplot.hpp>`: 
+following commands and then including `<g3p/gnuplot.hpp>`:
 ```bash
 git clone https://github.com/arminms/g3p.git
 cd g3p
@@ -83,8 +81,6 @@ find_package(g3p REQUIRED)
 add_executable(test test.cpp)
 target_link_libraries(test PRIVATE g3p::g3p)
 ```
-*There is no need to add `find_package(Gnuplot)` because CMake config provided by
-`g3p` will take care of that.*
 
 Another possibility is to mix `find_package()` with
 [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html)
@@ -95,7 +91,7 @@ find_package(
   g3p CONFIG
   HINTS $ENV{HOME} $ENV{HOME}/.local /usr/local /usr
 )
-if(NOT g3p_DIR)
+if(NOT g3p_FOUND)
     message(STATUS "Fetching g3p library...")
     include(FetchContent)
     FetchContent_Declare(

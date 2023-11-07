@@ -25,11 +25,8 @@
 #include <cstdio>
 #include <stdexcept>
 #include <string>
+#include <cstdlib>
 #include <type_traits>
-
-#ifndef GNUPLOT
-#   define GNUPLOT "gnuplot"
-#endif  // GNUPLOT
 
 namespace g3p {
 
@@ -54,25 +51,17 @@ class gnuplot
 public:
     gnuplot(bool persist = true)
     {
+        const char* gnuplot_path = std::getenv("G3P_GNUPLOT_PATH");
+        std::string gnuplot_cmd = gnuplot_path ? gnuplot_path : "gnuplot";
+        if (persist) gnuplot_cmd += " -persist";
 #ifdef _MSC_VER // possibly _WIN32 for MingW-64?
         _gp = _popen
-        (   persist
-        ?   "GNUPLOT -persist"
-        :   "GNUPLOT"
-        ,   "w"
-        );
-        if (nullptr == _gp)
-            throw std::domain_error("GNUPLOT -- failed");
 #else
-        _gp = popen
-        (   persist
-        ?   GNUPLOT" -persist"
-        :   GNUPLOT
-        ,   "w"
-        );
-        if (nullptr == _gp)
-            throw std::domain_error(GNUPLOT" -- failed");
+        _gp =  popen
 #endif //_MSC_VER
+            (gnuplot_cmd.c_str(), "w");
+        if (nullptr == _gp)
+            throw std::domain_error("gnuplot -- failed");
     }
 
     ~gnuplot()
