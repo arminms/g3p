@@ -33,9 +33,9 @@ endif()
 #
 project(
   g3p
-  VERSION 0.7
+  VERSION 0.8
   LANGUAGES CXX
-  DESCRIPTION "The most intuitive header-only modern C++ interface library for gnuplot."
+  DESCRIPTION "gnuplot for Modern C++"
 )
 
 ## prevent in-source builds
@@ -46,7 +46,10 @@ endif()
 
 ## find gnuplot
 #
-find_package(Gnuplot REQUIRED)
+find_package(Gnuplot)
+if (NOT GNUPLOT_FOUND)
+  message(WARNING "g3p requires gnuplot executable to be in the PATH environment variable")
+endif()
 
 ## make cache variables for install destinations
 #
@@ -57,7 +60,6 @@ include(GNUInstallDirs)
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
-target_compile_definitions(${PROJECT_NAME} INTERFACE GNUPLOT="${GNUPLOT_EXECUTABLE}")
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -126,5 +128,3 @@ if (NOT_SUBPROJECT)
   #
   add_subdirectory(artwork)
 endif(NOT_SUBPROJECT)
-
-# add_subdirectory(src)
