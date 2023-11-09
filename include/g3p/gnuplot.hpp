@@ -37,13 +37,13 @@ class gnuplot
     void operator= (const gnuplot&) = delete;
 
     template<typename T>
-    void ostream_opr_impl(T arg, std::true_type)
+    void ostream_opr_impl(T arg, std::true_type) const
     {   std::string s(arg);
         fprintf(_gp, " %s", s.c_str());
     }
 
     template<typename T>
-    void ostream_opr_impl(T arg, std::false_type)
+    void ostream_opr_impl(T arg, std::false_type) const
     {   fprintf(_gp, " %s", std::to_string(arg).c_str());   }
 
     FILE* _gp;
@@ -76,7 +76,7 @@ public:
 #   pragma GCC diagnostic ignored "-Wformat-security"
 #endif //__GNUG__
     template<typename... Args>
-    gnuplot& operator() (Args&&... args)
+    const gnuplot& operator() (Args&&... args) const
     {   fprintf(_gp, std::forward<Args>(args)...);
         fprintf(_gp, "\n");
         return *this;
@@ -86,28 +86,28 @@ public:
 #endif //__GNUG__
 
     template<typename T>
-    gnuplot& operator<< (T arg)
+    const gnuplot& operator<< (T arg) const
     {   ostream_opr_impl(arg, std::is_compound<T>());
         return *this;
     }
 
-    gnuplot& endl()
+    const gnuplot& endl() const
     {   fprintf(_gp, "\n");
         return *this;
     }
 
-    gnuplot& end()
+    const gnuplot& end() const
     {   fprintf(_gp, "e\n");
         return *this;
     }
 
-    gnuplot& flush()
+    const gnuplot& flush() const
     {   fflush(_gp);
         return *this;
     }
 
     template<typename InputT1, typename InputT2>
-    gnuplot& interleave(InputT1 x, InputT2 y, size_t n)
+    const gnuplot& interleave(InputT1 x, InputT2 y, size_t n) const
     {   for (size_t i = 0; i < n; ++i)
         {   fprintf
             (   _gp
@@ -124,13 +124,13 @@ public:
     ,   typename InputT2
     ,   typename InputT3
     >
-    gnuplot& interleave
+    const gnuplot& interleave
     (   InputT1 x
     ,   InputT2 y
     ,   InputT3 z
     ,   size_t n
     ,   size_t s = 0
-    )
+    ) const
     {   for (size_t i = 0; i < n; ++i)
         {   if (s) fprintf(_gp, 0 == i % s ? " " : "\n");
             fprintf
@@ -150,14 +150,14 @@ public:
     ,   typename InputT3
     ,   typename InputT4
     >
-    gnuplot& interleave
+    const gnuplot& interleave
     (   InputT1 x
     ,   InputT2 y
     ,   InputT3 z
     ,   InputT4 w
     ,   size_t n
     ,   size_t s = 0
-    )
+    ) const
     {   for (size_t i = 0; i < n; ++i)
         {   if (s) fprintf(_gp, 0 == i % s ? " " : "\n");
             fprintf
@@ -171,6 +171,7 @@ public:
         }
         return *this;
     }
+
 };
 
 } // end g3p namespace
