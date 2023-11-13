@@ -28,6 +28,16 @@
 #include <cstdlib>
 #include <type_traits>
 
+#ifdef __CLING__
+#   include <random>
+#   include <algorithm>
+#   include <functional>
+#   include <chrono>
+#   include <thread>
+#   include <fstream>
+#   include <filesystem>
+#   include <g3p/json.hpp>
+#endif //__CLING__
 namespace g3p {
 
 class gnuplot
@@ -62,6 +72,9 @@ public:
             (gnuplot_cmd.c_str(), "w");
         if (nullptr == _gp)
             throw std::domain_error("gnuplot -- failed");
+#ifdef __CLING__
+        fprintf(_gp, "set terminal unknown\n");
+#endif //__CLING__
     }
 
     ~gnuplot()
@@ -171,8 +184,37 @@ public:
         }
         return *this;
     }
-
 };
+
+#ifdef __CLING__
+    nlohmann::json mime_bundle_repr(const gnuplot& gp)
+    {
+        std::string name(32, ' ');
+        name[0] = 'g'; name[1] = '3'; name[2] = 'p';
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(48, 57);
+        std::generate_n(std::begin(name) + 3, 29, std::bind(dis, std::ref(gen)));
+        auto tmp{std::filesystem::temp_directory_path()};
+        std::string plot{tmp.c_str()};
+        plot += '/' + name + ".svg";
+        gp
+        ( "set term push" )
+        ( "set term svg dynamic mouse standalone enhanced" )
+        ( "set output \"%s\"", plot.c_str())
+        ( "replot" )
+        ( "set term pop" ).flush();
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::ifstream fin(plot, std::ios::binary);
+        std::stringstream buffer;
+        buffer << fin.rdbuf();
+        auto bundle = nlohmann::json::object();
+        bundle["image/svg+xml"] = buffer.str();
+        std::filesystem::path file(plot);
+        std::filesystem::remove(file);
+        return bundle;
+    }
+#endif //__CLING__
 
 } // end g3p namespace
 
