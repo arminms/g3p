@@ -42,6 +42,11 @@
 
 namespace g3p {
 
+std::string end("e\n");
+std::string endl("_G3P_ENDL_");
+std::string eod("EOD\n");
+std::string flush("_G3P_FLUSH_");
+
 class gnuplot
 {
     // disabling copy constructor and assignment operator
@@ -51,7 +56,14 @@ class gnuplot
     template<typename T>
     void ostream_opr_impl(T arg, std::true_type) const
     {   std::string s(arg);
-        fprintf(_gp, " %s", s.c_str());
+        if ("_G3P_FLUSH_" == s)
+            fflush(_gp);
+        else if ("_G3P_ENDL_" == s)
+        {   fprintf(_gp, "\n");
+            fflush(_gp);
+        }
+        else
+            fprintf(_gp, " %s", s.c_str());
     }
 
     template<typename T>
@@ -223,7 +235,7 @@ public:
         plot += '/' + name + ".svg";
         gp
         ( "set term push" )
-        ( "set term svg dynamic mouse standalone enhanced" )
+        ( "set term svg mouse standalone enhanced" )
         ( "set output \"%s\"", plot.c_str())
         ( "replot" )
         ( "set term pop" ).flush();
