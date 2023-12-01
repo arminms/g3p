@@ -32,12 +32,14 @@
 #   include <random>
 #   include <algorithm>
 #   include <functional>
+#   include <fstream>
+#   include <sstream>
 #   include <chrono>
 #   include <thread>
-#   include <fstream>
 #   include <filesystem>
 #   include <g3p/json.hpp>
 #endif //__CLING__
+
 namespace g3p {
 
 class gnuplot
@@ -57,13 +59,19 @@ class gnuplot
     {   fprintf(_gp, " %s", std::to_string(arg).c_str());   }
 
     FILE* _gp;
+    std::string _logfile;
 
 public:
-    gnuplot(bool persist = true)
+    gnuplot(std::string logfile = {}, bool persist = true)
+    :   _gp(nullptr)
+    ,   _logfile(logfile)
     {
         const char* gnuplot_path = std::getenv("G3P_GNUPLOT_PATH");
         std::string gnuplot_cmd = gnuplot_path ? gnuplot_path : "gnuplot";
-        if (persist) gnuplot_cmd += " -persist";
+        if (persist)
+            gnuplot_cmd += " -persist";
+        if (!_logfile.empty())
+            gnuplot_cmd += " > " + _logfile + " 2>&1";
 #ifdef _MSC_VER // possibly _WIN32 for MingW-64?
         _gp = _popen
 #else
@@ -73,16 +81,31 @@ public:
         if (nullptr == _gp)
             throw std::domain_error("gnuplot -- failed");
 #ifdef __CLING__
-        fprintf(_gp, "set terminal unknown\n");
+        fprintf(_gp, "set term push\nset term unknown\n");
 #endif //__CLING__
     }
 
     ~gnuplot()
+    {
 #ifdef _MSC_VER
-    {   if (_gp) _pclose(_gp);   }
+        if (_gp) _pclose(_gp);
 #else
-    {   if (_gp) pclose(_gp);   }
+        if (_gp) pclose(_gp);
 #endif //_MSC_VER
+    }
+
+#ifdef __CLING__
+    std::string log() const
+    {   if (_logfile.empty())
+            return _logfile;
+        flush();
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::ifstream fin(_logfile);
+        std::stringstream log;
+        log << fin.rdbuf();
+        return log.str();
+    }
+#endif //__CLING__
 
 #ifdef __GNUG__
 #   pragma GCC diagnostic push
