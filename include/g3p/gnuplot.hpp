@@ -29,9 +29,6 @@
 #include <type_traits>
 
 #ifdef __CLING__
-#   include <random>
-#   include <algorithm>
-#   include <functional>
 #   include <fstream>
 #   include <sstream>
 #   include <chrono>
@@ -237,23 +234,14 @@ public:
     }
 
     nlohmann::json mime_bundle_repr(const gnuplot& gp)
-    {
-        std::string name(32, ' ');
-        name[0] = 'g'; name[1] = '3'; name[2] = 'p';
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(48, 57);
-        std::generate_n(std::begin(name) + 3, 29, std::bind(dis, std::ref(gen)));
-        auto tmp{std::filesystem::temp_directory_path()};
-        std::string plot{tmp.c_str()};
-        plot += '/' + name + ".svg";
-        gp
-        ( "set term push" )
-        ( "set term svg mouse standalone enhanced" )
-        ( "set output \"%s\"", plot.c_str())
-        ( "replot" )
-        ( "print \"saved to %s\"", plot.c_str())
-        ( "set term pop" ).flush();
+    {   std::string plot{tmpnam(NULL)};
+        plot += ".svg";
+        gp  ( "set term push" )
+            ( "set term svg mouse standalone enhanced" )
+            ( "set output \"%s\"", plot.c_str())
+            ( "replot" )
+            ( "print \"saved to %s\"", plot.c_str())
+            ( "set term pop" ).flush();
         std::thread t(wait_for_file, plot, std::ref(gp));
         t.join();
         std::ifstream fin(plot, std::ios::binary);
@@ -261,8 +249,8 @@ public:
         buffer << fin.rdbuf();
         auto bundle = nlohmann::json::object();
         bundle["image/svg+xml"] = buffer.str();
-        std::filesystem::path file(plot);
-        std::filesystem::remove(file);
+        std::filesystem::path f(plot);
+        std::filesystem::remove(f);
         return bundle;
     }
 #endif //__CLING__
