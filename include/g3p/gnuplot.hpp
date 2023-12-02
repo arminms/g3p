@@ -81,6 +81,10 @@ public:
     {
         const char* gnuplot_path = std::getenv("G3P_GNUPLOT_PATH");
         std::string gnuplot_cmd = gnuplot_path ? gnuplot_path : "gnuplot";
+#ifdef __CLING__
+        if (_logfile.empty())
+            _logfile = tmpnam(NULL);
+#endif  //__CLING__
         if (persist)
             gnuplot_cmd += " -persist";
         if (!_logfile.empty())
@@ -105,7 +109,11 @@ public:
 #else
         if (_gp) pclose(_gp);
 #endif //_MSC_VER
+#ifdef __CLING__
+        std::filesystem::path f(_logfile);
+        std::filesystem::remove(f);
     }
+#endif //__CLING__
 
 #ifdef __CLING__
     std::string log() const
