@@ -37,6 +37,7 @@
 #   include <chrono>
 #   include <thread>
 #   include <filesystem>
+#   include <condition_variable>
 #   include <g3p/json.hpp>
 #endif //__CLING__
 
@@ -222,6 +223,11 @@ public:
 };
 
 #ifdef __CLING__
+    void wait_for_file(std::string filename, const gnuplot& gp)
+    {   while (filename.npos == gp.log().rfind(filename))
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+
     nlohmann::json mime_bundle_repr(const gnuplot& gp)
     {
         std::string name(32, ' ');
@@ -238,8 +244,10 @@ public:
         ( "set term svg mouse standalone enhanced" )
         ( "set output \"%s\"", plot.c_str())
         ( "replot" )
+        ( "print \"saved to %s\"", plot.c_str())
         ( "set term pop" ).flush();
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::thread t(wait_for_file, plot, std::ref(gp));
+        t.join();
         std::ifstream fin(plot, std::ios::binary);
         std::stringstream buffer;
         buffer << fin.rdbuf();
