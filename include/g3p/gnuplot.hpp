@@ -109,8 +109,8 @@ public:
 #ifdef __CLING__
         std::filesystem::path f(_logfile);
         std::filesystem::remove(f);
-    }
 #endif //__CLING__
+    }
 
 #ifdef __CLING__
     std::string log() const
@@ -227,32 +227,70 @@ public:
     }
 };
 
-#ifdef __CLING__
-    void wait_for_file(std::string filename, const gnuplot& gp)
-    {   while (filename.npos == gp.log().rfind(filename))
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
+std::string inline random_name(const int len)
+{   static const char alpha[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    std::string tmp_s;
+    tmp_s.reserve(len);
+    for (int i = 0; i < len; ++i)
+        tmp_s += alpha[rand() % (sizeof(alpha) - 1)];
+    return tmp_s;
+}
 
-    nlohmann::json mime_bundle_repr(const gnuplot& gp)
-    {   std::string plot{tmpnam(NULL)};
-        plot += ".svg";
-        gp  ( "set term push" )
-            ( "set term svg mouse standalone enhanced" )
-            ( "set output \"%s\"", plot.c_str())
-            ( "replot" )
-            ( "print \"saved to %s\"", plot.c_str())
-            ( "set term pop" ).flush();
-        std::thread t(wait_for_file, plot, std::ref(gp));
-        t.join();
-        std::ifstream fin(plot, std::ios::binary);
-        std::stringstream buffer;
-        buffer << fin.rdbuf();
-        auto bundle = nlohmann::json::object();
-        bundle["image/svg+xml"] = buffer.str();
-        std::filesystem::path f(plot);
-        std::filesystem::remove(f);
-        return bundle;
+template<typename T>
+inline std::string make_data_block(const gnuplot& gp, const T& c)
+{   std::string name{" $"};
+    name += random_name(8);
+    name += ' ';
+    gp  ("%s<< EOD", name.c_str())
+        ("%s\nEOD", c(gp).c_str());
+    return name;
+}
+template<typename T>
+inline std::string make_data_block
+(   const gnuplot& gp
+,   const T& c
+,   typename T::size_type row
+)
+{   std::string name{" $"};
+    name += random_name(8);
+    name += ' ';
+    gp << name << " << EOD";
+    auto it = std::begin(c);
+    for (typename T::size_type i = 0; i < c.size(); ++i, ++it)
+    {   if (0 == i % row)
+            gp << "\n";
+        gp << *it;
     }
+    gp("\nEOD");
+    return name;
+}
+
+#ifdef __CLING__
+void wait_for_file(std::string filename, const gnuplot& gp)
+{   while (filename.npos == gp.log().rfind(filename))
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+}
+
+nlohmann::json mime_bundle_repr(const gnuplot& gp)
+{   std::string plot{tmpnam(NULL)};
+    plot += ".svg";
+    gp  ( "set term push" )
+        ( "set term svg mouse standalone enhanced" )
+        ( "set output \"%s\"", plot.c_str())
+        ( "replot" )
+        ( "print \"saved to %s\"", plot.c_str())
+        ( "set term pop" ).flush();
+    std::thread t(wait_for_file, plot, std::ref(gp));
+    t.join();
+    std::ifstream fin(plot, std::ios::binary);
+    std::stringstream buffer;
+    buffer << fin.rdbuf();
+    auto bundle = nlohmann::json::object();
+    bundle["image/svg+xml"] = buffer.str();
+    std::filesystem::path f(plot);
+    std::filesystem::remove(f);
+    return bundle;
+}
 #endif //__CLING__
 
 } // end g3p namespace
