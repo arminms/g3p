@@ -40,10 +40,10 @@
 
 namespace g3p
 {
-    std::string end("e\n");
-    std::string endl("_G3P_ENDL_");
-    std::string eod("EOD\n");
-    std::string flush("_G3P_FLUSH_");
+    const std::string end("e\n");
+    const std::string endl("_G3P_ENDL_");
+    const std::string eod("EOD\n");
+    const std::string flush("_G3P_FLUSH_");
 
     class gnuplot
     {
