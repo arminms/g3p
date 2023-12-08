@@ -21,7 +21,7 @@
 #
 cmake_minimum_required(VERSION 3.14...3.26)
 
-## detect if g3p is being bundled, disable installations in that case
+## detect if g3p is being bundled, disable unit tests in that case
 #
 if(NOT DEFINED PROJECT_NAME)
   set(NOT_SUBPROJECT ON)
@@ -33,9 +33,9 @@ endif()
 #
 project(
   g3p
-  VERSION 0.8
+  VERSION 0.9
   LANGUAGES CXX
-  DESCRIPTION "gnuplot for Modern C++"
+  DESCRIPTION "gnuplot for Modern C++ with support for Jupyter"
 )
 
 ## prevent in-source builds
@@ -69,61 +69,61 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
   SOVERSION ${g3p_VERSION_MAJOR}
 )
 
-## only perform the installation when g3p is not being used as a subproject
+## specifying the export name for the targets
+#
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}-targets
+)
+
+## installing g3p header files
+#
+add_subdirectory(include)
+
+## installing g3p export target file
+#
+install(
+  EXPORT ${PROJECT_NAME}-targets
+  FILE ${PROJECT_NAME}-targets.cmake
+  NAMESPACE ${PROJECT_NAME}::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+## generate the config file that includes the exports
+#
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+## creating version file
+#
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
+  VERSION "${g3p_VERSION_MAJOR}.${g3p_VERSION_MINOR}"
+  COMPATIBILITY AnyNewerVersion
+)
+
+## installing g3p export config files
+#
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+## make export target available from the build tree
+#
+export(EXPORT ${PROJECT_NAME}-targets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-targets.cmake"
+  NAMESPACE ${PROJECT_NAME}::
+)
+
+## only include unit test and artwork when g3p is not being used as a subproject
 #
 if (NOT_SUBPROJECT)
-  ## specifying the export name for the targets
-  #
-  install(
-    TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}-targets
-  )
-
-  ## installing g3p header files
-  #
-  add_subdirectory(include)
-
-  ## installing g3p export target file
-  #
-  install(
-    EXPORT ${PROJECT_NAME}-targets
-    FILE ${PROJECT_NAME}-targets.cmake
-    NAMESPACE ${PROJECT_NAME}::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  )
-
-  ## generate the config file that includes the exports
-  #
-  include(CMakePackageConfigHelpers)
-  configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  )
-
-  ## creating version file
-  #
-  write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
-    VERSION "${g3p_VERSION_MAJOR}.${g3p_VERSION_MINOR}"
-    COMPATIBILITY AnyNewerVersion
-  )
-
-  ## installing g3p export config files
-  #
-  install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  )
-
-  ## make export target available from the build tree
-  #
-  export(EXPORT ${PROJECT_NAME}-targets
-    FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-targets.cmake"
-    NAMESPACE ${PROJECT_NAME}::
-  )
-
   ## adding artwork
   #
   add_subdirectory(artwork)
