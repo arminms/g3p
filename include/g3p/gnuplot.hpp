@@ -35,7 +35,7 @@
 #   include <thread>
 #   include <filesystem>
 #   include <condition_variable>
-#   include <g3p/json.hpp>
+#   include <nlohmann/json.hpp>
 #endif //__CLING__
 
 namespace g3p
