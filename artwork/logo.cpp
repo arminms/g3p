@@ -28,48 +28,49 @@ int main(int argc, char* argv[])
 {
     g3p::gnuplot gp;
     std::vector<float>
-        gx{ 1, 8.3, 8.3, 1, 1, 8.3 }
-    ,   gy{ 1, 1, 1, 1, 1, 1 }
-    ,   gz{ 1, 1, 9, 9, 4.5, 4.5 }
-    ,   ex{ 1, 1, 4.5, 4.5, 4.5, 8, 8 }
-    ,   ey{ 2.5, 9, 9, 2.5, 9, 9, 2.5 }
-    ,   ez{ 9, 9, 9, 9, 9, 9, 9 }
-    ,   px{ 9.3, 9.3, 9.3, 9.3, 9.3 }
-    ,   py{ 1, 1, 9, 9, 1 }
-    ,   pz{ 1, 9, 9, 4.5, 4.5 }
+        g //x    y    z
+        {   1,   1,   1
+        , 8.3,   1,   1
+        , 8.3,   1,   9
+        ,   1,   1,   9
+        ,   1,   1, 4.5
+        , 8.3,   1, 4.5
+        }
+    ,   e //x    y    z
+        {   1, 2.5,   9
+        ,   1,   9,   9
+        , 4.5,   9,   9
+        , 4.5, 2.5,   9
+        , 4.5,   9,   9
+        ,   8,   9,   9
+        ,   8, 2.5,   9
+        }
+    ,   p //x    y    z
+        { 9.3,   1,   1
+        , 9.3,   1,   9
+        , 9.3,   9,   9
+        , 9.3,   9, 4.5
+        , 9.3,   1, 4.5
+        }
     ;
-    gp
-    ( "set view ,,,1.45" )
-    ( "set border linecolor \"grey\"" )
-    ( "set xrange [0:10]" )
-    ( "set yrange [0:10]" )
-    ( "set zrange [0:10]" )
-    ( "set grid x y z" )
-    ( "unset key; unset xtics; unset ytics;" )
-    ( "set style line 1 lt rgb \"red\" lw 20" )
-    ( "set style line 2 lt rgb \"green\" lw 20" )
-    ( "set style line 3 lt rgb \"blue\" lw 20" )
-    ( "set ticslevel 0" )
+    auto lg = make_data_block(gp, g, 3);
+    auto l3 = make_data_block(gp, e, 3);
+    auto lp = make_data_block(gp, p, 3);
+    gp << "set view ,,,1.45\n"
+       << "set border linecolor \"grey\"\n"
+       << "set xrange [0:10]\n"
+       << "set yrange [0:10]\n"
+       << "set zrange [0:10]\n"
+       << "set grid x y z\n"
+       << "unset key; unset xtics; unset ytics;\n"
+       << "set style line 1 lt rgb \"red\" lw 20\n"
+       << "set style line 2 lt rgb \"green\" lw 20\n"
+       << "set style line 3 lt rgb \"blue\" lw 20\n"
+       << "set ticslevel 0\n"
     ;
-    gp
-    ( "splot '-' u 1:2:3 w l ls 1"
-      ", '' u 1:2:3 w l ls 2"
-      ", '' u 1:2:3 w l ls 3"
-    ).interleave
-    (   std::begin(gx)
-    ,   std::begin(gy)
-    ,   std::begin(gz)
-    ,   gx.size()
-    ).end().interleave
-    (   std::begin(ex)
-    ,   std::begin(ey)
-    ,   std::begin(ez)
-    ,   ex.size()
-    ).end().interleave
-    (   std::begin(px)
-    ,   std::begin(py)
-    ,   std::begin(pz)
-    ,   px.size()
-    )
-    ;
+    gp << "splot"
+       << lg << "u 1:2:3 w l ls 1,"
+       << l3 << "u 1:2:3 w l ls 2,"
+       << lp << "u 1:2:3 w l ls 3" 
+       << g3p::endl;
 }
