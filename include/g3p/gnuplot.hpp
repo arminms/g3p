@@ -67,7 +67,7 @@ namespace g3p
 
         template<typename T>
         void ostream_opr_impl(T arg, std::false_type) const
-        {   fprintf(_gp, " %s", std::to_string(arg).c_str());   }
+        {   fprintf(_gp, "%s", std::to_string(arg).c_str());   }
 
         FILE* _gp;
         std::string _logfile;
