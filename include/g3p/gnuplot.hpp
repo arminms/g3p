@@ -35,6 +35,7 @@
 #   include <thread>
 #   include <filesystem>
 #   include <condition_variable>
+#   include <xcpp/xdisplay.hpp>
 #   include <nlohmann/json.hpp>
 #endif //__CLING__
 
