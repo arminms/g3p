@@ -3,9 +3,9 @@
 # What is g3p?
 `g3p` (`G`nu`P`lot `P`lus `P`lus) is a header-only Modern C++ interface
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
-intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping.
+intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. The interface is even more intuitive than Python alternatives like [py-gnuplot](https://pypi.org/project/py-gnuplot/). You can check [this Jupyter Notebook](https://github.com/arminms/g3p/doc/g3p_by_examples.ipynb) to get some ideas.
 ## Table of contents
-- [Features](#features)
+- [Highlights](#highlights)
 - [Example usage](#example-usage)
   - [C++ convention](#c-convention)
   - [C convention](#c-convention-1)
@@ -14,11 +14,12 @@ intuitive way of adding `gnuplot` support into any C++ program. `g3p` also suppo
   - [CMake](#cmake)
     - [Embedded](#embedded)
 - [Rapid prototyping with *Jupyter* using *xeus-cling*](#rapid-prototyping-with-jupyter-using-xeus-cling)
-## Features
+## Highlights
 - Multiplatform (Linux/macOS/Windows)
 - No dependencies (except [gnuplot](http://www.gnuplot.info/))
 - Header-only (only one header file)
 - Lightweight (~200 lines of code)
+- Efficient (all i/o implemented with C API)
 - Support displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
 - Easy to use (via smart use of `templates` and `type traits` magic)
 - Easy to deploy (via CMake configs)
@@ -89,7 +90,6 @@ int main(int argc, char* argv[])
       ( "set pm3d depthorder" )
       ( "set view 40,200" )
     ;
-    // using C convention for passing `t` to gnuplot
     for (float t = 0.0f; t < 2.0f; t += 0.02f)
         gp("splot u*sin(v),u*cos(v),bessel(u,%f) w pm3d ls 1", t);
 }
@@ -101,7 +101,7 @@ Here's the output of the above programs:
 
 ## Integration
 
-[`gnuplot.hpp`](include/g3p/gnuplot.hpp) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/releases). You need to add:
+[`gnuplot.hpp`](include/g3p/gnuplot.hpp) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/tags). You need to add:
 ```c++
 #include <g3p/gnuplot.hpp>
 ```
