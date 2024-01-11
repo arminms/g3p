@@ -1,3 +1,4 @@
+![GitHub License](https://img.shields.io/github/license/arminms/g3p)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb)
 
 <p align="center"><img src="artwork/g3p_logo.svg" width="256" height="200"></p>
