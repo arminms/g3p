@@ -2,12 +2,21 @@
 
 <p align="center"><img src="artwork/g3p_logo.svg" width="256" height="200"></p>
 
-# What is g3p?
+# What is `g3p`?
 `g3p` (`G`nu`P`lot `P`lus `P`lus) is a header-only Modern C++ interface
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
-intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. The interface is even more intuitive than Python alternatives like [py-gnuplot](https://pypi.org/project/py-gnuplot/). You can check [this Jupyter Notebook](https://github.com/arminms/g3p/doc/g3p_by_examples.ipynb) to get some ideas.
+intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping.
+## Learn how to use `g3p` with Docker + Jupyter
+If you have [Docker](https://docker.io), an easy way to learn about `g3p` is to run the prebuilt Docker container:
+```
+docker run -p 8888:8888 -t -i asobhani/g3p
+```
+Then open the provided URL in your browser to connect to the Jupyter Server in the container.
+
+If you don't have Docker, just click on [`launch|binder`](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge on top of this page to launch it on [Binder](https://mybinder.org).
+
 ## Table of contents
-- [Highlights](#highlights)
+- [Features](#features)
 - [Example usage](#example-usage)
   - [C++ convention](#c-convention)
   - [C convention](#c-convention-1)
@@ -16,7 +25,7 @@ intuitive way of adding `gnuplot` support into any C++ program. `g3p` also suppo
   - [CMake](#cmake)
     - [Embedded](#embedded)
 - [Rapid prototyping with *Jupyter* using *xeus-cling*](#rapid-prototyping-with-jupyter-using-xeus-cling)
-## Highlights
+## Features
 - Multiplatform (Linux/macOS/Windows)
 - No dependencies (except [gnuplot](http://www.gnuplot.info/))
 - Header-only (only one header file)
@@ -165,8 +174,7 @@ Next, you can use `mamba env list` command to find where the `cling` environment
 ```bash
 git clone https://github.com/arminms/g3p.git
 cd g3p
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build && cmake --build build
 cmake --install build --prefix PATH_TO_CLING_ENV
 ```
 Now you can launch *Jupyter* with `jupyter lab` command and test your setup in a `C++17` notebook by typing the following demo plot and pressing <kbd>shift</kbd>+<kbd>enter</kbd> in the last cell:
