@@ -33,7 +33,7 @@ endif()
 #
 project(
   g3p
-  VERSION 0.9
+  VERSION 0.9.1
   LANGUAGES CXX
   DESCRIPTION "gnuplot for Modern C++ with support for Jupyter"
 )
