@@ -3,12 +3,13 @@
 
 <div align="center">
   <a href="https://github.com/arminms/g3p">
+    <!-- <img width="200" heigth="200" src="artwork/g3p_logo.svg"> -->
     <img width="256" heigth="256" src="artwork/g3p_logo.svg">
   </a>
   <h1>g3p</h1>
 </div>
 
-`g3p` (`G`nu`P`lot `P`lus `P`lus) is a header-only Modern C++ interface
+`g3p` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
 intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping.
 ## Learn how to use `g3p` with Docker + Jupyter
