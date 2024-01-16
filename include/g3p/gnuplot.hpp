@@ -67,7 +67,7 @@ namespace g3p
 
         template<typename T>
         void ostream_opr_impl(T arg, std::false_type) const
-        {   fprintf(_gp, "%s", std::to_string(arg).c_str());   }
+        {   fprintf(_gp, " %s", std::to_string(arg).c_str());   }
 
         FILE* _gp;
         std::string _logfile;
@@ -191,11 +191,11 @@ namespace g3p
     {   std::string name{" $"};
         name += detail::random_name(8);
         name += ' ';
-        gp << name << " << EOD";
+        gp("%s<< EOD", name.c_str());
         auto it = std::begin(c);
         for (typename T::size_type i = 0; i < c.size(); ++i, ++it)
         {   if (0 == i % row)
-                gp << "\n";
+                gp.endl();
             gp << *it;
         }
         gp("\nEOD");
