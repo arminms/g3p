@@ -135,7 +135,7 @@ cmake --install build
 ### CMake
 `g3p` exports a (namespaced) CMake target (`g3p::g3p`) and also CMake config
 scripts for downstream applications. This means that if `g3p` has been installed
-on the system using the above commands, it should be enough to do:
+on a system, it should be enough to do:
 ```cmake
 find_package(g3p REQUIRED)
 add_executable(test test.cpp)
