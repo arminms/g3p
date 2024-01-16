@@ -3,7 +3,6 @@
 
 <div align="center">
   <a href="https://github.com/arminms/g3p">
-    <!-- <img width="200" heigth="200" src="artwork/g3p_logo.svg"> -->
     <img width="256" heigth="256" src="artwork/g3p_logo.svg">
   </a>
   <h1>g3p</h1>
@@ -13,13 +12,13 @@
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
 intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping.
 
-If you have [Docker](https://docker.io), an easy way to learn about `g3p` is to run the prebuilt Docker container:
+If you have [Docker](https://docker.io), an easy way to learn about `g3p` is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -t -i asobhani/g3p
 ```
 Then open the provided URL in your browser to connect to the Jupyter Server in the container.
 
-If you don't have Docker, just click on [`launch|binder`](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge on top of this page to launch it on [Binder](https://mybinder.org).
+If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge here or on top of this page to launch it on [Binder](https://mybinder.org).
 
 ## Table of contents
 - [Features](#features)
@@ -128,8 +127,7 @@ Alternatively, you can build and install `g3p` using the following commands and 
 ```bash
 git clone https://github.com/arminms/g3p.git
 cd g3p
-cmake -S . -B build
-cmake --build build
+cmake -S . -B build && cmake --build build
 cmake --install build
 ```
 *The last command on Linux/macOS must be preceded by `sudo`, and on Windows must be run as an administrator unless you add `--prefix` option at the end to change the default installation path to a none system folder (e.g. `cmake --install build --prefix ~/.local`).*
