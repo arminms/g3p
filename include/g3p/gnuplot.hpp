@@ -186,7 +186,8 @@ namespace g3p
     inline std::string make_data_block
     (   const gnuplot& gp
     ,   const T& c
-    ,   typename T::size_type row
+    ,   typename T::size_type row 
+    ,   typename T::size_type sep = 0 // separator
     )
     {   std::string name{" $"};
         name += detail::random_name(8);
@@ -194,7 +195,9 @@ namespace g3p
         gp("%s<< EOD", name.c_str());
         auto it = std::begin(c);
         for (typename T::size_type i = 0; i < c.size(); ++i, ++it)
-        {   if (0 == i % row)
+        {   if (sep && i && 0 == i % sep)
+                gp.endl();
+            if (0 == i % row)
                 gp.endl();
             gp << *it;
         }
