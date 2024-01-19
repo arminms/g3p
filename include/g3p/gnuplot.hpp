@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2023 Armin Sobhani
+// Copyright (c) 2023-24 Armin Sobhani
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,8 @@
 #   include <chrono>
 #   include <thread>
 #   include <filesystem>
+#   include <unordered_map>
+#   include <any>
 #   include <condition_variable>
 #   include <xcpp/xdisplay.hpp>
 #   include <nlohmann/json.hpp>
@@ -41,6 +43,9 @@
 
 namespace g3p
 {
+
+// -- simulated ostream manipulators -------------------------------------------
+
     const std::string end("e\n");
     const std::string endl("_G3P_ENDL_");
     const std::string eod("EOD\n");
@@ -48,9 +53,12 @@ namespace g3p
 
     class gnuplot
     {
-        // disabling copy constructor and assignment operator
+// -- disabled copy constructor and assignment operator -----------------------
+
         gnuplot(const gnuplot&) = delete;
         void operator= (const gnuplot&) = delete;
+
+// -- ostream operator handlers ------------------------------------------------
 
         template<typename T>
         void ostream_opr_impl(T arg, std::true_type) const
@@ -64,13 +72,17 @@ namespace g3p
             else
                 fprintf(_gp, " %s", s.c_str());
         }
-
         template<typename T>
         void ostream_opr_impl(T arg, std::false_type) const
         {   fprintf(_gp, " %s", std::to_string(arg).c_str());   }
 
+// -- member variables ---------------------------------------------------------
+
         FILE* _gp;
         std::string _logfile;
+#ifdef __CLING__
+        std::string _plotfile;
+#endif  //__CLING__
 
     public:
         gnuplot(std::string logfile = {}, bool persist = true)
@@ -96,7 +108,11 @@ namespace g3p
             if (nullptr == _gp)
                 throw std::domain_error("gnuplot -- failed");
 #ifdef __CLING__
-            fprintf(_gp, "set term push\nset term unknown\n");
+            _plotfile = tmpnam(NULL);
+            _plotfile += ".svg";
+            fprintf(_gp, "set term push\n");
+            fprintf(_gp, "set term svg standalone enhanced\n");
+            fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
 
@@ -110,20 +126,31 @@ namespace g3p
 #ifdef __CLING__
             std::filesystem::path f(_logfile);
             std::filesystem::remove(f);
+            f = _plotfile;
+            std::filesystem::remove(f);
 #endif //__CLING__
         }
 
 #ifdef __CLING__
+
+// -- log file (cling only) ----------------------------------------------------
+
         std::string log() const
         {   if (_logfile.empty())
                 return _logfile;
             flush();
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
             std::ifstream fin(_logfile);
             std::stringstream log;
             log << fin.rdbuf();
             return log.str();
         }
+
+// -- plot file (cling only) ---------------------------------------------------
+
+        std::string plotfile() const
+        {   return _plotfile;   }
+
 #endif //__CLING__
 
 #ifdef __GNUG__
@@ -207,30 +234,32 @@ namespace g3p
 
 #ifdef __CLING__
     namespace detail
-    {   void wait_for_file(std::string filename, const gnuplot& gp)
-        {   while (filename.npos == gp.log().rfind(filename))
+    {   void wait_for_file(std::string tag, const gnuplot& gp)
+        {   while (tag.npos == gp.log().rfind(tag))
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
     }
 
     nlohmann::json mime_bundle_repr(const gnuplot& gp)
-    {   std::string plot{tmpnam(NULL)};
-        plot += ".svg";
-        gp  ( "set term push" )
-            ( "set term svg mouse standalone enhanced" )
-            ( "set output \"%s\"", plot.c_str())
-            ( "replot" )
-            ( "print \"saved to %s\"", plot.c_str())
-            ( "set term pop" ).flush();
-        std::thread t(detail::wait_for_file, plot, std::ref(gp));
+    {   std::filesystem::path f(gp.plotfile());
+        auto tag = detail::random_name(8);
+        gp("print \"plot -> %s\"", tag.c_str()).flush();
+        std::thread t(detail::wait_for_file, tag, std::ref(gp));
         t.join();
-        std::ifstream fin(plot, std::ios::binary);
+        if (0 == std::filesystem::file_size(f))
+        {   tag = detail::random_name(8);
+            gp  ("replot")
+                ("print \"plot -> %s\"", tag.c_str()).flush();
+            std::thread t(detail::wait_for_file, tag, std::ref(gp));
+            t.join();
+        }
+        std::ifstream fin(gp.plotfile(), std::ios::binary);
         std::stringstream buffer;
         buffer << fin.rdbuf();
         auto bundle = nlohmann::json::object();
         bundle["image/svg+xml"] = buffer.str();
-        std::filesystem::path f(plot);
         std::filesystem::remove(f);
+        gp("set output \"%s\"", f.c_str());
         return bundle;
     }
 #endif //__CLING__
