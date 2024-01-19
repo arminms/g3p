@@ -109,7 +109,6 @@ namespace g3p
                 throw std::domain_error("gnuplot -- failed");
 #ifdef __CLING__
             _plotfile = tmpnam(NULL);
-            _plotfile += ".svg";
             fprintf(_gp, "set term push\n");
             fprintf(_gp, "set term svg standalone enhanced\n");
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
