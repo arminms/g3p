@@ -10,9 +10,9 @@
 
 `g3p` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
-intuitive way of adding `gnuplot` support into any C++ program. `g3p` also supports displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping.
+intuitive way of adding `gnuplot` support into any C++ program.
 
-If you have [Docker](https://docker.io), an easy way to learn about `g3p` is to run the prebuilt container:
+A unique feature of `g3p` is the support for displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -t -i asobhani/g3p
 ```
