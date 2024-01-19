@@ -39,7 +39,7 @@ RUN mamba install -yn base nb_conda_kernels \
 
 # Install g3p header and the example notebook
 RUN mkdir -p /opt/conda/envs/xeus-cling/include/g3p
-COPY include/g3p/gnuplot.hpp /opt/conda/envs/xeus-cling/include/g3p
+COPY include/g3p/gnuplot /opt/conda/envs/xeus-cling/include/g3p
 COPY doc/g3p_by_examples.ipynb ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/xeus-cling/include/g3p

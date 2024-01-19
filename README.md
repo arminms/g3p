@@ -47,7 +47,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 ## Example usage
 ### C++ convention
 ```c++
-#include <g3p/gnuplot.hpp>
+#include <g3p/gnuplot>
 
 int main(int argc, char* argv[])
 {
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
 ```
 ### C convention
 ```c++
-#include <g3p/gnuplot.hpp>
+#include <g3p/gnuplot>
 
 int main(int argc, char* argv[])
 {
@@ -117,13 +117,13 @@ Here's the output of the above programs:
 
 ## Integration
 
-[`gnuplot.hpp`](include/g3p/gnuplot.hpp) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/tags). You need to add:
+[`gnuplot`](include/g3p/gnuplot) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/tags). You need to add:
 ```c++
-#include <g3p/gnuplot.hpp>
+#include <g3p/gnuplot>
 ```
 At the begining of your code and set the necessary switches to enable `C++11` (e.g. `-std=c++11` for GCC and Clang) or `C++17` if you want to use it in *Jupyter Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling).
 
-Alternatively, you can build and install `g3p` using the following commands and then including `<g3p/gnuplot.hpp>`:
+Alternatively, you can build and install `g3p` using the following commands and then including `<g3p/gnuplot>`:
 ```bash
 git clone https://github.com/arminms/g3p.git
 cd g3p

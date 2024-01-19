@@ -20,7 +20,7 @@
 // SOFTWARE.
 //
 #include <iostream>
-#include <g3p/gnuplot.hpp>
+#include <g3p/gnuplot>
 
 int main(int argc, char* argv[])
 {   try
