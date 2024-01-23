@@ -130,8 +130,6 @@ namespace g3p
 #endif //__CLING__
         }
 
-#ifdef __CLING__
-
 // -- log file (cling only) ----------------------------------------------------
 
         std::string log() const
@@ -144,6 +142,8 @@ namespace g3p
             log << fin.rdbuf();
             return log.str();
         }
+
+#ifdef __CLING__
 
 // -- plot file (cling only) ---------------------------------------------------
 
