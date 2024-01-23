@@ -44,6 +44,53 @@
 namespace g3p
 {
 
+// -- isolated functions in a namespace ----------------------------------------
+
+    namespace detail
+    {   std::string inline random_name(const int len)
+        {   static const char alpha[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            std::string tmp_s;
+            tmp_s.reserve(len);
+            for (int i = 0; i < len; ++i)
+                tmp_s += alpha[rand() % (sizeof(alpha) - 1)];
+            return tmp_s;
+        }
+
+        std::string get_last_lines
+        (   const std::string& filename
+        ,   size_t line_count
+        )
+        {   const size_t granularity = 100 * line_count;
+            std::ifstream source(filename, std::ios_base::binary);
+            source.seekg(0, std::ios_base::end);
+            size_t size = static_cast<size_t>(source.tellg());
+            std::vector<char> buffer;
+            int new_line_count = 0;
+            while
+            (   source
+            &&  buffer.size() != size
+            &&  new_line_count < line_count
+            )
+            {   buffer.resize(std::min(buffer.size() + granularity, size));
+                source.seekg
+                (   -static_cast<std::streamoff>(buffer.size())
+                ,   std::ios_base::end
+                );
+                source.read(buffer.data(), buffer.size());
+                new_line_count = std::count(buffer.begin(), buffer.end(), '\n');
+            }
+            std::vector<char>::iterator start = buffer.begin();
+            while (new_line_count > line_count)
+            {   start = std::find(start, buffer.end(), '\n') + 1;
+                --new_line_count;
+            }
+#ifdef   _MSC_VER
+            std::vector<char>::iterator end = std::remove(start, buffer.end(), '\r');
+#endif //_MSC_VER
+            return std::string(start, end);
+        }
+    }
+
 // -- simulated ostream manipulators -------------------------------------------
 
     const std::string end("e\n");
@@ -187,17 +234,6 @@ namespace g3p
             return *this;
         }
     };
-
-    namespace detail
-    {   std::string inline random_name(const int len)
-        {   static const char alpha[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            std::string tmp_s;
-            tmp_s.reserve(len);
-            for (int i = 0; i < len; ++i)
-                tmp_s += alpha[rand() % (sizeof(alpha) - 1)];
-            return tmp_s;
-        }
-    }
 
     template<typename T>
     inline std::string make_data_block(const gnuplot& gp, const T& c)
