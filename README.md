@@ -34,7 +34,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 - Multiplatform (Linux/macOS/Windows)
 - No dependencies (except [gnuplot](http://www.gnuplot.info/))
 - Header-only (only one header file)
-- Lightweight (~200 lines of code)
+- Lightweight (~300 lines of code)
 - Efficient (all i/o implemented with C API)
 - Support displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
 - Easy to use (via smart use of `templates` and `type traits` magic)

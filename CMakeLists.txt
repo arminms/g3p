@@ -29,6 +29,10 @@ else()
   set(NOT_SUBPROJECT OFF)
 endif()
 
+## life is about choices...
+#
+option(G3P_ENABLE_TESTS "Enable the unit tests ?" ON)
+
 ## finally our project...
 #
 project(
@@ -43,6 +47,10 @@ project(
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   message(FATAL_ERROR "Building in-source is not supported! Create a build dir and remove ${CMAKE_SOURCE_DIR}/CMakeCache.txt")
 endif()
+
+## find the thread library
+#
+find_package(Threads REQUIRED)
 
 ## find gnuplot
 #
@@ -63,6 +71,9 @@ target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+target_link_libraries(${PROJECT_NAME} INTERFACE
+  Threads::Threads
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${g3p_VERSION}
@@ -121,9 +132,31 @@ export(EXPORT ${PROJECT_NAME}-targets
   NAMESPACE ${PROJECT_NAME}::
 )
 
-## only include unit test and artwork when g3p is not being used as a subproject
+## include unit test and artwork only when g3p is not being used as a subproject
 #
 if (NOT_SUBPROJECT)
+  ## add unit tests
+  #
+  if(${G3P_ENABLE_TESTS})
+    enable_testing()
+    find_package(
+      Catch2 3
+      HINTS $ENV{HOME} /usr/local /opt/local /opt
+    )
+    if(NOT Catch2_FOUND)
+        message(STATUS "Fetching Catch2 library...")
+        FetchContent_Declare(
+          catch2
+          GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+          GIT_TAG        v3.5.2
+        )
+        FetchContent_MakeAvailable(Catch2)
+        list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+    endif()
+    include(Catch)
+    add_subdirectory(test)
+  endif()
+
   ## adding artwork
   #
   add_subdirectory(artwork)
