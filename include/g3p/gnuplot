@@ -22,21 +22,20 @@
 #ifndef _G3P_GNUPLOT_HPP_
 #define _G3P_GNUPLOT_HPP_
 
+#include <fstream>
 #include <cstdio>
-#include <stdexcept>
 #include <string>
+#include <sstream>
+#include <vector>
 #include <cstdlib>
 #include <type_traits>
+#include <chrono>
+#include <thread>
+#include <algorithm>
+#include <filesystem>
+#include <stdexcept>
 
 #ifdef __CLING__
-#   include <fstream>
-#   include <sstream>
-#   include <chrono>
-#   include <thread>
-#   include <filesystem>
-#   include <unordered_map>
-#   include <any>
-#   include <condition_variable>
 #   include <xcpp/xdisplay.hpp>
 #   include <nlohmann/json.hpp>
 #endif //__CLING__
@@ -56,12 +55,21 @@ namespace g3p
             return tmp_s;
         }
 
+        void wait4signal(std::uintmax_t size, const std::filesystem::path& file)
+        {   auto start = std::chrono::system_clock::now();
+            while
+            (   std::filesystem::file_size(file) == size
+            &&  std::chrono::system_clock::now() - start <= std::chrono::seconds{1}
+            )
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+
         std::string get_last_lines
         (   const std::string& filename
         ,   size_t line_count
         )
         {   const size_t granularity = 100 * line_count;
-            std::ifstream source(filename, std::ios_base::binary);
+            std::ifstream source(filename, std::ios::binary);
             source.seekg(0, std::ios_base::end);
             size_t size = static_cast<size_t>(source.tellg());
             std::vector<char> buffer;
@@ -74,18 +82,20 @@ namespace g3p
             {   buffer.resize(std::min(buffer.size() + granularity, size));
                 source.seekg
                 (   -static_cast<std::streamoff>(buffer.size())
-                ,   std::ios_base::end
+                ,   std::ios::end
                 );
                 source.read(buffer.data(), buffer.size());
                 new_line_count = std::count(buffer.begin(), buffer.end(), '\n');
             }
-            std::vector<char>::iterator start = buffer.begin();
+            auto start = buffer.begin();
             while (new_line_count > line_count)
             {   start = std::find(start, buffer.end(), '\n') + 1;
                 --new_line_count;
             }
 #ifdef   _MSC_VER
-            std::vector<char>::iterator end = std::remove(start, buffer.end(), '\r');
+            auto end = std::remove(start, buffer.end(), '\r');
+#else
+            auto end = buffer.end();
 #endif //_MSC_VER
             return std::string(start, end);
         }
@@ -177,17 +187,26 @@ namespace g3p
 #endif //__CLING__
         }
 
-// -- log file (cling only) ----------------------------------------------------
+// -- log file -----------------------------------------------------------------
 
-        std::string log() const
+        std::string log(size_t line_count = 0) const
         {   if (_logfile.empty())
-                return _logfile;
-            flush();
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
-            std::ifstream fin(_logfile);
-            std::stringstream log;
-            log << fin.rdbuf();
-            return log.str();
+                return std::string{"g3p::gnuplot -- no log file!\n"};
+            std::filesystem::path f(_logfile);
+            while(!std::filesystem::exists(f))
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            auto size = std::filesystem::file_size(f);
+            fflush(_gp);
+            std::thread t(detail::wait4signal, size, std::cref(f));
+            t.join();
+            if (0 == line_count)
+            {   std::ifstream fin(_logfile);
+                std::stringstream log;
+                log << fin.rdbuf();
+                return log.str();
+            }
+            else
+                return detail::get_last_lines(_logfile, line_count);
         }
 
 #ifdef __CLING__
@@ -217,6 +236,11 @@ namespace g3p
         const gnuplot& operator<< (T arg) const
         {   ostream_opr_impl(arg, std::is_compound<T>());
             return *this;
+        }
+
+        std::istringstream operator>> (size_t line_count) const
+        {   std::istringstream iss{log(line_count)};
+            return iss;
         }
 
         const gnuplot& endl() const
@@ -269,7 +293,7 @@ namespace g3p
 
 #ifdef __CLING__
     namespace detail
-    {   void wait_for_file(std::string tag, const gnuplot& gp)
+    {   void wait4tag(std::string tag, const gnuplot& gp)
         {   while (tag.npos == gp.log().rfind(tag))
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
@@ -279,13 +303,13 @@ namespace g3p
     {   std::filesystem::path f(gp.plotfile());
         auto tag = detail::random_name(8);
         gp("print \"plot -> %s\"", tag.c_str()).flush();
-        std::thread t(detail::wait_for_file, tag, std::ref(gp));
+        std::thread t(detail::wait4tag, tag, std::ref(gp));
         t.join();
         if (0 == std::filesystem::file_size(f))
         {   tag = detail::random_name(8);
             gp  ("replot")
                 ("print \"plot -> %s\"", tag.c_str()).flush();
-            std::thread t(detail::wait_for_file, tag, std::ref(gp));
+            std::thread t(detail::wait4tag, tag, std::cref(gp));
             t.join();
         }
         std::ifstream fin(gp.plotfile(), std::ios::binary);
