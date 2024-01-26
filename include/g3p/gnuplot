@@ -142,7 +142,7 @@ namespace g3p
 #endif  //__CLING__
 
     public:
-        gnuplot(std::string logfile = {}, bool persist = true)
+        gnuplot(bool persist = true, std::string logfile = {})
         :   _gp(nullptr)
         ,   _logfile(logfile)
         {
