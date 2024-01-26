@@ -148,14 +148,11 @@ namespace g3p
         {
             const char* gnuplot_path = std::getenv("G3P_GNUPLOT_PATH");
             std::string gnuplot_cmd = gnuplot_path ? gnuplot_path : "gnuplot";
-#ifdef __CLING__
             if (_logfile.empty())
                 _logfile = tmpnam(NULL);
-#endif  //__CLING__
             if (persist)
                 gnuplot_cmd += " -persist";
-            if (!_logfile.empty())
-                gnuplot_cmd += " > " + _logfile + " 2>&1";
+            gnuplot_cmd += " > " + _logfile + " 2>&1";
 #ifdef _MSC_VER // possibly _WIN32 for MingW-64?
             _gp = _popen
 #else
