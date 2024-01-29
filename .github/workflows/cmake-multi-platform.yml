@@ -1,0 +1,68 @@
+name: Build and Test (Linux/macOS/Windows)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+      - name: Install dependencies via vcpkg
+        run: vcpkg install catch2 --binarysource="clear;x-gha,readwrite"
+
+      - name: Install gnuplot (Linux)
+        run: |
+          sudo apt install gnuplot
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: Install gnuplot (Windows)
+        run: |
+          choco install gnuplot
+        if: matrix.os == 'windows-latest'
+
+      - name: Install gnuplot (macOS)
+        run: |
+          brew install gnuplot
+        if: matrix.os == 'macos-latest'
+
+      - name: Configure with CMake (Linux)
+        run: |
+          cmake -S ${{github.workspace}} -B build \
+          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: Configure with CMake (Windows)
+        run: |
+          cmake -S ${{github.workspace}} -B build -DCMAKE_TOOLCHAIN_FILE="$Env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+        if: matrix.os == 'windows-latest'
+
+      - name: Configure with CMake (macOS)
+        run: |
+          run: |
+            cmake -S ${{github.workspace}} -B build \
+            -DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake
+        if: matrix.os == 'macos-latest'
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: ctest --output-on-failure
