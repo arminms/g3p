@@ -42,7 +42,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 - Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
 - Support C++ exceptions
 - Support both C (`%d`,`%f`, ...) and C++ (`<<`) conventions for passing arguments to gnuplot
-<!-- - Provides Unit tests -->
+- Include [Catch2](https://github.com/catchorg/Catch2) unit tests
 <!-- - Well documented -->
 ## Example usage
 ### C++ convention
@@ -117,11 +117,11 @@ Here's the output of the above programs:
 
 ## Integration
 
-[`gnuplot`](include/g3p/gnuplot) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/tags). You need to add:
+[`gnuplot`](include/g3p/gnuplot) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/releases). You need to add:
 ```c++
 #include <g3p/gnuplot>
 ```
-At the begining of your code and set the necessary switches to enable `C++11` (e.g. `-std=c++11` for GCC and Clang) or `C++17` if you want to use it in *Jupyter Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling).
+At the begining of your code and set the necessary switches to enable `C++17` (e.g. `-std=c++17` for GCC and Clang).
 
 Alternatively, you can build and install `g3p` using the following commands and then including `<g3p/gnuplot>`:
 ```bash
