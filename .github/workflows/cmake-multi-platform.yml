@@ -35,9 +35,6 @@ jobs:
       - name: Install gnuplot (Windows)
         run: |
           choco install gnuplot
-          $env:ChocolateyInstall = Convert-Path "$((Get-Command choco).Path)\..\.."
-          Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-          refreshenv
         if: matrix.os == 'windows-latest'
 
       - name: Install gnuplot (macOS)
@@ -69,3 +66,11 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest --output-on-failure
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: ctest --output-on-failure
+        env:
+          PATH: ${{env.PATH}};C:\Program Files\gnuplot\bin
+        if: matrix.os == 'windows-latest'
