@@ -12,7 +12,7 @@
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
 intuitive way of adding `gnuplot` support into any C++ program.
 
-A unique feature of `g3p` is the support for displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
+A unique feature of `g3p` is the ability to display plots in *Jupyter C++ Notebooks* backed by [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -t -i asobhani/g3p
 ```
@@ -22,6 +22,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 
 ## Table of contents
 - [Features](#features)
+- [Requirements](#requirements)
 - [Example usage](#example-usage)
   - [C++ convention](#c-convention)
   - [C convention](#c-convention-1)
@@ -44,6 +45,10 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 - Support both C (`%d`,`%f`, ...) and C++ (`<<`) conventions for passing arguments to gnuplot
 - Include [Catch2](https://github.com/catchorg/Catch2) unit tests
 <!-- - Well documented -->
+
+## Requirements
+* [gnuplot](http://www.gnuplot.info/) must be installed and added to the `$PATH` environment variable
+* C++ compiler supporting the `C++17`` standard (e.g. gcc 9.3 or higher)
 ## Example usage
 ### C++ convention
 ```c++
