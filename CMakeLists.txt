@@ -59,9 +59,10 @@ if (NOT GNUPLOT_FOUND)
   message(WARNING "g3p requires gnuplot executable to be in the PATH environment variable")
 endif()
 
-## make cache variables for install destinations
+## necessary modules
 #
 include(GNUInstallDirs)
+include(FetchContent)
 
 ## defining g3p target
 #
