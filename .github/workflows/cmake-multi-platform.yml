@@ -35,11 +35,12 @@ jobs:
       - name: Install gnuplot (Windows)
         run: |
           choco install gnuplot
+          refreshenv
         if: matrix.os == 'windows-latest'
 
       - name: Install gnuplot (macOS)
         run: |
-          brew install gnuplot@4.6.7
+          brew install gnuplot
         if: matrix.os == 'macos-latest'
 
       - name: Configure with CMake (Linux)
