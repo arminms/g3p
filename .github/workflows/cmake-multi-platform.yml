@@ -35,6 +35,8 @@ jobs:
       - name: Install gnuplot (Windows)
         run: |
           choco install gnuplot
+          $env:ChocolateyInstall = Convert-Path "$((Get-Command choco).Path)\..\.."
+          Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
           refreshenv
         if: matrix.os == 'windows-latest'
 
