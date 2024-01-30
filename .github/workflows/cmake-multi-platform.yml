@@ -42,33 +42,27 @@ jobs:
           brew install gnuplot
         if: matrix.os == 'macos-latest'
 
-      - name: Configure with CMake (Linux)
+      - name: Configure with CMake (Linux and macOS)
         run: |
           cmake -S ${{github.workspace}} -B build \
           -DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
 
       - name: Configure with CMake (Windows)
         run: |
           cmake -S ${{github.workspace}} -B build -DCMAKE_TOOLCHAIN_FILE="$Env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
         if: matrix.os == 'windows-latest'
 
-      - name: Configure with CMake (macOS)
-        run: |
-          run: |
-            cmake -S ${{github.workspace}} -B build \
-            -DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake
-        if: matrix.os == 'macos-latest'
 
       - name: Build
         run: cmake --build build
 
-      - name: Test
+      - name: Test (Linux and macOS)
         working-directory: ${{github.workspace}}/build
         run: ctest --output-on-failure
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
 
-      - name: Test
+      - name: Test (Windows)
         working-directory: ${{github.workspace}}/build
         run: ctest --output-on-failure
         env:
