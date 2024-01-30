@@ -29,11 +29,15 @@ else()
   set(NOT_SUBPROJECT OFF)
 endif()
 
+## life is about choices...
+#
+option(G3P_ENABLE_TESTS "Enable the unit tests ?" ON)
+
 ## finally our project...
 #
 project(
   g3p
-  VERSION 0.9.4
+  VERSION 1.0.0
   LANGUAGES CXX
   DESCRIPTION "gnuplot for Modern C++ with support for Jupyter"
 )
@@ -44,6 +48,10 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   message(FATAL_ERROR "Building in-source is not supported! Create a build dir and remove ${CMAKE_SOURCE_DIR}/CMakeCache.txt")
 endif()
 
+## find the thread library
+#
+find_package(Threads REQUIRED)
+
 ## find gnuplot
 #
 find_package(Gnuplot)
@@ -51,18 +59,22 @@ if (NOT GNUPLOT_FOUND)
   message(WARNING "g3p requires gnuplot executable to be in the PATH environment variable")
 endif()
 
-## make cache variables for install destinations
+## necessary modules
 #
 include(GNUInstallDirs)
+include(FetchContent)
 
 ## defining g3p target
 #
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+target_link_libraries(${PROJECT_NAME} INTERFACE
+  Threads::Threads
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${g3p_VERSION}
@@ -121,9 +133,31 @@ export(EXPORT ${PROJECT_NAME}-targets
   NAMESPACE ${PROJECT_NAME}::
 )
 
-## only include unit test and artwork when g3p is not being used as a subproject
+## include unit test and artwork only when g3p is not being used as a subproject
 #
 if (NOT_SUBPROJECT)
+  ## add unit tests
+  #
+  if(${G3P_ENABLE_TESTS})
+    enable_testing()
+    find_package(
+      Catch2 3
+      HINTS $ENV{HOME} /usr/local /opt/local /opt
+    )
+    if(NOT Catch2_FOUND)
+        message(STATUS "Fetching Catch2 library...")
+        FetchContent_Declare(
+          catch2
+          GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+          GIT_TAG        v3.5.2
+        )
+        FetchContent_MakeAvailable(Catch2)
+        list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+    endif()
+    include(Catch)
+    add_subdirectory(test)
+  endif()
+
   ## adding artwork
   #
   add_subdirectory(artwork)

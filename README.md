@@ -12,7 +12,7 @@
 library for [gnuplot](http://www.gnuplot.info/). It is the most natural and
 intuitive way of adding `gnuplot` support into any C++ program.
 
-A unique feature of `g3p` is the support for displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
+A unique feature of `g3p` is the ability to display plots in *Jupyter C++ Notebooks* backed by [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -t -i asobhani/g3p
 ```
@@ -22,6 +22,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 
 ## Table of contents
 - [Features](#features)
+- [Requirements](#requirements)
 - [Example usage](#example-usage)
   - [C++ convention](#c-convention)
   - [C convention](#c-convention-1)
@@ -34,7 +35,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 - Multiplatform (Linux/macOS/Windows)
 - No dependencies (except [gnuplot](http://www.gnuplot.info/))
 - Header-only (only one header file)
-- Lightweight (~200 lines of code)
+- Lightweight (~300 lines of code)
 - Efficient (all i/o implemented with C API)
 - Support displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
 - Easy to use (via smart use of `templates` and `type traits` magic)
@@ -42,8 +43,13 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 - Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
 - Support C++ exceptions
 - Support both C (`%d`,`%f`, ...) and C++ (`<<`) conventions for passing arguments to gnuplot
-<!-- - Provides Unit tests -->
+- Include [Catch2](https://github.com/catchorg/Catch2) unit tests
 <!-- - Well documented -->
+
+## Requirements
+* [gnuplot](http://www.gnuplot.info/) must be already installed and added to the `$PATH` environment variable
+* C++ compiler supporting the `C++17` standard (e.g. *gcc* 9.3 or higher)
+
 ## Example usage
 ### C++ convention
 ```c++
@@ -117,11 +123,11 @@ Here's the output of the above programs:
 
 ## Integration
 
-[`gnuplot`](include/g3p/gnuplot) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/tags). You need to add:
+[`gnuplot`](include/g3p/gnuplot) is the single required file in `include/g3p` or [released here](https://github.com/arminms/g3p/releases). You need to add:
 ```c++
 #include <g3p/gnuplot>
 ```
-At the begining of your code and set the necessary switches to enable `C++11` (e.g. `-std=c++11` for GCC and Clang) or `C++17` if you want to use it in *Jupyter Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling).
+At the begining of your code and set the necessary switches to enable `C++17` (e.g. `-std=c++17` for GCC and Clang).
 
 Alternatively, you can build and install `g3p` using the following commands and then including `<g3p/gnuplot>`:
 ```bash
