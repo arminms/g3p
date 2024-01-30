@@ -39,7 +39,7 @@ jobs:
 
       - name: Install gnuplot (macOS)
         run: |
-          brew install gnuplot
+          brew install gnuplot@4.6.7
         if: matrix.os == 'macos-latest'
 
       - name: Configure with CMake (Linux)
