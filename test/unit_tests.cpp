@@ -116,23 +116,21 @@ TEMPLATE_TEST_CASE("passing real values", "[gnuplot][real]", float, double)
     T pi = T(3.141592654), e = T(2.718281828);
     g3p::gnuplot gp;
     SECTION("c++ convention")
-    {   gp << "x={" << pi << "," << e << "}\n"
-           << "print x\n"
+    {   gp << "x=" << pi << "; y=" << e << "\n"
+           << "print x, y\n"
         ;
-        char skip;
-        T x1, x2;
-        gp >> 1 >> skip >> x1 >> skip >> x2;
-        CHECK(std::abs(pi - x1) < 0.0001);
-        CHECK(std::abs(e  - x2) < 0.0001);
+        T x, y;
+        gp >> 1 >> x >> y;
+        CHECK(std::abs(pi - x) < 0.0001);
+        CHECK(std::abs(e  - y) < 0.0001);
     }
     SECTION("c convention")
-    {   gp  ("x={%f,%f}", pi, e)
-            ("print x")
+    {   gp  ("x=%f; y=%f}", pi, e)
+            ("print x, y")
         ;
-        char skip;
-        T x1, x2;
-        gp >> 1 >> skip >> x1 >> skip >> x2;
-        CHECK(std::abs(pi - x1) < 0.0001);
-        CHECK(std::abs(e  - x2) < 0.0001);
+        T x, y;
+        gp >> 1 >> x >> y;
+        CHECK(std::abs(pi - x) < 0.0001);
+        CHECK(std::abs(e  - y) < 0.0001);
     }
 }
