@@ -48,7 +48,7 @@ If you don't have Docker, just click on [![Binder](https://mybinder.org/badge_lo
 <!-- - Well documented -->
 
 ## Requirements
-* [gnuplot](http://www.gnuplot.info/) must be already installed and added to the `$PATH` environment variable
+* [gnuplot](http://www.gnuplot.info/) (4 or higher) must be already installed and added to the `$PATH` environment variable
 * C++ compiler supporting the `C++17` standard (e.g. *gcc* 9.3 or higher)
 
 ## Example usage
