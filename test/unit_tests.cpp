@@ -125,7 +125,7 @@ TEMPLATE_TEST_CASE("passing real values", "[gnuplot][real]", float, double)
         CHECK(std::abs(e  - y) < 0.0001);
     }
     SECTION("c convention")
-    {   gp  ("x=%f; y=%f}", pi, e)
+    {   gp  ("x=%f; y=%f", pi, e)
             ("print x, y")
         ;
         T x, y;
