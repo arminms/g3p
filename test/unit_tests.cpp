@@ -26,8 +26,7 @@
 TEST_CASE("log() function", "[gnuplot][log]")
 {   g3p::gnuplot gp;
     SECTION("no argument")
-    {   //g3p::gnuplot gp;
-        auto log = gp.log();
+    {   auto log = gp.log();
         REQUIRE
         (   6 == std::count_if
             (   log.begin()
