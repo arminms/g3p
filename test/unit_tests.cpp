@@ -19,7 +19,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#include <algorithm>
 #include <catch2/catch_all.hpp>
 #include <g3p/gnuplot>
 
