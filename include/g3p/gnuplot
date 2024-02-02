@@ -47,7 +47,7 @@ namespace g3p
 // -- isolated functions in a namespace ----------------------------------------
 
     namespace detail
-    {   inline std::string random_name(const int len)
+    {   inline std::string random_name(const int len = 8)
         {   static const char alphanum[] =
                 "1234567890"
                 "abcdefghijklmnopqrstuvwxyz";
@@ -60,19 +60,11 @@ namespace g3p
             return tmp_s;
         }
 
+
         inline std::string tmpnam()
         {   auto filename = std::filesystem::temp_directory_path().string();
             filename += "/g3p" + random_name(16);
             return filename;
-        }
-
-        void wait4signal(std::uintmax_t size, const std::filesystem::path& file)
-        {   auto start = std::chrono::system_clock::now();
-            while
-            (   std::filesystem::file_size(file) == size
-            &&  std::chrono::system_clock::now() - start <= std::chrono::seconds{1}
-            )
-                std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 
         std::string get_last_lines
@@ -109,6 +101,11 @@ namespace g3p
             auto end = buffer.end();
 #endif //_MSC_VER
             return std::string(start, end);
+        }
+
+        void wait4tag(const std::string& tag, const std::string& filename)
+        {   while (tag != get_last_lines(filename, 1))
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
     }
 
@@ -204,23 +201,19 @@ namespace g3p
 // -- log file -----------------------------------------------------------------
 
         std::string log(size_t line_count = 0) const
-        {   if (_logfile.empty())
-                return std::string{"g3p::gnuplot -- no log file!\n"};
-            std::filesystem::path f(_logfile);
-            while(!std::filesystem::exists(f))
-                std::this_thread::sleep_for(std::chrono::milliseconds(1));
-            auto size = std::filesystem::file_size(f);
-            fflush(_gp);
-            std::thread t(detail::wait4signal, size, std::cref(f));
-            t.join();
+        {   sync();
+            std::string log;
             if (0 == line_count)
             {   std::ifstream fin(_logfile);
-                std::stringstream log;
-                log << fin.rdbuf();
-                return log.str();
+                std::stringstream logstream;
+                logstream << fin.rdbuf();
+                log = logstream.str();
+                return log.erase(log.size() - 9, 9);
             }
             else
-                return detail::get_last_lines(_logfile, line_count);
+            {   log = detail::get_last_lines(_logfile, line_count + 1);
+                return log.erase(log.size() - 9, 9);
+            }
         }
 
 #ifdef __CLING__
@@ -231,6 +224,18 @@ namespace g3p
         {   return _plotfile;   }
 
 #endif //__CLING__
+
+// -- sync helper function -------------------------------------------------
+
+        const gnuplot& sync() const
+        {   auto tag = detail::random_name(8);
+            fprintf(_gp, "print '%s'\n", tag.c_str());
+            fflush(_gp);
+            tag += '\n';
+            std::thread t(detail::wait4tag, tag, _logfile);
+            t.join();
+            return *this;
+        }
 
 #ifdef __GNUG__
 #       pragma GCC diagnostic push
@@ -253,7 +258,10 @@ namespace g3p
         }
 
         std::istringstream operator>> (size_t line_count) const
-        {   std::istringstream iss{log(line_count)};
+        {   sync();
+            auto line = detail::get_last_lines(_logfile, line_count + 1);
+            line.erase(line.size() - 9, 9);
+            std::istringstream iss{line};
             return iss;
         }
 
@@ -306,25 +314,12 @@ namespace g3p
     }
 
 #ifdef __CLING__
-    namespace detail
-    {   void wait4tag(std::string tag, const gnuplot& gp)
-        {   while (tag.npos == gp.log().rfind(tag))
-                std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-    }
-
     nlohmann::json mime_bundle_repr(const gnuplot& gp)
-    {   std::filesystem::path f(gp.plotfile());
-        auto tag = detail::random_name(8);
-        gp("print \"plot -> %s\"", tag.c_str()).flush();
-        std::thread t(detail::wait4tag, tag, std::ref(gp));
-        t.join();
+    {   gp.sync();
+        std::filesystem::path f(gp.plotfile());
         if (0 == std::filesystem::file_size(f))
-        {   tag = detail::random_name(8);
-            gp  ("replot")
-                ("print \"plot -> %s\"", tag.c_str()).flush();
-            std::thread t(detail::wait4tag, tag, std::cref(gp));
-            t.join();
+        {   gp("replot");
+            gp.sync();
         }
         std::ifstream fin(gp.plotfile(), std::ios::binary);
         std::stringstream buffer;
