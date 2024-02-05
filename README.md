@@ -1,15 +1,15 @@
-[![Build and Test (Linux/macOS/Windows)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml)
-[![GitHub License](https://img.shields.io/github/license/arminms/g3p?logo=github&logoColor=lightgrey&color=yellow)](https://github.com/arminms/g3p/blob/main/LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
-[![GitHub issues](https://img.shields.io/github/issues/arminms/g3p?logo=github&logoColor=lightgray&color=orange)](https://github.com/arminms/g3p/issues)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb)
-
 <div align="center">
   <a href="https://github.com/arminms/g3p">
     <img width="256" heigth="256" src="artwork/g3p_logo.svg">
   </a>
   <h1>g3p</h1>
 </div>
+
+[![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
+[![GitHub License](https://img.shields.io/github/license/arminms/g3p?logo=github&logoColor=lightgrey&color=yellow)](https://github.com/arminms/g3p/blob/main/LICENSE)
+[![Build and Test (Linux/macOS/Windows)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml)
+[![GitHub issues](https://img.shields.io/github/issues/arminms/g3p?logo=github&logoColor=lightgray&color=orange)](https://github.com/arminms/g3p/issues)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb)
 
 `g3p` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support into any C++ program.
 
