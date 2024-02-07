@@ -9,7 +9,7 @@
 [![GitHub License](https://img.shields.io/github/license/arminms/g3p?logo=github&logoColor=lightgrey&color=yellow)](https://github.com/arminms/g3p/blob/main/LICENSE)
 [![Build and Test (Linux/macOS/Windows)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml)
 [![GitHub issues](https://img.shields.io/github/issues/arminms/g3p?logo=github&logoColor=lightgray&color=orange)](https://github.com/arminms/g3p/issues)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
 
 `g3p` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support into any C++ program.
 
@@ -26,8 +26,8 @@ If you don't have Docker, an easier but slower way is to click on [![Binder](htt
 - 💥 No dependencies (except [gnuplot](http://www.gnuplot.info/))
 - 🖇️ Header-only (only one header file)
 - 🪶 Lightweight (~300 lines of code)
-- ⚡ Fast (all i/o implemented with C API and threaded)
-- 📊 Support displaying plots in *Jupyter C++ Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
+- ⚡ Fast (all i/o implemented with `C` API and `C++11` threading)
+- 📊 Support displaying plots in *Jupyter `C++` Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
 - 🏫 Easy to learn. If you know [gnuplot](http://www.gnuplot.info/), you're already set.
 - 📥 Easily integrates with existing libraries and code (via CMake configs)
 - ➡️ Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
@@ -41,7 +41,7 @@ If you don't have Docker, an easier but slower way is to click on [![Binder](htt
   - [CMake](#cmake)
     - [Embedded](#embedded)
 - [Rapid prototyping with *Jupyter* using *xeus-cling*](#rapid-prototyping-with-jupyter-using-xeus-cling)
-- [Example usage](#example-usage)
+- [Example](#example)
   - [C++ convention](#c-convention)
   - [C convention](#c-convention-1)
   - [Output](#output)
@@ -127,7 +127,7 @@ gp << "set samples" << 200 << "\n"
 ```
 <p align="center"><img src="artwork/xeus-cling.png"></p>
 
-## Example usage
+## Example
 ### C++ convention
 ```c++
 #include <g3p/gnuplot>
