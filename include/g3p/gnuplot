@@ -19,8 +19,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef _G3P_GNUPLOT_HPP_
-#define _G3P_GNUPLOT_HPP_
+#ifndef _G3P_GNUPLOT_
+#define _G3P_GNUPLOT_
 
 #include <fstream>
 #include <cstdio>
@@ -37,14 +37,16 @@
 #include <random>
 
 #ifdef __CLING__
+#   include <unordered_map>
 #   include <xcpp/xdisplay.hpp>
+#   include <xtl/xbase64.hpp>
 #   include <nlohmann/json.hpp>
 #endif //__CLING__
 
 namespace g3p
 {
 
-// -- isolated functions in a namespace ----------------------------------------
+// -- implementation details ---------------------------------------------------
 
     namespace detail
     {   inline std::string random_name(const int len = 8)
@@ -59,7 +61,6 @@ namespace g3p
                 tmp_s += alphanum[dist(rng)];
             return tmp_s;
         }
-
 
         inline std::string tmpnam()
         {   auto filename = std::filesystem::temp_directory_path().string();
@@ -107,6 +108,16 @@ namespace g3p
         {   while (tag != get_last_lines(filename, 1))
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
+
+#ifdef __CLING__
+        static std::unordered_map<std::string, std::string> mime
+        {   {   "gif"      , "image/gif"       }
+        ,   {   "jpeg"     , "image/jpeg"      }
+        ,   {   "png"      , "image/png"       }
+        ,   {   "pngcairo" , "image/png"       }
+        ,   {   "svg"      , "image/svg+xml"   }
+        };
+#endif //__CLING__
     }
 
 // -- simulated ostream manipulators -------------------------------------------
@@ -318,14 +329,27 @@ namespace g3p
     {   gp.sync();
         std::filesystem::path f(gp.plotfile());
         if (0 == std::filesystem::file_size(f))
-        {   gp("replot");
-            gp.sync();
-        }
-        std::ifstream fin(gp.plotfile(), std::ios::binary);
-        std::stringstream buffer;
-        buffer << fin.rdbuf();
+            gp("replot").sync();
         auto bundle = nlohmann::json::object();
-        bundle["image/svg+xml"] = buffer.str();
+        std::string term;
+        gp("print GPVAL_TERM") >> 1 >> term;
+        auto type = detail::mime.find(term);
+        if (type == detail::mime.end())
+            bundle["text/html"] =
+                "<table style=\"width:100%;\">"
+                "<tr><td style=\"background-color:#ffdddd;text-align:left;\">"
+                "<span style=\"color:#b22b31\">error: </span>"
+                "the terminal type is not supported by g3p"
+                "</td></tr></table>";
+        else
+        {   std::ifstream fin(gp.plotfile(), std::ios::binary);
+            std::stringstream buffer;
+            buffer << fin.rdbuf();
+            if ("svg" == term)
+                bundle[detail::mime[term]] = buffer.str();
+            else
+                bundle[detail::mime[term]] = xtl::base64encode(buffer.str());
+        }
         std::filesystem::remove(f);
         gp("set output \"%s\"", f.c_str());
         return bundle;
@@ -334,4 +358,4 @@ namespace g3p
 
 } // end g3p namespace
 
-#endif  // _G3P_GNUPLOT_HPP_
+#endif  // _G3P_GNUPLOT_
