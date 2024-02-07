@@ -111,10 +111,8 @@ mamba install xeus-cling -c conda-forge
 ```
 Next, you can use `mamba env list` command to find where the `cling` environment is installed and use the following commands to install `g3p` in the `cling` environment:
 ```bash
-git clone https://github.com/arminms/g3p.git
-cd g3p
-cmake -S . -B build && cmake --build build
-cmake --install build --prefix PATH_TO_CLING_ENV
+wget https://github.com/arminms/g3p/releases/latest/download/install.zip
+unzip install.zip -d <PATH_TO_CLING_ENV>
 ```
 Now you can launch *Jupyter* with `jupyter lab` command and test your setup by opening [`doc/tutorial.ipynb`](doc/tutorial.ipynb) or typing the following demo plot in a `C++17` notebook and pressing <kbd>shift</kbd>+<kbd>enter</kbd> in the last cell:
 ```c++
