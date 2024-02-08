@@ -27,7 +27,7 @@ If you don't have Docker, an easier but slower way is to click on [![Binder](htt
 - 🖇️ Header-only (only one header file)
 - 🪶 Lightweight (~300 lines of code)
 - ⚡ Fast (all i/o implemented with `C` API and `C++11` threading)
-- 📊 Support displaying plots in *Jupyter `C++` Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
+- 📊 Support embedding plots/animations in *Jupyter `C++` Notebooks* via [xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
 - 🏫 Easy to learn. If you know [gnuplot](http://www.gnuplot.info/), you're already set.
 - 📥 Easily integrates with existing libraries and code (via CMake configs)
 - ➡️ Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
