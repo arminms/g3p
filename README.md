@@ -13,13 +13,13 @@
 
 `g3p` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support into any C++ program.
 
-A unique feature of `g3p` is the ability to display plots in *Jupyter C++ Notebooks* backed by [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
+A unique feature of `g3p` is the ability to embed plots/animations in *Jupyter C++ Notebooks* backed by [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -t -i asobhani/g3p
 ```
 Then click on the provided URL to connect to the Jupyter Server in the container and open `tutorial.ipynb` notebook.
 
-If you don't have Docker, an easier but slower way is to click on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge to launch it on [Binder](https://mybinder.org). 
+If you don't have Docker, an easier but much slower way is to click on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge to launch it on [Binder](https://mybinder.org). 
 
 **Key features include:**
 - 🖥️ Multiplatform (Linux/macOS/Windows)
