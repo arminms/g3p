@@ -313,12 +313,12 @@ namespace g3p
         name += ' ';
         gp("%s<< EOD", name.c_str());
         auto it = std::begin(c);
-        for (typename T::size_type i = 0; i < c.size(); ++i, ++it)
-        {   if (sep && i && 0 == i % sep)
+        for (typename T::size_type i = 0; i < (c.size() / row); ++i)
+        {   if (sep && 0 == i % sep && i)
                 gp.endl();
-            if (0 == i % row)
-                gp.endl();
-            gp << *it;
+            for (typename T::size_type j = 0; j < row; ++j, ++it)
+                gp << *it;
+            gp.endl();
         }
         gp("\nEOD");
         return name;
