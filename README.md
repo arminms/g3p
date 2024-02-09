@@ -86,7 +86,6 @@ find_package(
 )
 if(NOT g3p_FOUND)
     message(STATUS "Fetching g3p library...")
-    include(FetchContent)
     FetchContent_Declare(
       g3p
       GIT_REPOSITORY https://github.com/arminms/g3p.git
