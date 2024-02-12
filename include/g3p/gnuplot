@@ -117,15 +117,25 @@ namespace g3p
         ,   {   "pngcairo" , "image/png"       }
         ,   {   "svg"      , "image/svg+xml"   }
         };
+
+        static const std::string error_prefix
+        {   "<table style='width:100%;'><tbody><tr>"
+            "<td style='font-family:monospace;background-color:#ffdddd;"
+            "text-align:left;'><pre style='background-color:#ffdddd;'>"
+            "<b><span style=color:#b22b31;>g3p/gnuplot error: </span>"
+        };
+        static const std::string error_suffix
+        {   "</b></pre></td></tr></tbody></table>"
+        };
 #endif //__CLING__
     }
 
 // -- simulated ostream manipulators -------------------------------------------
 
-    const std::string end("e\n");
-    const std::string endl("_G3P_ENDL_");
-    const std::string eod("EOD\n");
-    const std::string flush("_G3P_FLUSH_");
+    static const std::string end("e\n");
+    static const std::string endl("_G3P_ENDL_");
+    static const std::string eod("EOD\n");
+    static const std::string flush("_G3P_FLUSH_");
 
     class gnuplot
     {
@@ -326,32 +336,39 @@ namespace g3p
 
 #ifdef __CLING__
     nlohmann::json mime_bundle_repr(const gnuplot& gp)
-    {   gp.sync();
-        std::filesystem::path f(gp.plotfile());
-        if (0 == std::filesystem::file_size(f))
-            gp("replot").sync();
-        auto bundle = nlohmann::json::object();
+    {   int error_no;
         std::string term;
-        gp("print GPVAL_TERM") >> 1 >> term;
+        auto bundle = nlohmann::json::object();
+        gp("print GPVAL_ERRNO") >> 1 >> error_no;
+        gp("print GPVAL_TERM")  >> 1 >> term;
         auto type = detail::mime.find(term);
-        if (type == detail::mime.end())
+        if (error_no)
+        {   auto out = gp("print GPVAL_ERRMSG") >> 1;
+            auto error_msg = out.str();
             bundle["text/html"] =
-                "<table style=\"width:100%;\">"
-                "<tr><td style=\"background-color:#ffdddd;text-align:left;\">"
-                "<span style=\"color:#b22b31\">error: </span>"
-                "the terminal type is not supported by g3p"
-                "</td></tr></table>";
+                detail::error_prefix
+            +   error_msg
+            +   detail::error_suffix;
+        }
+        else if (type == detail::mime.end())
+            bundle["text/html"] =
+                detail::error_prefix
+            +   "the terminal type is not supported by g3p"
+            +   detail::error_suffix;
         else
-        {   std::ifstream fin(gp.plotfile(), std::ios::binary);
+        {   std::filesystem::path f(gp.plotfile());
+            if (0 == std::filesystem::file_size(f))
+                gp("replot").sync();
+            std::ifstream fin(gp.plotfile(), std::ios::binary);
             std::stringstream buffer;
             buffer << fin.rdbuf();
             if ("svg" == term)
                 bundle[detail::mime[term]] = buffer.str();
             else
                 bundle[detail::mime[term]] = xtl::base64encode(buffer.str());
+            std::filesystem::remove(f);
         }
-        std::filesystem::remove(f);
-        gp("set output \"%s\"", f.c_str());
+        gp("reset errors;set output \"%s\"", gp.plotfile().c_str());
         return bundle;
     }
 #endif //__CLING__
