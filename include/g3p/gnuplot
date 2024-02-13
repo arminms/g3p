@@ -50,15 +50,15 @@ namespace g3p
 
     namespace detail
     {   inline std::string random_name(const int len = 8)
-        {   static const char alphanum[] =
-                "1234567890"
+        {   static const char alpha[] =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 "abcdefghijklmnopqrstuvwxyz";
             std::string tmp_s;
             tmp_s.reserve(len);
             std::default_random_engine rng(std::random_device{}());
-            std::uniform_int_distribution<> dist(0, sizeof(alphanum) - 2);
+            std::uniform_int_distribution<> dist(0, sizeof(alpha) - 2);
             for (int i = 0; i < len; ++i)
-                tmp_s += alphanum[dist(rng)];
+                tmp_s += alpha[dist(rng)];
             return tmp_s;
         }
 
