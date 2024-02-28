@@ -26,4 +26,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}/g3p:latest
+        tags: ghcr.io/${{ github.repository }}/g3p:latest,
+              ghcr.io/${{ github.repository }}/g3p:${{ github.event.release.tag_name }}
