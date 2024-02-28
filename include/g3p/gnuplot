@@ -165,6 +165,9 @@ namespace g3p
 // -- member variables ---------------------------------------------------------
 
         FILE* _gp;
+        float _version;
+        std::string _patchlevel;
+        std::string _version_string;
         std::string _logfile;
 #ifdef __CLING__
         std::string _plotfile;
@@ -174,6 +177,7 @@ namespace g3p
         gnuplot(bool persist = true, std::string logfile = {})
         :   _gp(nullptr)
         ,   _logfile(logfile)
+        ,   _version(0)
         {   const char* gnuplot_path = std::getenv("G3P_GNUPLOT_PATH");
             std::string gnuplot_cmd = gnuplot_path ? gnuplot_path : "gnuplot";
             if (nullptr != gnuplot_path)
@@ -219,6 +223,38 @@ namespace g3p
 #endif //__CLING__
         }
 
+// -- version checking  --------------------------------------------------------
+
+        /// @brief returns the version of gnuplot excluding the patchlevel
+        /// @return a float representing the version of gnuplot
+        float version()
+        {   if (0 == _version)
+            {   fprintf(_gp, "print GPVAL_VERSION\n");
+                operator>> (1) >> _version;
+            }
+            return _version;
+        }
+
+        /// @brief returns the patchlevel of gnuplot
+        /// @return a string representing the patchlevel of gnuplot
+        std::string patchlevel()
+        {   if (_patchlevel.empty())
+            {   fprintf(_gp, "print GPVAL_PATCHLEVEL\n");
+                operator>> (1) >> _patchlevel;
+            }
+            return _patchlevel;
+        }
+
+        /// @brief returns the version and patchlevel of gnuplot
+        /// @return a string representing the version and patchlevel of gnuplot
+        std::string version_string()
+        {   if (_version_string.empty())
+            {   fprintf(_gp, "print GPVAL_VERSION\n");
+                operator>> (1) >> _version_string;
+            }
+            return _version_string + '.' + _patchlevel;
+        }
+
 // -- log file -----------------------------------------------------------------
 
         std::string log(size_t line_count = 0) const
@@ -229,12 +265,10 @@ namespace g3p
                 std::stringstream logstream;
                 logstream << fin.rdbuf();
                 log = logstream.str();
-                return log.erase(log.size() - 9, 9);
             }
             else
-            {   log = detail::get_last_lines(_logfile, line_count + 1);
-                return log.erase(log.size() - 9, 9);
-            }
+                log = detail::get_last_lines(_logfile, line_count + 1);
+            return log.erase(log.size() - 9, 9);
         }
 
 #ifdef __CLING__

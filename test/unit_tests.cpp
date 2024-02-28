@@ -42,6 +42,26 @@ TEST_CASE("log() function", "[gnuplot][log]")
     }
 }
 
+TEST_CASE("version checking", "[gnuplot][version]")
+{   g3p::gnuplot gp;
+    SECTION("version")
+    {   auto version = gp.version();
+        CHECK(version >= 1.0f);
+        CHECK(version  < 7.0f);
+    }
+    SECTION("patchlevel")
+    {   auto patchlevel = gp.patchlevel();
+        CHECK(patchlevel.size()  > 0);
+        CHECK(patchlevel.size() <= 3);
+    }
+    SECTION("version string")
+    {   auto v = gp.version_string();
+        CHECK(v.size() > 0);
+        CHECK(v.size() < 8);
+        CHECK(2 == std::count(v.cbegin(), v.cend(), '.'));
+    }
+}
+
 TEST_CASE("output stream operator", "[gnuplot]")
 {   g3p::gnuplot gp;
     SECTION("whole output")
