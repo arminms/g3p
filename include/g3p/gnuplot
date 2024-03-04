@@ -116,6 +116,7 @@ namespace g3p
         ,   {   "png"      , "image/png"       }
         ,   {   "pngcairo" , "image/png"       }
         ,   {   "svg"      , "image/svg+xml"   }
+        ,   {   "webp"     , "image/webp"      }
         };
 
         static const std::string error_prefix
@@ -128,7 +129,7 @@ namespace g3p
         {   "</b></pre></td></tr></tbody></table>"
         };
 #endif //__CLING__
-    }
+    } // end detail namespace
 
 // -- simulated ostream manipulators -------------------------------------------
 
@@ -174,6 +175,10 @@ namespace g3p
 #endif  //__CLING__
 
     public:
+        /// @brief default constructor
+        /// @param persist a boolean indicating whether the gnuplot instance
+        ///                should be persistent
+        /// @param logfile a string representing the name of the log file
         gnuplot(bool persist = true, std::string logfile = {})
         :   _gp(nullptr)
         ,   _logfile(logfile)
@@ -207,7 +212,7 @@ namespace g3p
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
-
+        /// @brief destructor
         ~gnuplot()
         {
 #ifdef _MSC_VER
@@ -234,7 +239,6 @@ namespace g3p
             }
             return _version;
         }
-
         /// @brief returns the patchlevel of gnuplot
         /// @return a string representing the patchlevel of gnuplot
         std::string patchlevel()
@@ -244,7 +248,6 @@ namespace g3p
             }
             return _patchlevel;
         }
-
         /// @brief returns the version and patchlevel of gnuplot
         /// @return a string representing the version and patchlevel of gnuplot
         std::string version_string()
@@ -257,6 +260,9 @@ namespace g3p
 
 // -- log file -----------------------------------------------------------------
 
+        /// @brief returns the content of the log file 
+        /// @param line_count number of lines to return from the end of the log file
+        /// @return a string representing the content of the log file
         std::string log(size_t line_count = 0) const
         {   sync();
             std::string log;
@@ -275,13 +281,17 @@ namespace g3p
 
 // -- plot file (cling only) ---------------------------------------------------
 
+        /// @brief returns the name of the plot file (only available in cling)
+        /// @return a string representing the name of the plot file
         std::string plotfile() const
         {   return _plotfile;   }
 
 #endif //__CLING__
 
-// -- sync helper function -------------------------------------------------
+// -- sync helper function -----------------------------------------------------
 
+        /// @brief waits for the gnuplot to finish processing the commands
+        /// @return a reference to the gnuplot object
         const gnuplot& sync() const
         {   auto tag = detail::random_name(8);
             fprintf(_gp, "print '%s'\n", tag.c_str());
@@ -291,11 +301,13 @@ namespace g3p
             t.join();
             return *this;
         }
-
 #ifdef __GNUG__
 #       pragma GCC diagnostic push
 #       pragma GCC diagnostic ignored "-Wformat-security"
 #endif //__GNUG__
+        /// @brief sends the arguments to the gnuplot instance
+        /// @param args arguments to be sent to the gnuplot instance
+        /// @return a reference to the gnuplot object
         template<typename... Args>
         const gnuplot& operator() (Args&&... args) const
         {   fprintf(_gp, std::forward<Args>(args)...);
@@ -305,13 +317,17 @@ namespace g3p
 #ifdef __GNUG__
 #       pragma GCC diagnostic pop
 #endif //__GNUG__
-
+        /// @brief sends the argument to the gnuplot instance
+        /// @param arg argument to be sent to the gnuplot instance
+        /// @return a reference to the gnuplot object
         template<typename T>
         const gnuplot& operator<< (T arg) const
         {   ostream_opr_impl(arg, std::is_compound<T>());
             return *this;
         }
-
+        /// @brief reads the output of the gnuplot instance
+        /// @param line_count number of lines to read from the end of the output
+        /// @return a stringstream containing the output of the gnuplot instance
         std::istringstream operator>> (size_t line_count) const
         {   sync();
             auto line = detail::get_last_lines(_logfile, line_count + 1);
@@ -319,23 +335,30 @@ namespace g3p
             std::istringstream iss{line};
             return iss;
         }
-
+        /// @brief sends an end-of-line to the gnuplot instance
+        /// @return a reference to the gnuplot object
         const gnuplot& endl() const
         {   fprintf(_gp, "\n");
             return *this;
         }
-
+        /// @brief sends an end-of-data to the gnuplot instance
+        /// @return a reference to the gnuplot object
         const gnuplot& end() const
         {   fprintf(_gp, "e\n");
             return *this;
         }
-
+        /// @brief sends a flush command to the gnuplot instance
+        /// @return a reference to the gnuplot object
         const gnuplot& flush() const
         {   fflush(_gp);
             return *this;
         }
     };
-
+    /// @brief returns a data block for the gnuplot instance
+    /// @tparam T type of the object to be converted to a data block
+    /// @param gp reference to the gnuplot instance
+    /// @param c reference to the object to be converted to a data block
+    /// @return a string representing the name of the data block 
     template<typename T>
     inline std::string make_data_block(const gnuplot& gp, const T& c)
     {   std::string name{" $"};
@@ -345,6 +368,13 @@ namespace g3p
             ("%s\nEOD", c(gp).c_str());
         return name;
     }
+    /// @brief returns a data block for the gnuplot instance
+    /// @tparam T type of the container to be converted to a data block
+    /// @param gp reference to the gnuplot instance
+    /// @param c reference to the container to be converted to a data block
+    /// @param row number of elements in each row
+    /// @param sep number of rows to separate the data block
+    /// @return a string representing the name of the data block
     template<typename T>
     inline std::string make_data_block
     (   const gnuplot& gp
