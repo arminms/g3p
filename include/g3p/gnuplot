@@ -374,13 +374,13 @@ namespace g3p
     /// @param c reference to the container to be converted to a data block
     /// @param row number of elements in each row
     /// @param sep number of rows to separate the data block
-    /// @return a string representing the name of the data block
+    /// @return a string representing the name of the data block (default = 0)
     template<typename T>
     inline std::string make_data_block
     (   const gnuplot& gp
     ,   const T& c
     ,   typename T::size_type row 
-    ,   typename T::size_type sep = 0 // separator
+    ,   typename T::size_type sep = 0
     )
     {   std::string name{" $"};
         name += detail::random_name(8);
