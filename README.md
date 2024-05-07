@@ -120,7 +120,7 @@ Now you can launch *Jupyter* with `jupyter lab` command and test your setup by o
 g3p::gnuplot gp;
 gp << "set samples" << 200 << "\n"
    << "set style data points\n"
-   << "plot [-10:10] sin(x),atan(x),cos(atan(x))\n:
+   << "plot [-10:10] sin(x),atan(x),cos(atan(x))\n"
 ```
 <p align="center"><img src="artwork/xeus-cling.png"></p>
 
