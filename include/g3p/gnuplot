@@ -38,7 +38,7 @@
 
 #ifdef __CLING__
 #   include <unordered_map>
-#   include <xcpp/xdisplay.hpp>
+// #   include <xcpp/xdisplay.hpp>
 #   include <xtl/xbase64.hpp>
 #   include <nlohmann/json.hpp>
 #endif //__CLING__
@@ -354,6 +354,7 @@ namespace g3p
             return *this;
         }
     };
+
     /// @brief returns a data block for the gnuplot instance
     /// @tparam T type of the object to be converted to a data block
     /// @param gp reference to the gnuplot instance
@@ -434,6 +435,22 @@ namespace g3p
         }
         gp("reset errors;set output \"%s\"", gp.plotfile().c_str());
         return bundle;
+    }
+    /// @brief displays the gnuplot in the notebook
+    /// @param gp reference to the gnuplot instance
+    /// @param clear_output a boolean indicating whether the output should be cleared
+    inline
+    void display
+    (   const gnuplot& gp
+    ,   bool clear_ouput = true
+    )
+    {   if (clear_ouput)
+            xeus::get_interpreter().clear_output(true);
+        xeus::get_interpreter().display_data
+        (   mime_bundle_repr(gp)
+        ,   nlohmann::json::object()
+        ,   nlohmann::json::object()
+        );
     }
 #endif //__CLING__
 
