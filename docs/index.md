@@ -53,3 +53,4 @@ g3p supports embedding animated plots into [Jupyter](wiki:Project_Jupyter) noteb
 - ➡️ Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
 - 🔀 Support both C (`%d`,`%f`, ...) and C++ (`<<`) conventions for passing arguments to <wiki:Gnuplot>
 - 🧪 Include [Catch2](https://github.com/catchorg/Catch2) unit tests
+- 📖 Well documented

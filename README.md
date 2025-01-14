@@ -33,7 +33,7 @@ If you don't have Docker, an easier but much slower way is to click on [![Binder
 - ➡️ Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
 - 🔀 Support both C (`%d`,`%f`, ...) and C++ (`<<`) conventions for passing arguments to [gnuplot](http://www.gnuplot.info/)
 - 🧪 Include [Catch2](https://github.com/catchorg/Catch2) unit tests
-<!-- - Well documented -->
+- 📖 Well documented
 
 ## Table of contents
 - [Requirements](#requirements)
