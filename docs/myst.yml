@@ -9,6 +9,7 @@ project:
     - c++
     - plotting
   github: https://github.com/arminms/g3p
+  jupyter: true
   license:
     code: MIT
     content: CC-BY-4.0
