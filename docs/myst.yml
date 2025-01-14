@@ -1,0 +1,29 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 32515b4b-1917-40eb-badc-c33afddfa0c3
+  # title: g3p Guide
+  description: Modern C++ interface library for gnuplot
+  keywords:
+    - gnuplot
+    - c++
+    - plotting
+  github: https://github.com/arminms/g3p
+  license:
+    code: MIT
+    content: CC-BY-4.0
+  references:
+    cmake: https://cmake.org/cmake/help/latest/
+    jupyterbook: https://jupyterbook.org/en/stable/
+    xeus-cling: https://xeus-cling.readthedocs.io/en/latest/
+    mamba: https://mamba.readthedocs.io/en/latest/
+  abbreviations:
+    g3p: GnuPlot Plus Plus
+
+  # To autogenerate a Table of Contents, run "myst init --write-toc"
+site:
+  template: book-theme
+  # hide_toc: true
+  options:
+  #   favicon: favicon.ico
+    logo: images/g3p_logo.svg
