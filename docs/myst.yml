@@ -2,7 +2,8 @@
 version: 1
 project:
   id: 32515b4b-1917-40eb-badc-c33afddfa0c3
-  # title: g3p Guide
+  title: g3p Guide
+  subject: g3p Guide
   description: Modern C++ interface library for gnuplot
   keywords:
     - gnuplot
@@ -14,7 +15,9 @@ project:
     code: MIT
     content: CC-BY-4.0
   references:
+    cling: https://cling.readthedocs.io/en/latest/
     cmake: https://cmake.org/cmake/help/latest/
+    jupyter: https://docs.jupyter.org/en/latest/
     jupyterbook: https://jupyterbook.org/en/stable/
     xeus-cling: https://xeus-cling.readthedocs.io/en/latest/
     mamba: https://mamba.readthedocs.io/en/latest/
@@ -22,9 +25,19 @@ project:
     g3p: GnuPlot Plus Plus
 
   # To autogenerate a Table of Contents, run "myst init --write-toc"
+  toc:
+    - file: index.md
+    - file: quickstart.md
+    - title: Tutorials
+      children:
+        - file: 01_the_basics.md
+        - file: 02_embedding_plot_data.md
+
+  # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
   template: book-theme
   # hide_toc: true
   options:
   #   favicon: favicon.ico
-    logo: images/g3p_logo.svg
+    logo: images/g3p_logo.png
+    # logo_dark: images/g3p_logo_dark.svg
