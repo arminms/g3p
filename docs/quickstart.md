@@ -1,5 +1,6 @@
 ---
 title: Start using g3p
+subject: g3p Quickstart
 subtitle: CMake integration and rapid prototyping with Jupyter
 short_title: Get Started
 description: g3p is available through GitHub.
@@ -7,7 +8,7 @@ kernelspec:
   name: xcpp17
   display_name: C++17
 ---
-
+---
 (reuirements)=
 ## Requirements
 
@@ -39,7 +40,7 @@ cmake --install build
 
 ::::{attention} Installing into non system folders 🖥️
 
-On <wiki:Linux>/<wiki:macOS>, the last command  must be preceded by `sudo`, and on <wiki:Windows> must be run as an administrator unless you add `--prefix` option at the end to change the default installation path to a none system folder (e.g. `cmake --install build --prefix ~/.local`).
+The last command on <wiki:Linux> or <wiki:macOS> must be preceded by `sudo`, and on <wiki:Windows> must be run as an administrator unless you add `--prefix` option at the end to change the default installation path to a none system folder (e.g. `cmake --install build --prefix ~/.local`).
 ::::
 
 ::::{hint} Running unit tests 🧪
@@ -92,7 +93,7 @@ A cool feature of g3p is the ability to embed plots in [Jupyter](wiki:Project_Ju
 ```
 ---
 #### Installing g3p in a xeus-cling environment
-The easiest way to install <xref:xeus-cling> is to create an environment named `cling` using <xref:mamba#installation/mamba-installation>:
+The easiest way to install <xref:xeus-cling> is to create an environment named `cling` using [Mamba](xref:mamba#installation/mamba-installation):
 ```bash
 mamba create -n cling
 mamba activate cling
