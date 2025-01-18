@@ -7,7 +7,11 @@ kernelspec:
   name: xcpp17
   display_name: C++17
 ---
+
+# The basics
+
 ---
+
 (header_file)=
 ## The header file
 
@@ -56,7 +60,7 @@ g3p::gnuplot gp;
 (conventions)=
 ## C and C++ conventions
 
-There are two ways to send string literals (e.g. `gnuplot` commands)  and variables to a `gnuplot` instance: `C` and `C++` conventions. You can even mix and match them.
+There are two ways to send string literals (e.g. `gnuplot` commands)  and variables to a `g3p::gnuplot` instance: `C` and `C++` conventions. You can even mix and match them.
 
 [`Gnuplot`](http://www.gnuplot.info) comes with lots of demos that you can find them [here](http://gnuplot.info/demos). For our first plot we use almost a verbatim copy of the [Simple Plots](https://gnuplot.sourceforge.net/demo_5.4/simple.html) demo:
 
