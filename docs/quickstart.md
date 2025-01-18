@@ -8,8 +8,11 @@ kernelspec:
   name: xcpp17
   display_name: C++17
 ---
+
+# Start using g3p
+
 ---
-(reuirements)=
+
 ## Requirements
 
 - <wiki:Gnuplot> (4 or higher) must be already installed and added to the `$PATH` environment variable
@@ -92,21 +95,29 @@ A cool feature of g3p is the ability to embed plots in [Jupyter](wiki:Project_Ju
 :align: center
 ```
 ---
+
 #### Installing g3p in a xeus-cling environment
-The easiest way to install <xref:xeus-cling> is to create an environment named `cling` using [Mamba](xref:mamba#installation/mamba-installation):
+
+The easiest way to install [xeus-cling](xref:xeus-cling) is to create an environment named `cling` using [Mamba](xref:mamba#installation/mamba-installation):
+
 ```bash
 mamba create -n cling
 mamba activate cling
 ```
-Then you can install <xref:xeus-cling> in this environment and its dependencies:
+
+Then you can install [xeus-cling](xref:xeus-cling) in this environment and its dependencies:
+
 ```bash
 mamba install xeus-cling -c conda-forge
 ```
+
 Next, you can use `mamba env list` command to find where the `cling` environment is installed and use the following commands to install g3p in the `cling` environment:
+
 ```bash
 wget https://github.com/arminms/g3p/releases/latest/download/install.zip
 unzip install.zip -d <PATH_TO_CLING_ENV>
 ```
+
 Now you can launch *Jupyter* with `jupyter lab` command and test your setup by copy/paste the following demo plot in a `C++17` notebook and pressing {kbd}`Shift`+{kbd}`Enter` in the last cell:
 
 ```{code-cell} cpp
