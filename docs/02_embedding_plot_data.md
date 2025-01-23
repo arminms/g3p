@@ -17,7 +17,7 @@ So far, we've used functions defined in <wiki:Gnuplot> for plotting. While it's 
 (inline_data)=
 ## Inline data
 
-If the *special filename* `'-'` appears in a plot command, then the lines immediately following the plot command are interpreted as *inline data*. To demonstrate that, let's first define a function template.
+If the *special filename* `'-'` appears in a plot command, then the lines immediately following the plot command are interpreted as *inline data*. To demonstrate that, let's first define a function template:
 
 :::{dropdown} Matlab's Peaks
 :label: matlab_peaks
@@ -40,12 +40,13 @@ Here's the function template for the above equation:
 template<typename T = float>
 auto matlab_peaks(T x1, T x2) -> T
 {   return
-        (   T(3)
-        *   std::pow(T(1) - x1, T(2))
-        *   std::exp(-std::pow(x1, T(2)) - std::pow(x2 + T(1), T(2)))
-        -   (T(10) * (x1 / T(5) - std::pow(x1, T(3)) - std::pow(x2, T(5))) *  std::exp(-std::pow(x1, T(2)) - std::pow(x2, T(2))))
-        -   (T(1) / T(3) * std::exp(-std::pow(x1 + T(1), T(2)) - std::pow(x2, T(2))))
-        );
+    (   T(3)
+    *   std::pow(T(1) - x1, T(2))
+    *   std::exp(-std::pow(x1, T(2)) - std::pow(x2 + T(1), T(2)))
+    -   (T(10) * (x1 / T(5) - std::pow(x1, T(3)) - std::pow(x2, T(5)))
+    *   std::exp(-std::pow(x1, T(2)) - std::pow(x2, T(2))))
+    -   (T(1) / T(3) * std::exp(-std::pow(x1 + T(1), T(2)) - std::pow(x2, T(2))))
+    );
 }
 ```
 
@@ -119,10 +120,10 @@ auto peaks = make_data_block(gp, grid, 3, 40);
 
 // now we can use it in a multiplot
 // NOTE: we mix and match C and C++ conventions here...
-gp  ("set term pngcairo size 600,1000")
-    ("set multiplot layout 2,1 spacing 0,0")
-    << "splot"
-    << peaks // <-- using peaks once
+gp  ("set term pngcairo size 600,1000")      // make some space for the 2nd plot
+    ("set multiplot layout 2,1 spacing 0,0") // switch to multiplot
+    << "splot" // start plotting as the rest has been already set
+    << peaks   // <-- using peaks once
     << "with lines lc 'black' lw 0.2\n";
 gp  ("set view map")
     ("set contour")
