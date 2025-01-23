@@ -32,7 +32,7 @@ At the begining of your code and set the necessary switches to enable `C++17` (e
 (cmake)=
 ### CMake
 
-Alternatively, you can use <wiki:CMake> to install g3p on your computer with the following commands and then including `<g3p/gnuplot>` in your program:
+Alternatively, you can use <wiki:CMake> 3.19+ to install g3p on your computer with the following commands and then including `<g3p/gnuplot>` in your program:
 
 ```bash
 git clone https://github.com/arminms/g3p.git
@@ -81,9 +81,7 @@ if(NOT g3p_FOUND)
 endif()
 ```
 
-The above approach first tries to find an installed version of g3p and if not
-then tries to fetch it from the repository. You can find a complete
-example of the above approach in the [`example`](https://github.com/arminms/g3p/blob/main/example/CMakeLists.txt#L5-L19) folder.
+The above approach first tries to find an installed version of g3p and if it cannot then tries to fetch it from the repository. You can find a complete example of the above approach in the [`example`](https://github.com/arminms/g3p/blob/main/example/CMakeLists.txt#L5-L19) folder.
 ::::
 
 (jupyter-rapid-prototyping)=
@@ -129,3 +127,5 @@ gp << "set samples" << 200 << "\n"
    << "set style data points\n"
    << "plot [-10:10] sin(x),atan(x),cos(atan(x))\n"
 ```
+
+![](xref:jupyter-xc#build_virtual_env)

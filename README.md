@@ -68,9 +68,7 @@ cmake --install build
 *The last command on Linux/macOS must be preceded by `sudo`, and on Windows must be run as an administrator unless you add `--prefix` option at the end to change the default installation path to a none system folder (e.g. `cmake --install build --prefix ~/.local`).*
 
 ### CMake
-`g3p` exports a (namespaced) CMake target (`g3p::g3p`) and also CMake config
-scripts for downstream applications. This means that if `g3p` has been installed
-on a system, it should be enough to do:
+You need CMake 3.19+ for this. `g3p` exports a (namespaced) CMake target (`g3p::g3p`) and also CMake config scripts for downstream applications. This means that if `g3p` has been installed on a system, it should be enough to do:
 ```cmake
 find_package(g3p REQUIRED)
 add_executable(test test.cpp)
