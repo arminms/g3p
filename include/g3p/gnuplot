@@ -255,7 +255,7 @@ namespace g3p
             {   fprintf(_gp, "print GPVAL_VERSION\n");
                 operator>> (1) >> _version_string;
             }
-            return _version_string + '.' + _patchlevel;
+            return _version_string + '.' + patchlevel();
         }
 
 // -- log file -----------------------------------------------------------------
@@ -285,15 +285,12 @@ namespace g3p
         /// @return a string representing the name of the plot file
         std::string plotfile() const
         {   return _plotfile;   }
-        // /// @brief finalizes the plot file for xw::image widget (only available in cling)
-        // /// @param plot reference to the xw::image widget
-        // void finalize(xw::image plot) const
-        // {   sync();
-        //     plot.value = xw::read_file(_plotfile);
-        //     std::filesystem::path f(_plotfile);
-        //     std::filesystem::remove(f);
-        //     fprintf(_gp, "reset errors;set output \"%s\"", _plotfile.c_str());
-        // }
+        /// @brief finalizes the plot file for xw::image widget (only available in cling)
+        void finalize() const
+        {   std::filesystem::path f(_plotfile);
+            std::filesystem::remove(f);
+            fprintf(_gp, "reset errors;set output \"%s\"", _plotfile.c_str());
+        }
 
 #endif //__CLING__
 
