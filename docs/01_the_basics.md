@@ -57,12 +57,25 @@ Now you can start with a `gnuplot` instance that is defined in `g3p` namespace. 
 g3p::gnuplot gp;
 ```
 
+:::::{aside}
+
+::::{seealso} Start learning Gnuplot 📚
+:class: dropdown
+:open:
+
+Here are some good resources to start with:
+- [Gnuplot on-line documentation](http://gnuplot.info/docs_6.0/gnuplot6.html)
+- [Zipped Jupyter notebooks](https://alogus.com/g5script/servefile/JupyterVersions.zip/dl/) from [Gnuplot 5 book](https://alogus.com/g5script/gnuplot5/)
+- [Gnuplotting](https://gnuplotting.org/)
+::::
+:::::
+
 (conventions)=
 ## C and C++ conventions
 
-There are two ways to send string literals (e.g. `gnuplot` commands)  and variables to a `g3p::gnuplot` instance: `C` and `C++` conventions. You can even mix and match them.
+There are two ways to send string literals (e.g. `gnuplot` commands)  and variables to a `g3p::gnuplot` instance: `C` and `C++` conventions. You can even [mix and match](#datablock_plot) them.
 
-[`Gnuplot`](http://www.gnuplot.info) comes with lots of demos that you can find them [here](http://gnuplot.info/demos). For our first plot we use almost a verbatim copy of the [Simple Plots](https://gnuplot.sourceforge.net/demo_5.4/simple.html) demo:
+[`Gnuplot`](http://www.gnuplot.info) comes with lots of demos that you can find them [here](http://gnuplot.info/demos). For our first plot we use almost a verbatim copy of the [Simple Plots](https://gnuplot.sourceforge.net/demo_5.4/simple.html) demo. Here are the g3p versions using both conventions along with the original <wiki:Gnuplot> version for the sake of comparisons:
 
 ::::{tab-set}
 :label: conventions_tab
@@ -95,6 +108,22 @@ gp << "set title 'Simple Plots (" << count << " points )' font ',20'\n"
 
 :::
 
+:::{tab-item} gnuplot
+
+```{code-cell} Gnuplot
+:label: gnuplot_version
+:tags: [skip-execution]
+
+set title "Simple Plots ( 200 Points )" font ",20"
+set key left box
+set samples 200
+set style data points
+
+plot [-10:10] sin(x),atan(x),cos(atan(x))
+```
+![](#c_convention)
+:::
+
 ::::
 
 ::::{important} Displaying the plot 📈
@@ -120,7 +149,7 @@ g3p::display(gp);
 (newline)=
 ## Newline
 
-As you may noticed in the above examples, one important difference between `C++` and `C` *conventions* is that a newline character will be added automatically at the end of the string literals for the latter. In g3p, there are various ways to send a newline to a `gnuplot` instance:
+As you may noticed in the above examples, one important difference between `C++` and `C` *conventions* is that a newline character will be added automatically at the end of a string literal for the latter. In g3p, there are various ways to send a newline to a `g3p::gnuplot` instance:
 
 - **Implicit**
   - String literal in parenthesis (i.e. overloaded function operator): `gp("...")`
@@ -131,7 +160,7 @@ As you may noticed in the above examples, one important difference between `C++`
 
 ::::{attention} Don't use single quotes 🚫
 
-Unlike <wiki:C++> streams, single quotes are not valid. So, `gp << '\n'` doesn't compile:
+Unlike <wiki:C++> streams, single quotes are not valid for sending characters and you should use double quotes. So, `gp << '\n'` doesn't compile:
 
 ```{code-cell} cpp
 :label: single_quotes
