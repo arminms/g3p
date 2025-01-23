@@ -1,15 +1,15 @@
 ---
-title: Start using g3p
-subject: g3p Quickstart
+title: Start using G3P
+subject: G3P Quickstart
 subtitle: CMake integration and rapid prototyping with Jupyter
 short_title: Get Started
-description: g3p is available through GitHub.
+description: G3P is available through GitHub.
 kernelspec:
   name: xcpp17
   display_name: C++17
 ---
 
-# Start using g3p
+# Start using G3P
 
 ---
 
@@ -32,7 +32,7 @@ At the begining of your code and set the necessary switches to enable `C++17` (e
 (cmake)=
 ### CMake
 
-Alternatively, you can use <wiki:CMake> 3.19+ to install g3p on your computer with the following commands and then including `<g3p/gnuplot>` in your program:
+Alternatively, you can use <wiki:CMake> 3.19+ to install G3P on your computer with the following commands and then including `<g3p/gnuplot>` in your program:
 
 ```bash
 git clone https://github.com/arminms/g3p.git
@@ -56,7 +56,7 @@ cmake --build build -t test
 ```
 ::::
 
-g3p exports a (namespaced) <wiki:CMake> target (`g3p::g3p`) and also <wiki:CMake> config scripts for downstream applications. This means that if g3p has been installed on a system, in case your project also relies on <wiki:CMake>, a better option is to use [`find_package()`](xref:cmake#command/find_package) in project's `CMakeLists.txt` as shown below:
+G3P exports a (namespaced) <wiki:CMake> target (`g3p::g3p`) and also <wiki:CMake> config scripts for downstream applications. This means that if G3P has been installed on a system, in case your project also relies on <wiki:CMake>, a better option is to use [`find_package()`](xref:cmake#command/find_package) in project's `CMakeLists.txt` as shown below:
 
 ```cmake
 find_package(g3p REQUIRED)
@@ -81,12 +81,12 @@ if(NOT g3p_FOUND)
 endif()
 ```
 
-The above approach first tries to find an installed version of g3p and if it cannot then tries to fetch it from the repository. You can find a complete example of the above approach in the [`example`](https://github.com/arminms/g3p/blob/main/example/CMakeLists.txt#L5-L19) folder.
+The above approach first tries to find an installed version of G3P and if it cannot then tries to fetch it from the repository. You can find a complete example of the above approach in the [`example`](https://github.com/arminms/g3p/blob/main/example/CMakeLists.txt#L5-L19) folder.
 ::::
 
 (jupyter-rapid-prototyping)=
 ### Rapid prototyping with *Jupyter*
-A cool feature of g3p is the ability to embed plots in [Jupyter](wiki:Project_Jupyter) notebooks backed by <xref:xeus-cling> kernel for rapid prototyping:
+A cool feature of G3P is the ability to embed plots in [Jupyter](wiki:Project_Jupyter) notebooks backed by <xref:xeus-cling> kernel for rapid prototyping:
 
 ```{image} ./images/xeus-cling.png
 :label: xeus-cling
@@ -94,7 +94,7 @@ A cool feature of g3p is the ability to embed plots in [Jupyter](wiki:Project_Ju
 ```
 ---
 
-#### Installing g3p in a xeus-cling environment
+#### Installing G3P in a xeus-cling environment
 
 The easiest way to install [xeus-cling](xref:xeus-cling) is to create an environment named `cling` using [Mamba](xref:mamba#installation/mamba-installation):
 
@@ -109,7 +109,7 @@ Then you can install [xeus-cling](xref:xeus-cling) in this environment and its d
 mamba install xeus-cling -c conda-forge
 ```
 
-Next, you can use `mamba env list` command to find where the `cling` environment is installed and use the following commands to install g3p in the `cling` environment:
+Next, you can use `mamba env list` command to find where the `cling` environment is installed and use the following commands to install G3P in the `cling` environment:
 
 ```bash
 wget https://github.com/arminms/g3p/releases/latest/download/install.zip

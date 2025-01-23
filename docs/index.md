@@ -1,7 +1,7 @@
 ---
-title: g3p
+title: G3P
 subtitle: The Modern C++ interface to Gnuplot
-description: g3p is a header-only Modern C++ interface library for gnuplot
+description: G3P is a header-only Modern C++ interface library for gnuplot
 ---
 
 [![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
@@ -14,7 +14,7 @@ description: g3p is a header-only Modern C++ interface library for gnuplot
 
 :::{grid-item}
 
-g3p is a tiny but mighty <wiki:header-only> modern <wiki:C++> interface library for <wiki:Gnuplot>.
+G3P is a tiny but mighty <wiki:header-only> modern <wiki:C++> interface library for <wiki:Gnuplot>.
 
 It's the most natural and intuitive way of adding <wiki:Gnuplot> support into any <wiki:C++> program.
 
@@ -33,16 +33,16 @@ It's also one of few <wiki:C++> libraries to support embedding of plots in [Jupy
 
 :::::{aside}
 
-::::{important} Try g3p with Docker
+::::{important} Try G3P with Docker
 :class: dropdown
 
-If you have [Docker](wiki:Docker_(software)), you can start tinkering with g3p by running the prebuilt container:
+If you have [Docker](wiki:Docker_(software)), you can start tinkering with G3P by running the prebuilt container:
 ```bash
 docker run -p 8888:8888 -it --rm asobhani/g3p
 ```
 ::::
 
-:::::{seealso} Try g3p on Binder
+:::::{seealso} Try G3P on Binder
 :class: dropdown
 
 An easier but slower way is to click the *launch binder* badge below to launch it on [Binder](wiki:Binder_Project) :
@@ -63,7 +63,7 @@ _Be advised sometimes it takes several minutes to start!_
 
 ---
 
-## Cool g3p Features 🪄
+## Cool G3P Features 🪄
 
 ::::{grid} 1 1 2 2
 
@@ -71,14 +71,14 @@ _Be advised sometimes it takes several minutes to start!_
 :header: 📊 [Rapid prototyping with Jupyter](#jupyter-rapid-prototyping)
 :footer: [Learn more »](#jupyter-rapid-prototyping)
 
-Using g3p you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on <xref:xeus-cling> kernel.
+Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on <xref:xeus-cling> kernel.
 :::
 
 :::{card}
 :header: 🏃 [Animated plots](#sine_wave)
 :footer: [Learn more »](#gif_animations)
 
-g3p supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
+G3P supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
 :::
 
 :::{card}
@@ -92,7 +92,7 @@ Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) c
 :header: 📈 [Interactive plots in Jupyter](#sine_wave_interactive)
 :footer: [Learn more »](#interactive_plots)
 
-g3p in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
+G3P in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
 :::
 
 ::::
@@ -102,7 +102,7 @@ g3p in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can
 :class: dropdown
 :open:
 
-> The initial idea about g3p sparked in my mind back in 2022 after attending a SHARCNET's General Interest webinar by my colleague Ge Baolai about [realtime display with Gnuplot](https://youtu.be/A9YPibAEXEE)
+> The initial idea about G3P sparked in my mind back in 2022 after attending a SHARCNET's General Interest webinar by my colleague Ge Baolai about [realtime display with Gnuplot](https://youtu.be/A9YPibAEXEE)
 >
 > -- Armin Sobhani
 

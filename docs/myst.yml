@@ -2,8 +2,8 @@
 version: 1
 project:
   id: 32515b4b-1917-40eb-badc-c33afddfa0c3
-  title: g3p Guide
-  subject: g3p Guide
+  title: G3P Guide
+  subject: G3P Guide
   description: Modern C++ interface library for gnuplot
   keywords:
     - gnuplot
@@ -25,7 +25,7 @@ project:
     mamba: https://mamba.readthedocs.io/en/latest
     jupyter-xc: https://armin.sobhani.me/xeus-cling-jupyter
   abbreviations:
-    g3p: GnuPlot Plus Plus
+    G3P: GnuPlot Plus Plus
 
   # To autogenerate a Table of Contents, run "myst init --write-toc"
   toc:

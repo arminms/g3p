@@ -1,8 +1,8 @@
 ---
 title: The basics
 subtitle: C and C++ conventions
-subject: g3p Quickstart Tutorial
-description: Basic steps and concepts to work with g3p.
+subject: G3P Quickstart Tutorial
+description: Basic steps and concepts to work with G3P.
 kernelspec:
   name: xcpp17
   display_name: C++17
@@ -15,7 +15,7 @@ kernelspec:
 (header_file)=
 ## The header file
 
-The whole g3p library implemented as a single header file that you have to include it once in your <wiki:C++> code:
+The whole G3P library implemented as a single header file that you have to include it once in your <wiki:C++> code:
 
 ```{code-cell} cpp
 
@@ -25,7 +25,7 @@ The whole g3p library implemented as a single header file that you have to inclu
 :::::{seealso} `cling` include paths
 :class: dropdown
 
-If g3p is not installed in a standard folder for headers, you can add it to the [cling include paths](xref:cling#chapters/grammar) using one of the following methods:
+If G3P is not installed in a standard folder for headers, you can add it to the [cling include paths](xref:cling#chapters/grammar) using one of the following methods:
 
 ::::{tab-set}
 :::{tab-item} #pragma
@@ -75,7 +75,7 @@ Here are some good resources to start with:
 
 There are two ways to send string literals (e.g. `gnuplot` commands)  and variables to a `g3p::gnuplot` instance: `C` and `C++` conventions. You can even [mix and match](#datablock_plot) them.
 
-[`Gnuplot`](http://www.gnuplot.info) comes with lots of demos that you can find them [here](http://gnuplot.info/demos). For our first plot we use almost a verbatim copy of the [Simple Plots](https://gnuplot.sourceforge.net/demo_5.4/simple.html) demo. Here are the g3p versions using both conventions along with the original <wiki:Gnuplot> version for the sake of comparisons:
+[`Gnuplot`](http://www.gnuplot.info) comes with lots of demos that you can find them [here](http://gnuplot.info/demos). For our first plot we use almost a verbatim copy of the [Simple Plots](https://gnuplot.sourceforge.net/demo_5.4/simple.html) demo. Here are the G3P versions using both conventions along with the original <wiki:Gnuplot> version for the sake of comparisons:
 
 ::::{tab-set}
 :label: conventions_tab
@@ -149,7 +149,7 @@ g3p::display(gp);
 (newline)=
 ## Newline
 
-As you may noticed in the above examples, one important difference between `C++` and `C` *conventions* is that a newline character will be added automatically at the end of a string literal for the latter. In g3p, there are various ways to send a newline to a `g3p::gnuplot` instance:
+As you may noticed in the above examples, one important difference between `C++` and `C` *conventions* is that a newline character will be added automatically at the end of a string literal for the latter. In G3P, there are various ways to send a newline to a `g3p::gnuplot` instance:
 
 - **Implicit**
   - String literal in parenthesis (i.e. overloaded function operator): `gp("...")`
@@ -194,7 +194,7 @@ gp << "plot [-pi/2:pi] cos(x),-(sin(x) > sin(x+1) ? sin(x) : sin(x+1))"
 (flush)=
 ## Flush
 
-g3p uses *buffered i/o* to communicate with `g3p::gnuplot` instances. That means the plotting commands you use in your `C/C++` code are not necessarily received by the `g3p::gnuplot` instance at any moment unless you ensure the buffer is flushed. That's particularly important after executing [`plot`](http://gnuplot.info/docs_5.5/loc7782.html), [`splot`](http://gnuplot.info/docs_5.5/loc17814.html) or [`replot`](http://gnuplot.info/docs_5.5/loc9853.html) commands to ensure the plot is displayed. Like [newline](#newline), there are various ways in g3p to flush the buffers:
+G3P uses *buffered i/o* to communicate with `g3p::gnuplot` instances. That means the plotting commands you use in your `C/C++` code are not necessarily received by the `g3p::gnuplot` instance at any moment unless you ensure the buffer is flushed. That's particularly important after executing [`plot`](http://gnuplot.info/docs_5.5/loc7782.html), [`splot`](http://gnuplot.info/docs_5.5/loc17814.html) or [`replot`](http://gnuplot.info/docs_5.5/loc9853.html) commands to ensure the plot is displayed. Like [newline](#newline), there are various ways in G3P to flush the buffers:
 
 - **Implicit** (available only in [Jupyter Notebooks](xref:jupyter#what-is-a-notebook))
   - Omitting semicolon from a `g3p::gnuplot` instance as the last element of a cell or using `g3p::display()`
