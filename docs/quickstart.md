@@ -1,6 +1,6 @@
 ---
 title: Start using G3P
-subject: G3P Quickstart
+subject: g3p Quickstart
 subtitle: CMake integration and rapid prototyping with Jupyter
 short_title: Get Started
 description: G3P is available through GitHub.

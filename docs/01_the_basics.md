@@ -1,14 +1,14 @@
 ---
-title: The basics
+title: The Basics
 subtitle: C and C++ conventions
-subject: G3P Quickstart Tutorial
+subject: g3p Quickstart Tutorial
 description: Basic steps and concepts to work with G3P.
 kernelspec:
   name: xcpp17
   display_name: C++17
 ---
 
-# The basics
+# The Basics
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Animating Plots
 subtitle: GIF animation and beyond
-subject: G3P Quickstart Tutorial
+subject: g3p Quickstart Tutorial
 description: Describes different ways to animate plots.
 kernelspec:
   name: xcpp17

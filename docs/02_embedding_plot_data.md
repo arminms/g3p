@@ -1,7 +1,7 @@
 ---
 title: Embedding Plot Data
 subtitle: Inline data and datablocks
-subject: G3P Quickstart Tutorial
+subject: g3p Quickstart Tutorial
 description: How to embed data into a stream of Gnuplot commands.
 kernelspec:
   name: xcpp17
