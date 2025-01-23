@@ -58,8 +58,8 @@ That being said, here's the same sine wave animation implemented using `g3p::dis
 :label: sine_wave_g3p_display
 :tags: [skip-execution]
 
-#include <chrono> // std::chrono::chrono_literals
-#include <thread> // std::this_thread::sleep_for
+#include <chrono> // for chrono_literals
+#include <thread> // for sleep_for()
 
 using namespace std::chrono_literals;
 
@@ -81,9 +81,10 @@ We can use the approach mentioned in the [previous section](#g3p_display) to pro
 
 ```{code-cell} cpp
 :label: sine_wave_interactive
-:tags: [skip-execution]
+:tags: [hide-output]
 
 #include <xwidgets/xslider.hpp>
+#include <xwidgets/ximage.hpp>
 
 g3p::gnuplot gp;
 gp ("set nokey")
@@ -92,7 +93,7 @@ gp ("set nokey")
 
 auto slider = xw::slider<float>::initialize()
   .min(0.0f)
-  .max(19.0f)
+  .max(100.0f)
   .finalize();
 
 auto plot = xw::image_from_file(gp.plotfile()).finalize();
@@ -101,15 +102,18 @@ XOBSERVE
 (   slider
 ,   value
 ,   [&](const auto& s)
-    {   gp("plot [-10:10] sin(x + %f) lw 2.0", s.value).sync();
-        std::filesystem::path f(gp.plotfile());
+    {   std::ostringstream value;
+        value << s.value;
+        gp("plot [-10:10] sin(x + %s) lw 2.0", value.str().c_str()).sync();
         plot.value = xw::read_file(gp.plotfile());
+        std::filesystem::path f(gp.plotfile());
         std::filesystem::remove(f);
         gp("reset errors;set output \"%s\"", gp.plotfile().c_str());
     }
 );
 
-slider.value=10.0f;
+slider.style().handle_color = "purple";
+slider.value=0.0f;
 
 plot.display();
 slider.display();
