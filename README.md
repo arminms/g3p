@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/arminms/g3p">
-    <img width="256" heigth="256" src="artwork/g3p_logo.svg">
+    <img width="256" heigth="256" src="docs/images/g3p_logo_bold.svg">
   </a>
   <h1>g3p</h1>
 </div>
