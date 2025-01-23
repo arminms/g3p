@@ -42,6 +42,6 @@ site:
   template: book-theme
   # hide_toc: true
   options:
-    favicon: images/g3p_logo.svg
-    logo: images/g3p_logo.png
-    # logo_dark: images/g3p_logo_dark.svg
+    favicon: images/g3p_logo_bold.svg
+    logo: images/g3p_logo_bold.svg
+    logo_dark: images/g3p_logo_bold.svg

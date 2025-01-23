@@ -24,7 +24,7 @@ It's also one of few <wiki:C++> libraries to support embedding of plots in [Jupy
 
 :::{grid-item}
 
-```{image} images/g3p_logo.svg
+```{image} images/g3p_logo_bold.svg
 ```
 
 :::
@@ -68,28 +68,28 @@ _Be advised sometimes it takes several minutes to start!_
 ::::{grid} 1 1 2 2
 
 :::{card}
-:header: 📊 [Rapid prototyping with Jupyter](#jupyter-rapid-prototyping)
+:header: 📊 [Rapid Prototyping with Jupyter](#jupyter-rapid-prototyping)
 :footer: [Learn more »](#jupyter-rapid-prototyping)
 
 Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on <xref:xeus-cling> kernel.
 :::
 
 :::{card}
-:header: 🏃 [Animated plots](#sine_wave)
+:header: 🏃 [Animated Plots](#sine_wave)
 :footer: [Learn more »](#gif_animations)
 
 G3P supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
 :::
 
 :::{card}
-:header: 🔀 [C/C++ conventions support](#conventions_tab)
+:header: 🔀 [C & C++ Conventions Support](#conventions_tab)
 :footer: [Learn more »](#conventions)
 
 Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported. You can even [mix and match](#datablock_plot) them.
 :::
 
 :::{card}
-:header: 📈 [Interactive plots in Jupyter](#sine_wave_interactive)
+:header: 📈 [Interactive Plots in Jupyter](#sine_wave_interactive)
 :footer: [Learn more »](#interactive_plots)
 
 G3P in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
