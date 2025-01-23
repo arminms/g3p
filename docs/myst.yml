@@ -10,17 +10,20 @@ project:
     - c++
     - plotting
   github: https://github.com/arminms/g3p
-  jupyter: true
+  jupyter:
+    binder: true
+    kernelName: xcpp17
   license:
     code: MIT
     content: CC-BY-4.0
   references:
-    cling: https://cling.readthedocs.io/en/latest/
-    cmake: https://cmake.org/cmake/help/latest/
-    jupyter: https://docs.jupyter.org/en/latest/
-    jupyterbook: https://jupyterbook.org/en/stable/
-    xeus-cling: https://xeus-cling.readthedocs.io/en/latest/
-    mamba: https://mamba.readthedocs.io/en/latest/
+    cling: https://cling.readthedocs.io/en/latest
+    cmake: https://cmake.org/cmake/help/latest
+    jupyter: https://docs.jupyter.org/en/latest
+    jupyterbook: https://jupyterbook.org/en/stable
+    xeus-cling: https://xeus-cling.readthedocs.io/en/latest
+    mamba: https://mamba.readthedocs.io/en/latest
+    jupyter-xc: https://armin.sobhani.me/xeus-cling-jupyter
   abbreviations:
     g3p: GnuPlot Plus Plus
 
@@ -39,6 +42,6 @@ site:
   template: book-theme
   # hide_toc: true
   options:
-  #   favicon: favicon.ico
+    favicon: images/g3p_logo.svg
     logo: images/g3p_logo.png
     # logo_dark: images/g3p_logo_dark.svg
