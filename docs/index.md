@@ -4,13 +4,17 @@ subtitle: The Modern C++ interface to Gnuplot
 description: g3p is a header-only Modern C++ interface library for gnuplot
 ---
 
+[![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
+[![Build and Test (Linux/macOS/Windows)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
+
 ---
 
 ::::{grid} 1 1 2 2
 
 :::{grid-item}
 
-g3p is tiny but mighty <wiki:header-only> modern <wiki:C++> interface library for <wiki:Gnuplot>.
+g3p is a tiny but mighty <wiki:header-only> modern <wiki:C++> interface library for <wiki:Gnuplot>.
 
 It's the most natural and intuitive way of adding <wiki:Gnuplot> support into any <wiki:C++> program.
 
@@ -27,21 +31,35 @@ It's also one of few <wiki:C++> libraries to support embedding of plots in [Jupy
 
 ::::
 
+:::::{aside}
+
 ::::{important} Try g3p with Docker
 :class: dropdown
 
 If you have [Docker](wiki:Docker_(software)), you can start tinkering with g3p by running the prebuilt container:
 ```bash
-docker run -p 8888:8888 -t -i asobhani/g3p
+docker run -p 8888:8888 -it --rm asobhani/g3p
 ```
 ::::
 
-::::{seealso} Try g3p on Binder
+:::::{seealso} Try g3p on Binder
 :class: dropdown
 
-If you don't have [Docker](wiki:Docker_(software)), an easier but much slower way (sometimes takes several minutes to start) is to click on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge to launch it on [Binder](wiki:Binder_Project).
+An easier but slower way is to click the *launch binder* badge below to launch it on [Binder](wiki:Binder_Project) :
+
+::::{grid} 2 2 2 2
+
+:::{grid-item}
+👉   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
+:::
+
+:::{grid-item}
+_Be advised sometimes it takes several minutes to start!_
+:::
 
 ::::
+
+:::::
 
 ---
 
@@ -53,24 +71,51 @@ If you don't have [Docker](wiki:Docker_(software)), an easier but much slower wa
 :header: 📊 [Rapid prototyping with Jupyter](#jupyter-rapid-prototyping)
 :footer: [Learn more »](#jupyter-rapid-prototyping)
 
-Using g3p you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on <xref:xeus-cling> kernel
+Using g3p you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on <xref:xeus-cling> kernel.
 :::
 
 :::{card}
 :header: 🏃 [Animated plots](#sine_wave)
 :footer: [Learn more »](#gif_animations)
 
-g3p supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in two different ways
+g3p supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
 :::
 
 :::{card}
 :header: 🔀 [C/C++ conventions support](#conventions_tab)
 :footer: [Learn more »](#conventions)
 
-Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported
+Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported. You can even [mix and match](#datablock_plot) them.
+:::
+
+:::{card}
+:header: 📈 [Interactive plots in Jupyter](#sine_wave_interactive)
+:footer: [Learn more »](#interactive_plots)
+
+g3p in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
 :::
 
 ::::
+
+:::::{aside}
+::::{note} Background 📚
+:class: dropdown
+:open:
+
+> The initial idea about g3p sparked in my mind back in 2022 after attending a SHARCNET's General Interest webinar by my colleague Ge Baolai about [realtime display with Gnuplot](https://youtu.be/A9YPibAEXEE)
+>
+> -- Armin Sobhani
+
+````{seealso} Watch the video 📺
+:class: dropdown
+:open:
+
+```{iframe} https://www.youtube.com/embed/A9YPibAEXEE
+:width: 100%
+```
+````
+::::
+:::::
 
 ---
 
