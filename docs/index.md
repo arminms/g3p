@@ -71,7 +71,7 @@ _Be advised sometimes it takes several minutes to start!_
 :header: 📊 [Rapid Prototyping with Jupyter](#jupyter-rapid-prototyping)
 :footer: [Learn more »](#jupyter-rapid-prototyping)
 
-Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on [Xeus-Cling][xref:xeus-cling] kernel.
+Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on [Xeus-Cling](xref:xeus-cling) kernel.
 :::
 
 :::{card}
