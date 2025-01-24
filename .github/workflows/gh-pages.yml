@@ -1,8 +1,8 @@
 name: MyST GitHub Pages Deploy
 on:
-  push:
-    # Runs on pushes targeting the default branch
-    branches: [main]
+  release:
+    # Runs when a release is published or on demand
+    types: [published]
   workflow_dispatch:
 
 env:
