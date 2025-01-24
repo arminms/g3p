@@ -29,6 +29,10 @@ else()
   set(NOT_SUBPROJECT OFF)
 endif()
 
+## Set default build type to Release if none was specified
+#
+include(cmake/BuildType.cmake)
+
 ## life is about choices...
 #
 option(G3P_ENABLE_TESTS "Enable the unit tests ?" ON)
