@@ -37,7 +37,7 @@ option(G3P_ENABLE_TESTS "Enable the unit tests ?" ON)
 #
 project(
   g3p
-  VERSION 1.1.1
+  VERSION 1.2.0
   LANGUAGES CXX
   DESCRIPTION "gnuplot for Modern C++ with support for Jupyter"
 )
