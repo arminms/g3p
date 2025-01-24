@@ -47,7 +47,7 @@ RUN set -ex \
 RUN set -ex \
     && mkdir -p /opt/xeus-cling \
     && cd /opt \
-    && git clone -b devel https://github.com/arminms/g3p.git \
+    && git clone https://github.com/arminms/g3p.git \
     && cd g3p \
     && cmake -S . -B build \
         -DCMAKE_BUILD_TYPE=Release \
