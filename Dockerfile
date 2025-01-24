@@ -22,66 +22,65 @@
 
 #-- g3p image -----------------------------------------------------------------
 
-    FROM ubuntu:20.04 AS g3p
+FROM ubuntu:20.04 AS g3p
 
-    # change default shell to bash
-    SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-    
-    # install build-essential and other dependencies
-    RUN set -ex \
-        && apt-get update && apt-get upgrade -y \
-        && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            build-essential \
-            ca-certificates \
-            git \
-            wget \
-            pkg-config \
-        && rm -rf /var/lib/apt/lists/*
-    
-    # install CMake >= 3.19
-    RUN set -ex \
-        && wget -qO- https://cmake.org/files/v3.25/cmake-3.25.2-linux-x86_64.tar.gz \
-           | tar --strip-components=1 -xz -C /usr/local
-    
-    # install xeus-cling
-    RUN set -ex \
-        && mkdir -p /opt/xeus-cling \
-        && cd /opt \
-        && git clone -b devel https://github.com/arminms/g3p.git \
-        && cd g3p \
-        && cmake -S . -B build \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_INSTALL_PREFIX=/opt/xeus-cling \
-          -DG3P_ENABLE_TESTS=OFF \
-        && cmake --build build \
-        && cmake --install build
-    
-    #-- g3p-xeus-cling -----------------------------------------------------------------
-    
-    FROM asobhani/xeus-cling-jupyter:latest AS g3p-xeus-cling
-    
-    LABEL maintainer="Armin Sobhani <arminms@gmail.com>"
-    LABEL description="Docker image for G3P (gnuplot for Modern C++) with Xeus-Cling"
-    
-    # change default shell to bash
-    SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-    
-    USER root
-    
-    # install Gnuplot
-    RUN set -ex \
-        && apt-get update && apt-get upgrade -y \
-        && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            gnuplot \
-        && apt-get clean \
-        && rm -rf /var/lib/apt/lists/*
-    
-    # copy g3p
-    COPY --from=g3p /opt/xeus-cling /opt/xeus-cling
-    
-    # switch back to jovyan
-    USER ${NB_USER}
-    
-    # copy tutorial notebooks to the home directory
-    COPY --from=g3p --chown=${NB_UID}:${NB_GID} /opt/g3p/docs ${HOME}
-    
+# change default shell to bash
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# install build-essential and other dependencies
+RUN set -ex \
+    && apt-get update && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        git \
+        wget \
+        pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# install CMake >= 3.19
+RUN set -ex \
+    && wget -qO- https://cmake.org/files/v3.25/cmake-3.25.2-linux-x86_64.tar.gz \
+        | tar --strip-components=1 -xz -C /usr/local
+
+# install xeus-cling
+RUN set -ex \
+    && mkdir -p /opt/xeus-cling \
+    && cd /opt \
+    && git clone -b devel https://github.com/arminms/g3p.git \
+    && cd g3p \
+    && cmake -S . -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/xeus-cling \
+        -DG3P_ENABLE_TESTS=OFF \
+    && cmake --build build \
+    && cmake --install build
+
+#-- g3p-xeus-cling -------------------------------------------------------------
+
+FROM asobhani/xeus-cling-jupyter:latest AS g3p-xeus-cling
+
+LABEL maintainer="Armin Sobhani <arminms@gmail.com>"
+LABEL description="Docker image for G3P (gnuplot for Modern C++) with Xeus-Cling"
+
+# change default shell to bash
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+USER root
+
+# install Gnuplot
+RUN set -ex \
+    && apt-get update && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        gnuplot \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# copy g3p
+COPY --from=g3p /opt/xeus-cling /opt/xeus-cling
+
+# switch back to jovyan
+USER ${NB_USER}
+
+# copy tutorial notebooks to the home directory
+COPY --from=g3p --chown=${NB_UID}:${NB_GID} /opt/g3p/docs ${HOME}
