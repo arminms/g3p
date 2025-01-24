@@ -14,7 +14,7 @@
 
 `G3P` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support into any C++ program.
 
-A unique feature of `G3P` is the ability to embed plots/animations in *Jupyter C++ Notebooks* backed by [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) kernel for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
+A unique feature of `G3P` is the ability to embed plots/animations in *Jupyter C++ Notebooks* backed by [Xeus-Cling](https://github.com/jupyter-xeus/xeus-cling) kernel for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -it --rm asobhani/g3p
 ```
@@ -28,7 +28,7 @@ If you don't have Docker, an easier but much slower way is to click on [![Binder
 - 🖇️ Header-only (only one header file)
 - 🪶 Lightweight (~300 lines of code)
 - ⚡ Fast (all i/o implemented with `C` API and `C++11` threading)
-- 📊 Support embedding plots/animations in *Jupyter `C++` Notebooks* backed by [xeus-cling](https://github.com/jupyter-xeus/xeus-cling) kernel
+- 📊 Support embedding plots/animations in *Jupyter `C++` Notebooks* backed by [Xeus-Cling](https://github.com/jupyter-xeus/xeus-cling) kernel
 - 🏫 Easy to learn. If you know [gnuplot](http://www.gnuplot.info/), you're already set.
 - 📥 Easily integrates with existing libraries and code (via CMake configs)
 - ➡️ Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)

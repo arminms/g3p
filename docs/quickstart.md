@@ -86,7 +86,7 @@ The above approach first tries to find an installed version of G3P and if it can
 
 (jupyter-rapid-prototyping)=
 ### Rapid prototyping with *Jupyter*
-A cool feature of G3P is the ability to embed plots in [Jupyter](wiki:Project_Jupyter) notebooks backed by <xref:xeus-cling> kernel for rapid prototyping:
+A cool feature of G3P is the ability to embed plots in [Jupyter](wiki:Project_Jupyter) notebooks backed by [Xeus-Cling](xref:xeus-cling) kernel for rapid prototyping:
 
 ```{image} ./images/xeus-cling.png
 :label: xeus-cling
@@ -94,16 +94,16 @@ A cool feature of G3P is the ability to embed plots in [Jupyter](wiki:Project_Ju
 ```
 ---
 
-#### Installing G3P in a xeus-cling environment
+#### Installing G3P in a Xeus-Cling environment
 
-The easiest way to install [xeus-cling](xref:xeus-cling) is to create an environment named `cling` using [Mamba](xref:mamba#installation/mamba-installation):
+The easiest way to install [Xeus-Cling](xref:xeus-cling) is to create an environment named `cling` using [Mamba](xref:mamba#installation/mamba-installation):
 
 ```bash
 mamba create -n cling
 mamba activate cling
 ```
 
-Then you can install [xeus-cling](xref:xeus-cling) in this environment and its dependencies:
+Then you can install [Xeus-Cling](xref:xeus-cling) in this environment and its dependencies:
 
 ```bash
 mamba install xeus-cling -c conda-forge
