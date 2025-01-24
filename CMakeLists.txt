@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-cmake_minimum_required(VERSION 3.14...3.26)
+cmake_minimum_required(VERSION 3.19...3.26)
 
 ## detect if g3p is being bundled, disable unit tests in that case
 #

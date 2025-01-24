@@ -41,8 +41,8 @@
 // #   include <xcpp/xdisplay.hpp>
 #   include <xtl/xbase64.hpp>
 #   include <nlohmann/json.hpp>
+// #   include <xwidgets/ximage.hpp>
 #endif //__CLING__
-
 namespace g3p
 {
 
@@ -208,7 +208,7 @@ namespace g3p
 #ifdef __CLING__
             _plotfile = detail::tmpnam();
             fprintf(_gp, "set term push\n");
-            fprintf(_gp, "set term svg standalone enhanced\n");
+            fprintf(_gp, "set term pngcairo transparent enhanced\n");
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
@@ -255,7 +255,7 @@ namespace g3p
             {   fprintf(_gp, "print GPVAL_VERSION\n");
                 operator>> (1) >> _version_string;
             }
-            return _version_string + '.' + _patchlevel;
+            return _version_string + '.' + patchlevel();
         }
 
 // -- log file -----------------------------------------------------------------
@@ -285,6 +285,12 @@ namespace g3p
         /// @return a string representing the name of the plot file
         std::string plotfile() const
         {   return _plotfile;   }
+        /// @brief finalizes the plot file for xw::image widget (only available in cling)
+        void finalize() const
+        {   std::filesystem::path f(_plotfile);
+            std::filesystem::remove(f);
+            fprintf(_gp, "reset errors;set output \"%s\"", _plotfile.c_str());
+        }
 
 #endif //__CLING__
 
