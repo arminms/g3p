@@ -19,7 +19,7 @@ jobs:
         - os: macos-latest
           vcpkg_triplet: arm64-osx-release
         - os: windows-latest
-          vcpkg_triplet: x64-windows-debug
+          vcpkg_triplet: x64-windows-static-release
 
     steps:
       - uses: actions/checkout@v4
