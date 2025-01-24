@@ -9,23 +9,31 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  multi-platform-build:
+    runs-on: ${{matrix.config.os}}
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'windows-latest']
-    runs-on: ${{matrix.os}}
+        config:
+        - os: ubuntu-latest
+          vcpkg_triplet: x64-linux-release
+        - os: macos-latest
+          vcpkg_triplet: arm64-osx-release
+        - os: windows-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/github-script@v7
+      - name: Set up GitHub Cache for Windows
+        uses: actions/github-script@v7
         with:
           script: |
             core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
             core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+        if: matrix.os == 'windows-latest'
 
-      - name: Install dependencies via vcpkg
+      - name: Install Catch2 via vcpkg (Windows)
         run: vcpkg install catch2 --binarysource="clear;x-gha,readwrite"
+        if: matrix.os == 'windows-latest'
 
       - name: Install gnuplot (Linux)
         run: |
@@ -37,25 +45,40 @@ jobs:
           choco install gnuplot
         if: matrix.os == 'windows-latest'
 
-      - name: Configure with CMake (Linux)
+      - name: Install gnuplot (macOS)
         run: |
-          cmake -S ${{github.workspace}} -B build \
-          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake
-        if: matrix.os == 'ubuntu-latest'
+          brew install gnuplot
+        if: matrix.os == 'macos-latest'
+
+      - name: vcpkg build (Linux/macOS)
+        uses: johnwason/vcpkg-action@v6
+        id: vcpkg
+        with:
+          pkgs: catch2
+          triplet: ${{ matrix.config.vcpkg_triplet }}
+          cache-key: ${{ matrix.config.os }}
+          revision: master
+          token: ${{ github.token }}
+          github-binarycache: true
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+
+      - name: Configure with CMake (Linux/macOS)
+        run: |
+          cmake ${{ steps.vcpkg.outputs.vcpkg-cmake-config }} -S ${{ github.workspace }} -B build
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
 
       - name: Configure with CMake (Windows)
         run: |
           cmake -S ${{github.workspace}} -B build -DCMAKE_TOOLCHAIN_FILE="$Env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
         if: matrix.os == 'windows-latest'
 
-
       - name: Build
         run: cmake --build build
 
-      - name: Test (Linux)
+      - name: Test (Linux and macOS)
         working-directory: ${{github.workspace}}/build
         run: ctest --output-on-failure
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
 
       - name: Test (Windows)
         working-directory: ${{github.workspace}}/build
