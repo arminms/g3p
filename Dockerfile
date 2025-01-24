@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2024 Armin Sobhani (arminms@gmail.com)
+# Copyright (c) 2024-25 Armin Sobhani (arminms@gmail.com)
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,24 +33,32 @@ RUN set -ex \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
-        cmake \
         git \
+        wget \
         pkg-config \
     && rm -rf /var/lib/apt/lists/*
+
+# install CMake >= 3.19
+RUN set -ex \
+    && wget -qO- https://cmake.org/files/v3.25/cmake-3.25.2-linux-x86_64.tar.gz \
+       | tar --strip-components=1 -xz -C /usr/local
 
 # install xeus-cling
 RUN set -ex \
     && mkdir -p /opt/xeus-cling \
     && cd /opt \
-    && git clone https://github.com/arminms/g3p.git \
-    && cd /opt/g3p \
-    && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/xeus-cling \
+    && git clone -b devel https://github.com/arminms/g3p.git \
+    && cd g3p \
+    && cmake -S . -B build \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_INSTALL_PREFIX=/opt/xeus-cling \
+      -DG3P_ENABLE_TESTS=OFF \
     && cmake --build build \
     && cmake --install build
 
 #-- g3p-xeus-cling -----------------------------------------------------------------
 
-FROM asobhani/xeus-cling-jupyter:latest as g3p-xeus-cling
+FROM asobhani/xeus-cling-jupyter:latest AS g3p-xeus-cling
 
 LABEL maintainer="Armin Sobhani <arminms@gmail.com>"
 LABEL description="Docker image for g3p (gnuplot for Modern C++) with Xeus-Cling"
