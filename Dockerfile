@@ -1,46 +1,86 @@
-FROM quay.io/jupyter/base-notebook:latest
+#
+# Copyright (c) 2024-25 Armin Sobhani (arminms@gmail.com)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+#-- g3p image -----------------------------------------------------------------
+
+FROM ubuntu:20.04 AS g3p
+
+# change default shell to bash
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# install build-essential and other dependencies
+RUN set -ex \
+    && apt-get update && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        git \
+        wget \
+        pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# install CMake >= 3.19
+RUN set -ex \
+    && wget -qO- https://cmake.org/files/v3.25/cmake-3.25.2-linux-x86_64.tar.gz \
+        | tar --strip-components=1 -xz -C /usr/local
+
+# install xeus-cling
+RUN set -ex \
+    && mkdir -p /opt/xeus-cling \
+    && cd /opt \
+    && git clone https://github.com/arminms/g3p.git \
+    && cd g3p \
+    && cmake -S . -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/xeus-cling \
+        -DG3P_ENABLE_TESTS=OFF \
+    && cmake --build build \
+    && cmake --install build
+
+#-- g3p-xeus-cling -------------------------------------------------------------
+
+FROM asobhani/xeus-cling-jupyter:latest AS g3p-xeus-cling
 
 LABEL maintainer="Armin Sobhani <arminms@gmail.com>"
+LABEL description="Docker image for G3P (gnuplot for Modern C++) with Xeus-Cling"
 
+# change default shell to bash
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for a fully functional Server
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends \
-    # Common useful utilities
-    curl \
-    git \
-    nano-tiny \
-    tzdata \
-    unzip \
-    vim-tiny \
-    # git-over-ssh
-    openssh-client \
-    # gnuplot for g3p
-    gnuplot \
-    # nbconvert dependencies
-    # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
-    texlive-xetex \
-    texlive-fonts-recommended \
-    texlive-plain-generic \
-    # Enable clipboard on Linux host systems
-    xclip && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# install Gnuplot
+RUN set -ex \
+    && apt-get update && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        gnuplot \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Switch back to jovyan to avoid accidental container runs as root
-USER ${NB_UID}
+# copy g3p
+COPY --from=g3p /opt/xeus-cling /opt/xeus-cling
 
-# Install xeus-cling kernels and environment 
-RUN mamba install -yn base nb_conda_kernels \
-    && mamba create -yn xeus-cling xeus-cling \
-    && mamba clean -qafy
-
-# Install g3p header and the example notebook
-RUN mkdir -p /opt/conda/envs/xeus-cling/include/g3p
-COPY include/g3p/gnuplot /opt/conda/envs/xeus-cling/include/g3p
-COPY doc/tutorial.ipynb ${HOME}
-USER root
-RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/xeus-cling/include/g3p
+# switch back to jovyan
 USER ${NB_USER}
+
+# copy tutorial notebooks to the home directory
+COPY --from=g3p --chown=${NB_UID}:${NB_GID} /opt/g3p/docs ${HOME}

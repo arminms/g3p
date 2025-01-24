@@ -38,11 +38,11 @@
 
 #ifdef __CLING__
 #   include <unordered_map>
-#   include <xcpp/xdisplay.hpp>
+// #   include <xcpp/xdisplay.hpp>
 #   include <xtl/xbase64.hpp>
 #   include <nlohmann/json.hpp>
+// #   include <xwidgets/ximage.hpp>
 #endif //__CLING__
-
 namespace g3p
 {
 
@@ -50,15 +50,15 @@ namespace g3p
 
     namespace detail
     {   inline std::string random_name(const int len = 8)
-        {   static const char alphanum[] =
-                "1234567890"
+        {   static const char alpha[] =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 "abcdefghijklmnopqrstuvwxyz";
             std::string tmp_s;
             tmp_s.reserve(len);
             std::default_random_engine rng(std::random_device{}());
-            std::uniform_int_distribution<> dist(0, sizeof(alphanum) - 2);
+            std::uniform_int_distribution<> dist(0, sizeof(alpha) - 2);
             for (int i = 0; i < len; ++i)
-                tmp_s += alphanum[dist(rng)];
+                tmp_s += alpha[dist(rng)];
             return tmp_s;
         }
 
@@ -116,16 +116,27 @@ namespace g3p
         ,   {   "png"      , "image/png"       }
         ,   {   "pngcairo" , "image/png"       }
         ,   {   "svg"      , "image/svg+xml"   }
+        ,   {   "webp"     , "image/webp"      }
+        };
+
+        static const std::string error_prefix
+        {   "<table style='width:100%;'><tbody><tr>"
+            "<td style='font-family:monospace;background-color:#ffdddd;"
+            "text-align:left;'><pre style='background-color:#ffdddd;'>"
+            "<b><span style=color:#b22b31;>g3p/gnuplot error: </span>"
+        };
+        static const std::string error_suffix
+        {   "</b></pre></td></tr></tbody></table>"
         };
 #endif //__CLING__
-    }
+    } // end detail namespace
 
 // -- simulated ostream manipulators -------------------------------------------
 
-    const std::string end("e\n");
-    const std::string endl("_G3P_ENDL_");
-    const std::string eod("EOD\n");
-    const std::string flush("_G3P_FLUSH_");
+    static const std::string end("e\n");
+    static const std::string endl("_G3P_ENDL_");
+    static const std::string eod("EOD\n");
+    static const std::string flush("_G3P_FLUSH_");
 
     class gnuplot
     {
@@ -155,15 +166,23 @@ namespace g3p
 // -- member variables ---------------------------------------------------------
 
         FILE* _gp;
+        float _version;
+        std::string _patchlevel;
+        std::string _version_string;
         std::string _logfile;
 #ifdef __CLING__
         std::string _plotfile;
 #endif  //__CLING__
 
     public:
+        /// @brief default constructor
+        /// @param persist a boolean indicating whether the gnuplot instance
+        ///                should be persistent
+        /// @param logfile a string representing the name of the log file
         gnuplot(bool persist = true, std::string logfile = {})
         :   _gp(nullptr)
         ,   _logfile(logfile)
+        ,   _version(0)
         {   const char* gnuplot_path = std::getenv("G3P_GNUPLOT_PATH");
             std::string gnuplot_cmd = gnuplot_path ? gnuplot_path : "gnuplot";
             if (nullptr != gnuplot_path)
@@ -189,11 +208,11 @@ namespace g3p
 #ifdef __CLING__
             _plotfile = detail::tmpnam();
             fprintf(_gp, "set term push\n");
-            fprintf(_gp, "set term svg standalone enhanced\n");
+            fprintf(_gp, "set term pngcairo transparent enhanced\n");
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
-
+        /// @brief destructor
         ~gnuplot()
         {
 #ifdef _MSC_VER
@@ -209,8 +228,41 @@ namespace g3p
 #endif //__CLING__
         }
 
+// -- version checking  --------------------------------------------------------
+
+        /// @brief returns the version of gnuplot excluding the patchlevel
+        /// @return a float representing the version of gnuplot
+        float version()
+        {   if (0 == _version)
+            {   fprintf(_gp, "print GPVAL_VERSION\n");
+                operator>> (1) >> _version;
+            }
+            return _version;
+        }
+        /// @brief returns the patchlevel of gnuplot
+        /// @return a string representing the patchlevel of gnuplot
+        std::string patchlevel()
+        {   if (_patchlevel.empty())
+            {   fprintf(_gp, "print GPVAL_PATCHLEVEL\n");
+                operator>> (1) >> _patchlevel;
+            }
+            return _patchlevel;
+        }
+        /// @brief returns the version and patchlevel of gnuplot
+        /// @return a string representing the version and patchlevel of gnuplot
+        std::string version_string()
+        {   if (_version_string.empty())
+            {   fprintf(_gp, "print GPVAL_VERSION\n");
+                operator>> (1) >> _version_string;
+            }
+            return _version_string + '.' + patchlevel();
+        }
+
 // -- log file -----------------------------------------------------------------
 
+        /// @brief returns the content of the log file 
+        /// @param line_count number of lines to return from the end of the log file
+        /// @return a string representing the content of the log file
         std::string log(size_t line_count = 0) const
         {   sync();
             std::string log;
@@ -219,25 +271,33 @@ namespace g3p
                 std::stringstream logstream;
                 logstream << fin.rdbuf();
                 log = logstream.str();
-                return log.erase(log.size() - 9, 9);
             }
             else
-            {   log = detail::get_last_lines(_logfile, line_count + 1);
-                return log.erase(log.size() - 9, 9);
-            }
+                log = detail::get_last_lines(_logfile, line_count + 1);
+            return log.erase(log.size() - 9, 9);
         }
 
 #ifdef __CLING__
 
 // -- plot file (cling only) ---------------------------------------------------
 
+        /// @brief returns the name of the plot file (only available in cling)
+        /// @return a string representing the name of the plot file
         std::string plotfile() const
         {   return _plotfile;   }
+        /// @brief finalizes the plot file for xw::image widget (only available in cling)
+        void finalize() const
+        {   std::filesystem::path f(_plotfile);
+            std::filesystem::remove(f);
+            fprintf(_gp, "reset errors;set output \"%s\"", _plotfile.c_str());
+        }
 
 #endif //__CLING__
 
-// -- sync helper function -------------------------------------------------
+// -- sync helper function -----------------------------------------------------
 
+        /// @brief waits for the gnuplot to finish processing the commands
+        /// @return a reference to the gnuplot object
         const gnuplot& sync() const
         {   auto tag = detail::random_name(8);
             fprintf(_gp, "print '%s'\n", tag.c_str());
@@ -247,11 +307,13 @@ namespace g3p
             t.join();
             return *this;
         }
-
 #ifdef __GNUG__
 #       pragma GCC diagnostic push
 #       pragma GCC diagnostic ignored "-Wformat-security"
 #endif //__GNUG__
+        /// @brief sends the arguments to the gnuplot instance
+        /// @param args arguments to be sent to the gnuplot instance
+        /// @return a reference to the gnuplot object
         template<typename... Args>
         const gnuplot& operator() (Args&&... args) const
         {   fprintf(_gp, std::forward<Args>(args)...);
@@ -261,13 +323,17 @@ namespace g3p
 #ifdef __GNUG__
 #       pragma GCC diagnostic pop
 #endif //__GNUG__
-
+        /// @brief sends the argument to the gnuplot instance
+        /// @param arg argument to be sent to the gnuplot instance
+        /// @return a reference to the gnuplot object
         template<typename T>
         const gnuplot& operator<< (T arg) const
         {   ostream_opr_impl(arg, std::is_compound<T>());
             return *this;
         }
-
+        /// @brief reads the output of the gnuplot instance
+        /// @param line_count number of lines to read from the end of the output
+        /// @return a stringstream containing the output of the gnuplot instance
         std::istringstream operator>> (size_t line_count) const
         {   sync();
             auto line = detail::get_last_lines(_logfile, line_count + 1);
@@ -275,23 +341,31 @@ namespace g3p
             std::istringstream iss{line};
             return iss;
         }
-
+        /// @brief sends an end-of-line to the gnuplot instance
+        /// @return a reference to the gnuplot object
         const gnuplot& endl() const
         {   fprintf(_gp, "\n");
             return *this;
         }
-
+        /// @brief sends an end-of-data to the gnuplot instance
+        /// @return a reference to the gnuplot object
         const gnuplot& end() const
         {   fprintf(_gp, "e\n");
             return *this;
         }
-
+        /// @brief sends a flush command to the gnuplot instance
+        /// @return a reference to the gnuplot object
         const gnuplot& flush() const
         {   fflush(_gp);
             return *this;
         }
     };
 
+    /// @brief returns a data block for the gnuplot instance
+    /// @tparam T type of the object to be converted to a data block
+    /// @param gp reference to the gnuplot instance
+    /// @param c reference to the object to be converted to a data block
+    /// @return a string representing the name of the data block 
     template<typename T>
     inline std::string make_data_block(const gnuplot& gp, const T& c)
     {   std::string name{" $"};
@@ -301,12 +375,19 @@ namespace g3p
             ("%s\nEOD", c(gp).c_str());
         return name;
     }
+    /// @brief returns a data block for the gnuplot instance
+    /// @tparam T type of the container to be converted to a data block
+    /// @param gp reference to the gnuplot instance
+    /// @param c reference to the container to be converted to a data block
+    /// @param row number of elements in each row
+    /// @param sep number of rows to separate the data block
+    /// @return a string representing the name of the data block (default = 0)
     template<typename T>
     inline std::string make_data_block
     (   const gnuplot& gp
     ,   const T& c
     ,   typename T::size_type row 
-    ,   typename T::size_type sep = 0 // separator
+    ,   typename T::size_type sep = 0
     )
     {   std::string name{" $"};
         name += detail::random_name(8);
@@ -326,33 +407,56 @@ namespace g3p
 
 #ifdef __CLING__
     nlohmann::json mime_bundle_repr(const gnuplot& gp)
-    {   gp.sync();
-        std::filesystem::path f(gp.plotfile());
-        if (0 == std::filesystem::file_size(f))
-            gp("replot").sync();
-        auto bundle = nlohmann::json::object();
+    {   int error_no;
         std::string term;
-        gp("print GPVAL_TERM") >> 1 >> term;
+        auto bundle = nlohmann::json::object();
+        gp("print GPVAL_ERRNO") >> 1 >> error_no;
+        gp("print GPVAL_TERM")  >> 1 >> term;
         auto type = detail::mime.find(term);
-        if (type == detail::mime.end())
+        if (error_no)
+        {   auto out = gp("print GPVAL_ERRMSG") >> 1;
+            auto error_msg = out.str();
             bundle["text/html"] =
-                "<table style=\"width:100%;\">"
-                "<tr><td style=\"background-color:#ffdddd;text-align:left;\">"
-                "<span style=\"color:#b22b31\">error: </span>"
-                "the terminal type is not supported by g3p"
-                "</td></tr></table>";
+                detail::error_prefix
+            +   error_msg
+            +   detail::error_suffix;
+        }
+        else if (type == detail::mime.end())
+            bundle["text/html"] =
+                detail::error_prefix
+            +   "the terminal type is not supported by g3p"
+            +   detail::error_suffix;
         else
-        {   std::ifstream fin(gp.plotfile(), std::ios::binary);
+        {   std::filesystem::path f(gp.plotfile());
+            if (0 == std::filesystem::file_size(f))
+                gp("replot").sync();
+            std::ifstream fin(gp.plotfile(), std::ios::binary);
             std::stringstream buffer;
             buffer << fin.rdbuf();
             if ("svg" == term)
                 bundle[detail::mime[term]] = buffer.str();
             else
                 bundle[detail::mime[term]] = xtl::base64encode(buffer.str());
+            std::filesystem::remove(f);
         }
-        std::filesystem::remove(f);
-        gp("set output \"%s\"", f.c_str());
+        gp("reset errors;set output \"%s\"", gp.plotfile().c_str());
         return bundle;
+    }
+    /// @brief displays the gnuplot in the notebook
+    /// @param gp reference to the gnuplot instance
+    /// @param clear_output a boolean indicating whether the output should be cleared
+    inline
+    void display
+    (   const gnuplot& gp
+    ,   bool clear_ouput = true
+    )
+    {   if (clear_ouput)
+            xeus::get_interpreter().clear_output(true);
+        xeus::get_interpreter().display_data
+        (   mime_bundle_repr(gp)
+        ,   nlohmann::json::object()
+        ,   nlohmann::json::object()
+        );
     }
 #endif //__CLING__
 
