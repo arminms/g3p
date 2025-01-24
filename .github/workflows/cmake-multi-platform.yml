@@ -52,7 +52,7 @@ jobs:
 
       - name: Configure with CMake
         run: |
-          cmake ${{ steps.vcpkg.outputs.vcpkg-cmake-config }} -S ${{ github.workspace }} -B build
+          cmake ${{ steps.vcpkg.outputs.vcpkg-cmake-config }} -S ${{ github.workspace }} -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build
