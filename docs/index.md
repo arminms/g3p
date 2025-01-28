@@ -82,17 +82,17 @@ G3P supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupy
 :::
 
 :::{card}
-:header: 🔀 [C & C++ Conventions Support](#conventions_tab)
-:footer: [Learn more »](#conventions)
-
-Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported. You can even [mix and match](#datablock_plot) them.
-:::
-
-:::{card}
 :header: 📈 [Interactive Plots in Jupyter](#sine_wave_interactive)
 :footer: [Learn more »](#interactive_plots)
 
 G3P in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
+:::
+
+:::{card}
+:header: 🔀 [C & C++ Conventions Support](#conventions_tab)
+:footer: [Learn more »](#conventions)
+
+Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported. You can even [mix and match](#datablock_plot) them.
 :::
 
 ::::
