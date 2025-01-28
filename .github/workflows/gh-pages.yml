@@ -36,7 +36,7 @@ jobs:
       - name: Build HTML Assets
         run: |
           cd docs
-          apptainer run docker://asobhani/g3p:latest myst build --html --execute
+          apptainer exec docker://asobhani/g3p:latest myst build --html --execute
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
