@@ -5,7 +5,7 @@ description: G3P is a header-only Modern C++ interface library for gnuplot
 ---
 
 [![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
-[![Build and Test (Linux/macOS/Windows)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml)
+[![GitHub License](https://img.shields.io/github/license/arminms/g3p?logo=github&logoColor=lightgrey&color=green)](https://github.com/arminms/g3p/blob/main/LICENSE)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
 
 ---
