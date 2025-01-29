@@ -54,14 +54,25 @@ auto matlab_peaks(T x1, T x2) -> T
 
 And here is to the code to produce a 3D plot:
 
+```{code-cell} cpp
+#include <g3p/gnuplot>
+
+g3p::gnuplot gp;
+```
++++
+```{code-cell} cpp
+:tags: [remove-cell]
+
+gp ( "set border 31 linecolor '#555555'" )
+   ( "set key textcolor '#555555' box lc '#555555'" )
+   ( "set title tc '#555555'" );
+```
++++
 ```{code-cell}  cpp
 :label: matlab_peaks_plot
 :tags: [hide-output]
 
-#include <g3p/gnuplot>
-
 // setting our plot
-g3p::gnuplot gp;
 gp  ("set nokey")
     ("set view 60, 320,,1.2")
     ("set border 895")

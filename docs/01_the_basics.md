@@ -56,6 +56,14 @@ Now you can start with a `gnuplot` instance that is defined in `g3p` namespace. 
 
 g3p::gnuplot gp;
 ```
++++
+```{code-cell} cpp
+:tags: [remove-cell]
+
+gp ( "set border 31 linecolor '#555555'" )
+   ( "set key textcolor '#555555' box lc '#555555'" )
+   ( "set title tc '#555555'" );
+```
 
 :::::{aside}
 

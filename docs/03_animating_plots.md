@@ -34,15 +34,23 @@ Depending on the frame size and the number of frames, it may take a while for a 
 ::::
 
 ```{code-cell} cpp
-
 #include <g3p/gnuplot>
+
+g3p::gnuplot gp;
+```
++++
+```{code-cell} cpp
+:tags: [remove-cell]
+
+gp ( "set border 31 linecolor '#555555'" )
+   ( "set key textcolor '#555555' box lc '#555555'" )
+   ( "set title tc '#555555'" );
 ```
 +++
 
 ```{code-cell} cpp
 :label: sine_wave
 
-g3p::gnuplot gp;
 gp ("set term gif enhanced transparent animate")
    ("set nokey")
    ("set samples 200")
@@ -58,8 +66,9 @@ gp
 :::::{aside}
 ::::{important} Try it NOW! ⏯️
 :class: dropdown
+:label: thebe
 :open:
-Click on the floating _Power_ button and then _Play_ as show below:
+Click on the floating _Power button_ and then _Play button_ as shown below:
 :::{figure} ./videos/thebe.mp4
 :class: framed
 :::
@@ -68,11 +77,25 @@ Click on the floating _Power_ button and then _Play_ as show below:
 
 `g3p::display()` function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. The are two downsides for this approach:
 
-- It can only be used in Jupyter notebooks. For instance, on a static web page like this you may only see the last frame. 
+- It can only be used in _Jupyter notebooks_. For instance, on a static web page like this you have to click on the floating power button as shown in the [](#thebe) box. 
 - It cannot be played in an endless loop.
 
 That being said, here's the same sine wave animation implemented using `g3p::display()` in a loop:
 
+```{code-cell} cpp
+
+// start with a new instance to reset the terminal back
+g3p::gnuplot gp;
+```
++++
+```{code-cell} cpp
+:tags: [remove-cell]
+
+gp ( "set border 31 linecolor '#555555'" )
+   ( "set key textcolor '#555555' box lc '#555555'" )
+   ( "set title tc '#555555'" );
+```
++++
 ```{code-cell} cpp
 :label: sine_wave_g3p_display
 :tags: [skip-execution]
@@ -82,7 +105,6 @@ That being said, here's the same sine wave animation implemented using `g3p::dis
 
 using namespace std::chrono_literals;
 
-g3p::gnuplot gp;
 gp ("set nokey")
    ("set samples 200")
    ("set style data points");
@@ -104,11 +126,6 @@ We can use the approach mentioned in the [previous section](#g3p_display) to pro
 
 #include <xwidgets/xslider.hpp>
 #include <xwidgets/ximage.hpp>
-
-g3p::gnuplot gp;
-gp ("set nokey")
-   ("set samples 200")
-   ("set style data points");
 
 auto slider = xw::slider<float>::initialize()
   .min(0.0f)
