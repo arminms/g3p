@@ -15,7 +15,15 @@ kernelspec:
 (gif_animations)=
 ## GIF animations
 
-<wiki:Gnuplot> supports a large number of [output formats (i.e. terminals)](http://gnuplot.info/docs_5.5/Terminals.html). A few of them can be embedded in a Jupyter Notebook: [gif](http://gnuplot.info/docs_5.5/loc20476.html), [jpeg](http://gnuplot.info/docs_5.5/loc21075.html), [png](http://gnuplot.info/docs_5.5/loc21756.html), [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html), and last but not least [svg](http://gnuplot.info/docs_5.5/loc22578.html). The default terminal used by G3P for a new `g3p::gnuplot` instance in a Jupyter Notebook is [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html).
+<wiki:Gnuplot> supports a large number of [output formats (i.e. terminals)](http://gnuplot.info/docs_5.5/Terminals.html). A few of them can be embedded in a [Jupyter Notebook](wiki:Project_Jupyter): 
+
+- [gif](http://gnuplot.info/docs_5.5/loc20476.html)
+- [jpeg](http://gnuplot.info/docs_5.5/loc21075.html)
+- [png](http://gnuplot.info/docs_5.5/loc21756.html)
+- [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html)
+- [svg](http://gnuplot.info/docs_5.5/loc22578.html)
+
+The default terminal used by G3P for a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter) is [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html).
 
 Based on your plotting needs, you can switch to any other formats mentioned in the above list. One particularly important one is the [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html) because it's the only format that supports animation out of the box. Let's change the [Simple Plot](https://gnuplot.sourceforge.net/demo_5.4/simple.html) to show a moving sine wave using [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html):
 
