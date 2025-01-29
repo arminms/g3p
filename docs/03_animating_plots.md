@@ -81,7 +81,7 @@ We can use the approach mentioned in the [previous section](#g3p_display) to pro
 
 ```{code-cell} cpp
 :label: sine_wave_interactive
-:tags: [hide-output]
+:tags: [skip-execution]
 
 #include <xwidgets/xslider.hpp>
 #include <xwidgets/ximage.hpp>
@@ -118,3 +118,11 @@ slider.value=0.0f;
 plot.display();
 slider.display();
 ```
+
+::::{dropdown} Output
+:open:
+:label: slider_output
+:::{figure} ./videos/slider.mp4
+:label: slider_video
+:::
+::::
