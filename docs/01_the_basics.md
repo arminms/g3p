@@ -196,7 +196,7 @@ gp << "plot [-pi/2:pi] cos(x),-(sin(x) > sin(x+1) ? sin(x) : sin(x+1))"
 
 G3P uses *buffered i/o* to communicate with `g3p::gnuplot` instances. That means the plotting commands you use in your `C/C++` code are not necessarily received by the `g3p::gnuplot` instance at any moment unless you ensure the buffer is flushed. That's particularly important after executing [`plot`](http://gnuplot.info/docs_5.5/loc7782.html), [`splot`](http://gnuplot.info/docs_5.5/loc17814.html) or [`replot`](http://gnuplot.info/docs_5.5/loc9853.html) commands to ensure the plot is displayed. Like [newline](#newline), there are various ways in G3P to flush the buffers:
 
-- **Implicit** (available only in [Jupyter Notebooks](xref:jupyter#what-is-a-notebook))
+- **Implicit** (available only in [Jupyter Notebooks](wiki:Project_Jupyter))
   - Omitting semicolon from a `g3p::gnuplot` instance as the last element of a cell or using `g3p::display()`
 - **Explicit**
   - End-of-line member function: `gp.endl()`
