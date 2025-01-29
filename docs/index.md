@@ -6,7 +6,7 @@ description: G3P is a header-only Modern C++ interface library for gnuplot
 
 [![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
 [![GitHub License](https://img.shields.io/github/license/arminms/g3p?logo=github&logoColor=lightgrey&color=green)](https://github.com/arminms/g3p/blob/main/LICENSE)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=01_the_basics.ipynb)
 
 ---
 
@@ -33,30 +33,27 @@ It's also one of few <wiki:C++> libraries to support embedding of plots in [Jupy
 
 :::::{aside}
 
-::::{important} Try G3P with Docker
+::::{important} Try G3P in a Container
 :class: dropdown
-
-If you have [Docker](wiki:Docker_(software)), you can start tinkering with G3P by running the prebuilt container:
+[Docker:](wiki:Docker_(software))
 ```bash
 docker run -p 8888:8888 -it --rm asobhani/g3p
+```
+[Apptainer:](wiki:Singularity_(software))
+```bash
+apptainer run docker://asobhani/g3p:latest
 ```
 ::::
 
 :::::{seealso} Try G3P on Binder
 :class: dropdown
-
-An easier but slower way is to click the *launch binder* badge below to launch it on [Binder](wiki:Binder_Project) :
-
 ::::{grid} 2 2 2 2
-
 :::{grid-item}
-👉   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
+👉   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=01_the_basics.ipynb)
 :::
-
 :::{grid-item}
 _Be advised sometimes it takes several minutes to start!_
 :::
-
 ::::
 
 :::::
