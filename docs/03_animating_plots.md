@@ -55,6 +55,17 @@ gp
 (g3p_display)=
 ## Using `g3p::display()` in a loop
 
+:::::{aside}
+::::{important} Try it NOW! ⏯️
+:class: dropdown
+:open:
+Click on the floating _Power_ button and then _Play_ as show below:
+:::{figure} ./videos/thebe.mp4
+:class: framed
+:::
+::::
+:::::
+
 `g3p::display()` function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. The are two downsides for this approach:
 
 - It can only be used in Jupyter notebooks. For instance, on a static web page like this you may only see the last frame. 
