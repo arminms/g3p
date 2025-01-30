@@ -37,7 +37,7 @@ Here's the function template for the above equation:
 
 #include <cmath>
 
-template<typename T = float>
+template<typename T>
 auto matlab_peaks(T x1, T x2) -> T
 {   return
     (   T(3)
@@ -65,7 +65,10 @@ g3p::gnuplot gp;
 
 gp ( "set border 31 linecolor '#555555'" )
    ( "set key textcolor '#555555' box lc '#555555'" )
-   ( "set title tc '#555555'" );
+   ( "set title tc '#555555'" )
+   ( "set style line 101 lt 1 lc '#555555' dt '.'" )
+   ( "set grid ls 101" )
+   ;
 ```
 +++
 ```{code-cell}  cpp
@@ -83,14 +86,16 @@ gp  ("set nokey")
     ("set zrange[-8:10]")
     ("set ticslevel 0")
     ("set palette rgb 33,13,10")
-    ("set pm3d")
+    // ("set style line 101 lc 'black' lw 0.2")
     ("set pm3d depthorder border")
-    ("splot '-' with lines lc 'black' lw 0.2");
+    // ("splot '-' with lines lc 'gray' lw 0.1");
+    // ("splot '-' with pm3d ls 101");
+    ("splot '-' with pm3d");
 //           ^ --> tells gnuplot that data is coming after this command
 
 // now we can start embedding our inline data...
-for (float i = -3.0f; i < 3.0f; i += 0.15f)
-{   for (float j = -3.0f; j < 3.0f; j += 0.15f) 
+for (float i = -3; i < 3; i += 0.15)
+{   for (float j = -3; j < 3; j += 0.15) 
         gp << i << j << matlab_peaks(i, j) << "\n";
     gp.endl();
 }
@@ -113,8 +118,8 @@ Data provided in the previous method can only be used once, by the plot command 
 // we first put our data in a 3d vector
 std::vector<float> grid(40 * 40 * 3); // 40 x 40 x 3 grid
 auto itr = std::begin(grid);
-for (float i = -3.0f; i <= 3.0f; i += 0.15f)
-    for (float j = -3.0f; j <= 3.0f; j += 0.15f)
+for (float i = -3; i <= 3; i += 0.15)
+    for (float j = -3; j <= 3; j += 0.15)
     {   *itr++ = i;
         *itr++ = j;
         *itr++ = matlab_peaks(i, j);
@@ -135,7 +140,7 @@ gp  ("set term pngcairo size 600,1000")      // make some space for the 2nd plot
     ("set multiplot layout 2,1 spacing 0,0") // switch to multiplot
     << "splot" // start plotting as the rest has been already set
     << peaks   // <-- using peaks once
-    << "with lines lc 'black' lw 0.2\n";
+    << "with pm3d\n";
 gp  ("set view map")
     ("set contour")
     ("set cntrparam levels 50")
