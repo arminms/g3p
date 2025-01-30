@@ -192,7 +192,7 @@ namespace g3p
             if (persist)
                 gnuplot_cmd += " -persist";
             gnuplot_cmd += " > " + _logfile + " 2>&1";
-#ifdef _MSC_VER // possibly _WIN32 for MingW-64?
+#ifdef _MSC_VER
             _gp = _popen
 #else
             _gp =  popen
@@ -208,7 +208,11 @@ namespace g3p
 #ifdef __CLING__
             _plotfile = detail::tmpnam();
             fprintf(_gp, "set term push\n");
-            fprintf(_gp, "set term webp transparent enhanced\n");
+            fprintf
+            (   _gp
+            ,   "set term %s transparent enhanced\n"
+            ,   (version() < 6) ? "pngcairo" : "webp"
+            );
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
