@@ -208,7 +208,7 @@ namespace g3p
 #ifdef __CLING__
             _plotfile = detail::tmpnam();
             fprintf(_gp, "set term push\n");
-            fprintf(_gp, "set term pngcairo transparent enhanced\n");
+            fprintf(_gp, "set term webp transparent enhanced\n");
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
@@ -231,8 +231,8 @@ namespace g3p
 // -- version checking  --------------------------------------------------------
 
         /// @brief returns the version of gnuplot excluding the patchlevel
-        /// @return a float representing the version of gnuplot
-        float version()
+        /// @return a double representing the version of gnuplot
+        double version()
         {   if (0 == _version)
             {   fprintf(_gp, "print GPVAL_VERSION\n");
                 operator>> (1) >> _version;
