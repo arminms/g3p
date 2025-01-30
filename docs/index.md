@@ -65,21 +65,21 @@ _Be advised sometimes it takes several minutes to start!_
 ::::{grid} 1 1 2 2
 
 :::{card}
-:header: 📊 [Rapid Prototyping with Jupyter](#jupyter-rapid-prototyping)
+:header: 🪐 [Rapid Prototyping with Jupyter](#jupyter-rapid-prototyping)
 :footer: [Learn more »](#jupyter-rapid-prototyping)
 
 Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on [Xeus-Cling](xref:xeus-cling) kernel.
 :::
 
 :::{card}
-:header: 🏃 [Animated Plots](#sine_wave)
+:header: 🏃 [Animated Plots](#sine_wave_gif)
 :footer: [Learn more »](#gif_animations)
 
 G3P supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
 :::
 
 :::{card}
-:header: 📈 [Interactive Plots in Jupyter](#sine_wave_interactive)
+:header: 📈 [Interactive Plots in Jupyter](#slider_output)
 :footer: [Learn more »](#interactive_plots)
 
 G3P in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
