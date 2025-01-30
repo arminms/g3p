@@ -10,7 +10,7 @@
 [![Build and Test (Linux/macOS/Windows)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/arminms/g3p/actions/workflows/cmake-multi-platform.yml)
 [![GitHub issues](https://img.shields.io/github/issues/arminms/g3p?logo=github&logoColor=lightgray&color=orange)](https://github.com/arminms/g3p/issues)
 [![view documentation](https://img.shields.io/badge/view-documentation-yellow?style=flat&logo=github&logoColor=lightgray)](https://armin.sobhani.me/g3p/)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=tutorial.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=01_the_basics.ipynb)
 
 `G3P` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support into any C++ program.
 
