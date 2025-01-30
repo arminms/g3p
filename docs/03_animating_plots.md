@@ -22,10 +22,13 @@ kernelspec:
 - [png](http://gnuplot.info/docs_5.5/loc21756.html)
 - [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html)
 - [svg](http://gnuplot.info/docs_5.5/loc22578.html)
+- [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]
 
-The default terminal used by G3P for a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter) is [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html).
+[^1]: <wiki:Gnuplot> *6.0* or higher.
 
-Based on your plotting needs, you can switch to any other formats mentioned in the above list. One particularly important one is the [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html) because it's the only format that supports animation out of the box. Let's change the [Simple Plot](https://gnuplot.sourceforge.net/demo_5.4/simple.html) to show a moving sine wave using [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html):
+G3P sets the default terminal for a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter) to [webp](http://gnuplot.info/docs_6.0/loc22961.html) for <wiki:Gnuplot> version 6 or higher and [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) otherwise.
+
+Based on your plotting needs, you can switch to any other formats mentioned in the above list. One particularly important one is the [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html) because it's one of the two terminals ([webp](#webp_animations) being the other one) that can save an animation to a file for later playback or by embedding it to a web page. Let's change the [Simple Plot](https://gnuplot.sourceforge.net/demo_5.4/simple.html) to show a moving sine wave using [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html):
 
 ::::{attention} Be patient ⏲️
 :class: dropdown
@@ -49,16 +52,41 @@ gp ( "set border 31 linecolor '#555555'" )
 +++
 
 ```{code-cell} cpp
-:label: sine_wave
+:label: sine_wave_gif
 
 gp ("set term gif enhanced transparent animate")
    ("set nokey")
    ("set samples 200")
    ("set style data points");
-for (float i = 0; i < 19; i += 0.2)
+for (float i = 0; i < 6; i += 0.2)
     gp("plot [-10:10] sin(x + %f) lw 2.0", i);
 gp
 ```
+
+(webp_animations)=
+## Animated webp
+
+Starting version 6, <wiki:Gnuplot> added [webp terminal](http://gnuplot.info/docs_6.0/loc22961.html) that like [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html) supports animations. The quality is generally better than animated GIF but you have to switch the transparency off as it doesn't clear the previous frames (probably a bug).
+You also have to unset the output when you're finished with the frames to signal it's done.
+
+Here's the way you can do the sine wave example using [webp terminal](http://gnuplot.info/docs_6.0/loc22961.html):
+
+
+```{code-cell} cpp
+:label: sine_wave_webp
+:tags: [hide-output]
+
+gp ("set term webp enhanced notransparent animate delay 100");
+for (float i = 0; i < 6; i += 0.2)
+    gp("plot [-10:10] sin(x + %f) lw 2.0", i);
+
+// signaling the animation sequence is terminated
+gp ("unset output") // <-- dropping semicolon to show the animation
+```
+
+::::{note} Switching terminals based on the version
+Test
+::::
 
 (g3p_display)=
 ## Using `g3p::display()` in a loop
@@ -132,6 +160,7 @@ auto slider = xw::slider<float>::initialize()
   .max(100.0f)
   .finalize();
 
+// converting the plot to a widget
 auto plot = xw::image_from_file(gp.plotfile()).finalize();
 
 XOBSERVE
