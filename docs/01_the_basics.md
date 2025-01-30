@@ -168,7 +168,7 @@ As you may noticed in the above examples, one important difference between `C++`
 
 ::::{attention} Don't use single quotes 🚫
 
-Unlike <wiki:C++> streams, single quotes are not valid for sending characters and you should use double quotes. So, `gp << '\n'` doesn't compile:
+Unlike <wiki:C++> streams, single quotes are not valid for sending characters and you should use double quotes. So, `gp << '\n'` results in an error:
 
 ```{code-cell} cpp
 :label: single_quotes
