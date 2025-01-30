@@ -37,7 +37,6 @@ project:
         - file: 02_embedding_plot_data.md
         - file: 03_animating_plots.md
         - file: 04_troubleshooting.md
-
   # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
   template: book-theme
@@ -46,3 +45,14 @@ site:
     favicon: images/g3p_logo_bold.svg
     logo: images/g3p_logo_wide.svg
     logo_dark: images/g3p_logo_wide.svg
+  nav:
+    - title: Overview
+      url: /index
+    - title: Quickstart
+      url: /quickstart
+    - title: Tutorials
+      url: /the-basics
+    # - title: API Reference
+    #   url: /api
+    - title: Try G3P
+      url: https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=01_the_basics.ipynb
