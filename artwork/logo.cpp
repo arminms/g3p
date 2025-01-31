@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     auto lp = make_data_block(gp, p, 3);
     gp << "set view 55,44,,2.0\n"
        << "set border linecolor 'grey'\n"
-       << "set border 895-32"
+       << "set border 895-32\n"
        << "set xrange [0:10]\n"
        << "set yrange [0:10]\n"
        << "set zrange [0:10]\n"
