@@ -150,3 +150,13 @@ gp  ("set view map")
     << "w lines\n"
     << "unset multiplot\n"
 ```
+::::{attention} Displaying multiplots 🪐
+
+Once you display a multiplot in a Jupyter cell, if you try to [display again](#display-the-plot), it only shows the last plot:
+
+```{code-cell} cpp
+:label: redisplay_multiplot
+:tags: [hide-output]
+gp
+```
+::::
