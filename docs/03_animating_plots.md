@@ -12,23 +12,47 @@ kernelspec:
 
 ---
 
-(gif_animations)=
-## GIF animations
+(animate_terminals)=
+## Terminals supporting animation
 
-<wiki:Gnuplot> supports a large number of [output formats (i.e. terminals)](http://gnuplot.info/docs_5.5/Terminals.html). A few of them can be embedded in a [Jupyter Notebook](wiki:Project_Jupyter): 
+<wiki:Gnuplot> supports a large number of [output formats (i.e. terminals)](http://gnuplot.info/docs_5.5/Terminals.html). For a compiled <wiki:C++> program, G3P doesn't change the default terminal and you can use any of them. On a desktop environment like <wiki:Linux>, it's most probably [qt terminal](http://gnuplot.info/docs_5.5/loc22399.html). In that case, for animating your plots, the only thing you have to do is to start ploting in a loop and your animation will show up in a pop-up window.
 
-- [gif](http://gnuplot.info/docs_5.5/loc20476.html)
-- [jpeg](http://gnuplot.info/docs_5.5/loc21075.html)
-- [png](http://gnuplot.info/docs_5.5/loc21756.html)
-- [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html)
-- [svg](http://gnuplot.info/docs_5.5/loc22578.html)
-- [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]
+:::{important} Run `bessel.cpp` 🛠️
+:class: dropdown
+
+Build and run [](https://github.com/arminms/g3p/blob/main/example/bessel.cpp) on your computer using the following commands to see the bessel animation in a pop-up window:
+
+```bash
+git clone https://github.com/arminms/g3p.git
+cd g3p/example
+cmake -S . -B build && cmake --build build
+./bessel
+```
+```{figure} #bessel_anim
+:width: 25%
+```
+:::
+
+On the other hand, only few of the terminals can produce images/animations suitable for embedding in a [Jupyter Notebook](wiki:Project_Jupyter) (i.e. [gif](http://gnuplot.info/docs_5.5/loc20476.html), [jpeg](http://gnuplot.info/docs_5.5/loc21075.html), [png](http://gnuplot.info/docs_5.5/loc21756.html), [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html), [svg](http://gnuplot.info/docs_5.5/loc22578.html) and recently [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]). That's why when you create a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter), in order to make the output embeddable in a notebook cell, G3P sets the terminal to [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) and pushes the default one by `set term push` command. But you can switch to any other terminal as you wish. 
 
 [^1]: <wiki:Gnuplot> *6.0* or higher.
 
-G3P sets the default terminal for a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter) to [webp](http://gnuplot.info/docs_6.0/loc22961.html) for <wiki:Gnuplot> version 6 or higher and [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) otherwise.
+:::{hint} Switching back
+:class: dropdown
+:open:
 
-Based on your plotting needs, you can switch to any other formats mentioned in the above list. One particularly important one is the [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html) because it's one of the two terminals ([webp](#webp_animations) being the other one) that can save an animation to a file for later playback or by embedding it to a web page. Let's change the [Simple Plot](https://gnuplot.sourceforge.net/demo_5.4/simple.html) to show a moving sine wave using [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html):
+You can even switch back to the default desktop terminal to force the output appear in a pop-up window rather than a notebook cell by running the following:
+```cpp
+gp("set term pop");
+```
+:::
+
+[gif](#gif_animations) and [webp](#webp_animations) are the only two terminals that can save an animation to a file for later playback or by embedding it to a web page and we're going to cover them next.
+
+(gif_animations)=
+## GIF animations
+
+Let's change the [Simple Plot](https://gnuplot.sourceforge.net/demo_5.4/simple.html) to show a moving sine wave using [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html):
 
 ::::{attention} Be patient ⏲️
 :class: dropdown
@@ -77,6 +101,8 @@ Here's the way you can do the sine wave example using [webp terminal](http://gnu
 :tags: [hide-output]
 
 gp ("set term webp enhanced notransparent animate delay 100");
+// turning off transparency ------^
+
 for (float i = 0; i < 6; i += 0.2)
     gp("plot [-10:10] sin(x + %f) lw 2.0", i);
 
@@ -84,12 +110,13 @@ for (float i = 0; i < 6; i += 0.2)
 gp ("unset output") // <-- dropping semicolon to show the animation
 ```
 
-::::{note} Switching terminals based on the version
-Test
-::::
+::::{hint} Version-based switching of terminals 🔀
+You can use `gnuplot::version()` function to switch between terminals based on the <wiki:Gnuplot> version:
 
-(g3p_display)=
-## Using `g3p::display()` in a loop
+``` cpp
+gp( "set term %s enhanced animate" ), (gp.version() < 6) ? "gif" : "webp" );
+```
+::::
 
 :::::{aside}
 ::::{important} Try it NOW! ⏯️
@@ -102,6 +129,9 @@ Click on the floating _Power button_ and then _Play button_ as shown below:
 :::
 ::::
 :::::
+
+(g3p_display)=
+## Using `g3p::display()` in a loop
 
 `g3p::display()` function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. The are two downsides for this approach:
 
