@@ -73,7 +73,6 @@ gp ( "set border 31 linecolor '#555555'" )
 +++
 ```{code-cell}  cpp
 :label: matlab_peaks_plot
-:tags: [hide-output]
 
 // setting our plot
 gp  ("set nokey")
@@ -128,7 +127,6 @@ for (float i = -3; i <= 3; i += 0.15)
 
 ```{code-cell} cpp
 :label: datablock_plot
-:tags: [hide-output]
 
 // we use make_data_block function provided by G3P
 // to turn our vector into a datablock
