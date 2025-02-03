@@ -33,7 +33,7 @@ cmake -S . -B build && cmake --build build
 ```
 :::
 
-On the other hand, only few of the terminals can produce images/animations suitable for embedding in a [Jupyter Notebook](wiki:Project_Jupyter) (i.e. [gif](http://gnuplot.info/docs_5.5/loc20476.html), [jpeg](http://gnuplot.info/docs_5.5/loc21075.html), [png](http://gnuplot.info/docs_5.5/loc21756.html), [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html), [svg](http://gnuplot.info/docs_5.5/loc22578.html) and recently [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]). That's why when you create a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter), in order to make the output embeddable in a notebook cell, G3P sets the terminal to [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) and pushes the default one by `set term push` command. But you can switch to any other terminal as you wish. 
+On the other hand, only few of the terminals can produce images/animations suitable for embedding in a [Jupyter Notebook](wiki:Project_Jupyter) (i.e. [gif](http://gnuplot.info/docs_5.5/loc20476.html), [jpeg](http://gnuplot.info/docs_5.5/loc21075.html), [png](http://gnuplot.info/docs_5.5/loc21756.html), [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html), [svg](http://gnuplot.info/docs_5.5/loc22578.html) and recently [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]) and G3P supports all of them. That's why when you create a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter), in order to make the output embeddable in a notebook cell, G3P sets the terminal to [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) and pushes the default one by `set term push` command. But you can switch to any of the above-mentioned terminals based on your needs.
 
 [^1]: <wiki:Gnuplot> *6.0* or higher.
 
@@ -47,7 +47,7 @@ gp("set term pop");
 ```
 :::
 
-[gif](#gif_animations) and [webp](#webp_animations) are the only two terminals that can save an animation to a file for later playback or by embedding it to a web page and we're going to cover them next.
+[gif](#gif_animations) and [webp](#webp_animations) are the only two terminals that can embed an animation into a web page and we're going to cover them next.
 
 (gif_animations)=
 ## GIF animations
@@ -176,7 +176,7 @@ for (float i = 0; i < 19; i += 0.2)
 (interactive_plots)=
 ## Interactive plots
 
-We can use the approach mentioned in the [previous section](#g3p_display) to produce an interactive plot with xwidgets that shifts our sine wave using a slider.
+We can use the approach mentioned in the [previous section](#g3p_display) to produce an interactive plot with [xwidgets](xref:xwidgets) that shifts our sine wave using a slider.
 
 ```{code-cell} cpp
 :label: sine_wave_interactive
