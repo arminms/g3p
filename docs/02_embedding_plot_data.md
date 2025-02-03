@@ -27,7 +27,7 @@ We use [Matlab's Peaks](https://www.mathworks.com/help/matlab/ref/peaks.html) as
 
 ```{math}
 :label: matlab_peaks_func
-F(x) = 3(1 - x_1)^2exp[-x_1^2 - (x_2 + 1)^2] - 10(\frac{1}{5}x_1 - x_1^3 - x_2^5)exp[-x_1^2 - x_2^2] - \frac{1}{3}exp[-(x_1 - 1)^2 - x_2^2]
+F(x_1,x_2) = 3(1 - x_1)^2exp[-x_1^2 - (x_2 + 1)^2] - 10(\frac{1}{5}x_1 - x_1^3 - x_2^5)exp[-x_1^2 - x_2^2] - \frac{1}{3}exp[-(x_1 - 1)^2 - x_2^2]
 ```
 
 Here's the function template for the above equation:
