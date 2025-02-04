@@ -57,7 +57,7 @@ cmake --build build -t test
 ```
 ::::
 
-G3P exports a (namespaced) <wiki:CMake> target (`g3p::g3p`) and also <wiki:CMake> config scripts for downstream applications. This means if your project also relies on <wiki:CMake> and G3P has been installed on your system, a better option is to use [`find_package()`](xref:cmake#command/find_package) in the project's `CMakeLists.txt` as shown below:
+G3P exports a (namespaced) <wiki:CMake> target (`g3p::g3p`) and also <wiki:CMake> config scripts for downstream applications. This means if your project also relies on <wiki:CMake> and G3P has been installed on your system, a better option is to use [`find_package()`](xref:cmake#command/find_package) in your project's `CMakeLists.txt` as shown below:
 
 ```cmake
 find_package(g3p REQUIRED)
