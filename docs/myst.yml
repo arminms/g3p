@@ -24,6 +24,8 @@ project:
     xeus-cling: https://xeus-cling.readthedocs.io/en/latest
     mamba: https://mamba.readthedocs.io/en/latest
     jupyter-xc: https://armin.sobhani.me/xeus-cling-jupyter
+    xwidgets: https://xwidgets.readthedocs.io/en/latest
+
   abbreviations:
     G3P: GnuPlot Plus Plus
 
@@ -37,12 +39,13 @@ project:
         - file: 02_embedding_plot_data.md
         - file: 03_animating_plots.md
         - file: 04_troubleshooting.md
+    - file: gallery.md
   # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
   template: book-theme
   # hide_toc: true
   options:
-    favicon: images/g3p_logo_bold.svg
+    favicon: images/g3p_logo_bold.png
     logo: images/g3p_logo_wide.svg
     logo_dark: images/g3p_logo_wide.svg
   nav:
@@ -50,8 +53,8 @@ site:
       url: /index
     - title: Quickstart
       url: /quickstart
-    - title: Tutorials
-      url: /the-basics
+    - title: Gallery
+      url: /gallery
     # - title: API Reference
     #   url: /api
     - title: Try G3P
