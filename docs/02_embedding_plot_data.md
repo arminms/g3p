@@ -66,7 +66,7 @@ g3p::gnuplot gp;
 gp ( "set border 31 linecolor '#555555'" )
    ( "set key textcolor '#555555' box lc '#555555'" )
    ( "set title tc '#555555'" )
-   ( "set style line 101 lt 1 lc '#555555' dt '.'" )
+   ( "set style line 101 lt 1 lc '#555555' dt '. '" )
    ( "set grid ls 101" )
    ;
 ```
