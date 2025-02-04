@@ -73,7 +73,7 @@ Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks runni
 
 :::{card}
 :header: 🏃 [Animated Plots](#sine_wave_gif)
-:footer: [Learn more »](#gif_animations)
+:footer: [Learn more »](#animate_terminals)
 
 G3P supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
 :::
