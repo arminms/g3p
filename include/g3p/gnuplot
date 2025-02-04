@@ -38,7 +38,7 @@
 
 #ifdef __CLING__
 #   include <unordered_map>
-// #   include <xcpp/xdisplay.hpp>
+#   include <xcpp/xdisplay.hpp>
 #   include <xtl/xbase64.hpp>
 #   include <nlohmann/json.hpp>
 // #   include <xwidgets/ximage.hpp>
@@ -208,11 +208,7 @@ namespace g3p
 #ifdef __CLING__
             _plotfile = detail::tmpnam();
             fprintf(_gp, "set term push\n");
-            fprintf
-            (   _gp
-            ,   "set term %s transparent enhanced\n"
-            ,   (version() < 6) ? "pngcairo" : "webp"
-            );
+            fprintf(_gp, "set term pngcairo transparent enhanced rounded\n");
             fprintf(_gp, "set output \"%s\"\n", _plotfile.c_str());
 #endif //__CLING__
         }
