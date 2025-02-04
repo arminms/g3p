@@ -15,7 +15,7 @@ kernelspec:
 (animate_terminals)=
 ## Terminals supporting animation
 
-<wiki:Gnuplot> supports a large number of [output formats (i.e. terminals)](http://gnuplot.info/docs_5.5/Terminals.html). For a compiled <wiki:C++> program, G3P doesn't change the default terminal and you can use any of them. On a desktop environment like <wiki:Linux>, it's most probably [qt terminal](http://gnuplot.info/docs_5.5/loc22399.html). In that case, for animating your plots, the only thing you have to do is to start ploting in a loop and your animation will show up in a pop-up window.
+<wiki:Gnuplot> supports a large number of [output formats (i.e. terminals)](http://gnuplot.info/docs_5.5/Terminals.html). For a compiled <wiki:C++> program, G3P doesn't change the default terminal and you can use any of them. On a desktop environment like <wiki:Linux>, it's most probably [Qt terminal](http://gnuplot.info/docs_5.5/loc22399.html). In that case, for animating your plots, the only thing you have to do is to start ploting in a loop and your animation will show up in a pop-up window.
 
 :::{important} Run `bessel.cpp` 🛠️
 :class: dropdown
@@ -98,7 +98,6 @@ Here's the way you can do the sine wave example using [webp terminal](http://gnu
 
 ```{code-cell} cpp
 :label: sine_wave_webp
-:tags: [hide-output]
 
 gp ("set term webp enhanced notransparent animate delay 100");
 // turning off transparency ------^
@@ -134,9 +133,9 @@ Click on the floating _Power button_ and then _Play button_ as shown below:
 (g3p_display)=
 ## Using `g3p::display()` in a loop
 
-`g3p::display()` function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. The are two downsides for this approach:
+`g3p::display()` function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. There are two downsides for this approach:
 
-- It can only be used in _Jupyter notebooks_. For instance, on a static web page like this you have to click on the floating power button as shown in the [](#thebe) box. 
+- It can only be used in _Jupyter Notebooks_. For instance, on a static web page like this you have to click on the floating power button as shown in the [](#thebe) box. 
 - It cannot be played in an endless loop.
 
 That being said, here's the same sine wave animation implemented using `g3p::display()` in a loop:
