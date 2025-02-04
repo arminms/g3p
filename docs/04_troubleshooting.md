@@ -52,7 +52,7 @@ As you can see in the output there's a missing newline character between `box` a
 
 ## Getting `Gnuplot` version information
 
-Depending on the version of <wiki:Gnuplot>, the same sequence of commands may generate different plots. You can use `g3p::gnuplot`'s family of member `version()` functions to switch to the right sequence of commands accordingly (for example, see [version-based switching of terminals](#version-based-switching)):
+Depending on the version of <wiki:Gnuplot>, the same sequence of commands may generate different plots. You can use `g3p::gnuplot`'s family of `version()` functions to switch to the right sequence of commands accordingly (for example, see [version-based switching of terminals](#version-based-switching)):
 
 ```{code-cell} cpp
 :tags: [hide-output]
@@ -71,7 +71,7 @@ gp.patchlevel()
 
 ## Communicating with Gnuplot
 
-<wiki:Gnuplot> has a long list of [`show`](http://gnuplot.info/docs_6.0/loc10320.html) commands that report various settings and also a [`print`](http://gnuplot.info/docs_6.0/loc10069.html) command that can show the value of an expression. Using `g3p::gnuplot` overloaded `>>` you can extract the information you need.
+<wiki:Gnuplot> has a long list of [`show`](http://gnuplot.info/docs_6.0/loc10320.html) commands that report various settings and also a [`print`](http://gnuplot.info/docs_6.0/loc10069.html) command that can show the value of an expression. Using `g3p::gnuplot` overloaded `>>` , you can extract the information you need.
 
 For example, here's how you can find the current terminal:
 
