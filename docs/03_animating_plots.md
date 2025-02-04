@@ -111,6 +111,7 @@ gp ("unset output") // <-- dropping semicolon to show the animation
 ```
 
 ::::{hint} Version-based switching of terminals 🔀
+:label: version-based-switching
 You can use `gnuplot::version()` function to switch between terminals based on the <wiki:Gnuplot> version:
 
 ``` cpp
@@ -185,6 +186,7 @@ We can use the approach mentioned in the [previous section](#g3p_display) to pro
 #include <xwidgets/xslider.hpp>
 #include <xwidgets/ximage.hpp>
 
+// creating the slider widget
 auto slider = xw::slider<float>::initialize()
   .min(0.0f)
   .max(100.0f)
