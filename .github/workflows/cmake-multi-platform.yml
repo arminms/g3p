@@ -38,7 +38,7 @@ jobs:
 
       - name: Install gnuplot (Linux)
         run: |
-          apt-get update && apt-get upgrade -y && apt-get install -y gnuplot
+          sudo apt-get update && apt-get upgrade -y && apt-get install -y gnuplot
         if: matrix.config.os == 'ubuntu-latest'
 
       - name: Install gnuplot (Windows)
