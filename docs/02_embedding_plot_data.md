@@ -29,8 +29,9 @@ We use [Matlab's Peaks](https://www.mathworks.com/help/matlab/ref/peaks.html) as
 :label: matlab_peaks_func
 F(x_1,x_2) = 3(1 - x_1)^2exp[-x_1^2 - (x_2 + 1)^2] - 10(\frac{1}{5}x_1 - x_1^3 - x_2^5)exp[-x_1^2 - x_2^2] - \frac{1}{3}exp[-(x_1 - 1)^2 - x_2^2]
 ```
+:::
 
-Here's the function template for the above equation:
+Here's the function template for the _Matlab's Peaks_ equation:
 
 ```{code-cell} cpp
 :label: matlab_peaks_template
@@ -50,9 +51,7 @@ auto matlab_peaks(T x1, T x2) -> T
 }
 ```
 
-:::
-
-And here is to the code to produce a 3D plot:
+And here's the code to produce a 3D plot:
 
 ```{code-cell} cpp
 #include <g3p/gnuplot>
