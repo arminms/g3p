@@ -50,11 +50,11 @@ site:
     logo_dark: images/g3p_logo_wide.svg
   nav:
     - title: Overview
-      url: /index
+      url: /g3p/index
     - title: Quickstart
-      url: /quickstart
+      url: /g3p/quickstart
     - title: Gallery
-      url: /gallery
+      url: /g3p/gallery
     # - title: API Reference
     #   url: /api
     - title: Try G3P
