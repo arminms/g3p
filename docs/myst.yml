@@ -39,6 +39,7 @@ project:
         - file: 02_embedding_plot_data.md
         - file: 03_animating_plots.md
         - file: 04_troubleshooting.md
+    - file: api_ref.md
     - file: gallery.md
   # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
