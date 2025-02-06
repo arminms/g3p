@@ -185,6 +185,9 @@ We can use the approach mentioned in the [previous section](#g3p_display) to pro
 #include <xwidgets/xslider.hpp>
 #include <xwidgets/ximage.hpp>
 
+// enable the key
+gp("set key");
+
 // creating the slider widget
 auto slider = xw::slider<float>::initialize()
   .min(0.0f)
@@ -202,9 +205,7 @@ XOBSERVE
         value << s.value;
         gp("plot [-10:10] sin(x + %s) lw 2.0", value.str().c_str()).sync();
         plot.value = xw::read_file(gp.plotfile());
-        std::filesystem::path f(gp.plotfile());
-        std::filesystem::remove(f);
-        gp("reset errors;set output \"%s\"", gp.plotfile().c_str());
+        gp("unset output;set output \"%s\"", gp.plotfile().c_str());
     }
 );
 
@@ -213,6 +214,7 @@ slider.value=0.0f;
 
 plot.display();
 slider.display();
+
 ```
 
 ::::{dropdown} Output
