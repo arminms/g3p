@@ -12,13 +12,13 @@
 [![view documentation](https://img.shields.io/badge/view-documentation-yellow?style=flat&logo=github&logoColor=lightgray)](https://armin.sobhani.me/g3p/)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=01_the_basics.ipynb)
 
-`G3P` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support into any C++ program.
+`G3P` (`G`nu`P`lot `P`lus `P`lus) is a tiny but mighty header-only Modern C++ interface library for [gnuplot](http://www.gnuplot.info/). It is the most natural and intuitive way of adding `gnuplot` support to any C++ program.
 
-A unique feature of `G3P` is the ability to embed plots/animations in *Jupyter C++ Notebooks* backed by [Xeus-Cling](https://github.com/jupyter-xeus/xeus-cling) kernel for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
+A unique feature of `G3P` is the ability to embed plots/animations in *Jupyter C++ Notebooks* with [Xeus-Cling](https://github.com/jupyter-xeus/xeus-cling) kernel for rapid prototyping. If you have [Docker](https://docker.io), an easy way to learn about this feature is to run the prebuilt container:
 ```
 docker run -p 8888:8888 -it --rm asobhani/g3p
 ```
-Then click on the provided URL to connect to the Jupyter Server in the container and open `tutorial.ipynb` notebook.
+Then click on the provided URL to connect to the Jupyter Server in the container and open `01_the_basics.ipynb` notebook.
 
 If you don't have Docker, an easier but much slower way is to click on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=g3p_by_examples.ipynb) badge to launch it on [Binder](https://mybinder.org). 
 
