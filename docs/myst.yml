@@ -39,8 +39,8 @@ project:
         - file: 02_embedding_plot_data.md
         - file: 03_animating_plots.md
         - file: 04_troubleshooting.md
-    - file: api_ref.md
     - file: gallery.md
+    - file: api_ref.md
   # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
   template: book-theme
@@ -56,7 +56,5 @@ site:
       url: /g3p/quickstart
     - title: Gallery
       url: /g3p/gallery
-    # - title: API Reference
-    #   url: /api
     - title: Try G3P
       url: https://mybinder.org/v2/gh/arminms/g3p/HEAD?labpath=01_the_basics.ipynb
