@@ -20,11 +20,11 @@ kernelspec:
 :::{important} Run `bessel.cpp` 🛠️
 :class: dropdown
 
-Build and run [](https://github.com/arminms/g3p/blob/main/example/bessel.cpp) on your computer using the following commands to see the bessel animation in a pop-up window:
+Build and run [](https://github.com/arminms/g3p/blob/main/examples/bessel.cpp) on your computer using the following commands to see the bessel animation in a pop-up window:
 
 ```bash
 git clone https://github.com/arminms/g3p.git
-cd g3p/example
+cd g3p/examples
 cmake -S . -B build && cmake --build build
 ./bessel
 ```
