@@ -177,7 +177,6 @@ The one and only class in G3P that encapsulates a <wiki:Gnuplot> instance.
 `std::string `[`patchlevel`](#gnuplot_patchlevel)`()` | Returns the patchlevel of gnuplot
 `std::string `[`log`](#gnuplot_log)`(size_t line_count) const` | Returns the content of the log file
 `std::string `[`plotfile`](#gnuplot_plotfile)`() const` | Returns the name of the plot file (_only available in `cling`_)
-`void `[`finalize`](#gnuplot_finalize)`() const` | Finalizes the plot file for xw::image widget (_only available in `cling`_)
 `const `[`gnuplot`](#class_gnuplot)`& `[`sync`](#gnuplot_sync)`() const` | Waits for the gnuplot to finish processing the commands
 `template<>`  <br/>`const `[`gnuplot`](#class_gnuplot)`& `[`operator()`](#gnuplot_fn_operator)`(Args &&... args) const` | Sends the arguments to the gnuplot instance
 `template<>`  <br/>`const `[`gnuplot`](#class_gnuplot)`& `[`operator<<`](#gnuplot_in_operator)`(T arg) const` | Sends the argument to the gnuplot instance
@@ -284,16 +283,6 @@ Returns the name of the plot file (_only available in `cling`_)
 |Return||
 |-|-|
 |`std::string`|A string representing the name of the plot file|
-
-:::
-
-:::{dropdown}
-:open:
-
-(gnuplot_finalize)=
-#### `void `[`finalize`](#gnuplot_finalize)`() const` 
-
-Finalizes the plot file for `xw::image` widget (_only available in `cling`_)
 
 :::
 
