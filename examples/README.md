@@ -1,12 +1,7 @@
-# Example
-This folder contains a complete example of using `g3p` including the CMake
-file. You can build and run it by executing the following commands inside the
+# Examples
+This folder contains some examples of using `G3P` including the CMake
+file. You can build them by executing the following command inside the
 folder:
 ```bash
-cmake -S . -B build
-cmake --build build
-build/bessel
+cmake -S . -B build && cmake --build build -j
 ```
-Here's the output:
-
-![bessel](bessel.gif)
