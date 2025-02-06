@@ -137,7 +137,7 @@ export(EXPORT ${PROJECT_NAME}-targets
   NAMESPACE ${PROJECT_NAME}::
 )
 
-## include unit test and artwork only when g3p is not being used as a subproject
+## include unit test only when g3p is not being used as a subproject
 #
 if (NOT_SUBPROJECT)
   ## add unit tests
@@ -162,8 +162,4 @@ if (NOT_SUBPROJECT)
     include(Catch)
     add_subdirectory(test)
   endif()
-
-  ## adding artwork
-  #
-  add_subdirectory(artwork)
 endif(NOT_SUBPROJECT)
