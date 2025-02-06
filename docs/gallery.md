@@ -19,6 +19,7 @@ kernelspec:
 :class: col-body-right
 
 ## Matlab Peaks
+![](#matlab_peaks_func)
 ````{dropdown} Code
 ```{embed} #datablock_plot
 :remove-input: false
@@ -42,6 +43,7 @@ kernelspec:
 :class: col-body-right
 
 ## G3P Logo
+Here's G3P logo plotted with G3P! 😀
 ````{dropdown} Code
 ```{embed} #g3p_logo_plot
 :remove-input: false
@@ -65,6 +67,7 @@ kernelspec:
 :class: col-body-right
 
 ## Bessel animation
+A nice animation from [gnuplotting.org](https://gnuplotting.org/animation-gif/)
 ````{dropdown} Code
 ```{embed} #bessel_anim
 :remove-input: false
