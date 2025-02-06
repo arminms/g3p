@@ -33,7 +33,7 @@ cmake -S . -B build && cmake --build build
 ```
 :::
 
-On the other hand, only few of the terminals can produce images/animations suitable for embedding in a [Jupyter Notebook](wiki:Project_Jupyter) (i.e. [gif](http://gnuplot.info/docs_5.5/loc20476.html), [jpeg](http://gnuplot.info/docs_5.5/loc21075.html), [png](http://gnuplot.info/docs_5.5/loc21756.html), [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html), [svg](http://gnuplot.info/docs_5.5/loc22578.html) and recently [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]) and G3P supports all of them. That's why when you create a new `g3p::gnuplot` instance in a [Jupyter Notebook](wiki:Project_Jupyter), in order to make the output embeddable in a notebook cell, G3P sets the terminal to [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) and pushes the default one by `set term push` command. But you can switch to any of the above-mentioned terminals based on your needs.
+On the other hand, only few of the terminals can produce images/animations suitable for embedding in a [Jupyter Notebook](wiki:Project_Jupyter) (i.e. [gif](http://gnuplot.info/docs_5.5/loc20476.html), [jpeg](http://gnuplot.info/docs_5.5/loc21075.html), [png](http://gnuplot.info/docs_5.5/loc21756.html), [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html), [svg](http://gnuplot.info/docs_5.5/loc22578.html) and recently [webp](http://gnuplot.info/docs_6.0/loc22961.html) [^1]) and G3P supports all of them. That's why when you create a new [`g3p`](#namespace_g3p)`::`[`gnuplot`](#class_gnuplot) instance in a [Jupyter Notebook](wiki:Project_Jupyter), in order to make the output embeddable in a notebook cell, G3P sets the terminal to [pngcairo](http://gnuplot.info/docs_5.5/loc21831.html) and pushes the default one by `set term push` command. But you can switch to any of the above-mentioned terminals based on your needs.
 
 [^1]: <wiki:Gnuplot> *6.0* or higher.
 
@@ -111,7 +111,7 @@ gp ("unset output") // <-- dropping semicolon to show the animation
 
 ::::{hint} Version-based switching of terminals 🔀
 :label: version-based-switching
-You can use `gnuplot::version()` function to switch between terminals based on the <wiki:Gnuplot> version:
+You can use [`g3p`](#namespace_g3p)`::`[`version`](#gnuplot_version)`()` function to switch between terminals based on the <wiki:Gnuplot> version:
 
 ``` cpp
 gp( "set term %s enhanced animate" ), (gp.version() < 6) ? "gif" : "webp" );
@@ -131,14 +131,14 @@ Click on the floating _Power button_ and then _Play button_ as shown below:
 :::::
 
 (g3p_display)=
-## Using `g3p::display()` in a loop
+## Using [`g3p`](#namespace_g3p)`::`[`display`](#display_func) in a loop
 
-`g3p::display()` function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. There are two downsides for this approach:
+[`g3p`](#namespace_g3p)`::`[`display`](#display_func) function has an optional 2{sup}`nd` argument for choosing if the previous output should be cleared or not. It's on by default, meaning if we don't provide it, the new plot will replace the previous one. We can use this feature to create a dynamic animation effect. There are two downsides for this approach:
 
 - It can only be used in _Jupyter Notebooks_. For instance, on a static web page like this you have to click on the floating power button as shown in the [](#thebe) box. 
 - It cannot be played in an endless loop.
 
-That being said, here's the same sine wave animation implemented using `g3p::display()` in a loop:
+That being said, here's the same sine wave animation implemented using [`g3p`](#namespace_g3p)`::`[`display`](#display_func) in a loop:
 
 ```{code-cell} cpp
 

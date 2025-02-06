@@ -106,7 +106,7 @@ gp.end()
 (datablocks)=
 ## Datablocks
 
-Data provided in the previous method can only be used once, by the plot command it follows. Often, we want to use the data referenced by more than one plot command in the same plot or multiplots. That's where *datablocks* come into play. You just need to define the datablock once and then you can use its name to refer to it. Here is the multiplot of the same Peaks function using *datablocks*:
+Data provided in the previous method can only be used once, by the plot command it follows. Often, we want to use the data referenced by more than one plot command in the same plot or multiplots. That's where *datablocks* come into play. You just need to define the datablock once and then you can use its name to refer to it. G3P provides a [`g3p`](#namespace_g3p)`::`[`make_data_block`](#make_data_block_4)`()` helper function to make your life easier. Here is the multiplot of the same _Peaks_ function using *datablocks*:
 
 ```{code-cell} cpp
 :label: datablock
@@ -127,8 +127,8 @@ for (float i = -3; i <= 3; i += 0.15)
 ```{code-cell} cpp
 :label: datablock_plot
 
-// we use make_data_block function provided by G3P
-// to turn our vector into a datablock
+// we use make_data_block() helper function provided
+// by G3P to turn our vector into a datablock
 auto peaks = make_data_block(gp, grid, 3, 40);
 
 // now we can use it in a multiplot
