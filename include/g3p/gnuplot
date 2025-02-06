@@ -41,7 +41,6 @@
 #   include <xcpp/xdisplay.hpp>
 #   include <xtl/xbase64.hpp>
 #   include <nlohmann/json.hpp>
-// #   include <xwidgets/ximage.hpp>
 #endif //__CLING__
 namespace g3p
 {
@@ -285,12 +284,6 @@ namespace g3p
         /// @return a string representing the name of the plot file
         std::string plotfile() const
         {   return _plotfile;   }
-        /// @brief finalizes the plot file for xw::image widget (only available in cling)
-        void finalize() const
-        {   std::filesystem::path f(_plotfile);
-            std::filesystem::remove(f);
-            fprintf(_gp, "reset errors;set output \"%s\"", _plotfile.c_str());
-        }
 
 #endif //__CLING__
 
