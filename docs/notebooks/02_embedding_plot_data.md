@@ -84,10 +84,7 @@ gp  ("set nokey")
     ("set zrange[-8:10]")
     ("set ticslevel 0")
     ("set palette rgb 33,13,10")
-    // ("set style line 101 lc 'black' lw 0.2")
     ("set pm3d depthorder border")
-    // ("splot '-' with lines lc 'gray' lw 0.1");
-    // ("splot '-' with pm3d ls 101");
     ("splot '-' with pm3d");
 //           ^ --> tells gnuplot that data is coming after this command
 
