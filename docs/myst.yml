@@ -49,6 +49,7 @@ site:
     favicon: images/g3p_logo_bold.png
     logo: images/g3p_logo_wide.svg
     logo_dark: images/g3p_logo_wide.svg
+    analytics_google: G-S6VPPS9V7R
   nav:
     - title: Overview
       url: /g3p/index
