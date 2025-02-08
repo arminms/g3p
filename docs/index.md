@@ -24,7 +24,7 @@ It's also one of few <wiki:C++> libraries to support embedding of plots in [Jupy
 
 :::{grid-item}
 
-```{image} images/g3p_logo_bold.svg
+```{image} ./images/g3p_logo_bold.svg
 ```
 
 :::
@@ -65,31 +65,31 @@ _Be advised sometimes it takes several minutes to start!_
 ::::{grid} 1 1 2 2
 
 :::{card}
-:header: 🪐 [Rapid Prototyping with Jupyter](#jupyter-rapid-prototyping)
-:footer: [Learn more »](#jupyter-rapid-prototyping)
+:header: 🪐 [Rapid Prototyping with Jupyter](./quickstart.md#jupyter-rapid-prototyping)
+:footer: [Learn more »](./quickstart.md#jupyter-rapid-prototyping)
 
 Using G3P you can embed plots in [Jupyter](wiki:Project_Jupyter) notebooks running on [Xeus-Cling](xref:xeus-cling) kernel.
 :::
 
 :::{card}
-:header: 🏃 [Animated Plots](#sine_wave_gif)
-:footer: [Learn more »](#animate_terminals)
+:header: 🏃 [Animated Plots](./03_animating_plots.md#sine_wave_gif)
+:footer: [Learn more »](./03_animating_plots.md#animate_terminals)
 
 G3P supports embedding animated plots into [Jupyter Notebooks](wiki:Project_Jupyter) in several ways.
 :::
 
 :::{card}
-:header: 📈 [Interactive Plots in Jupyter](#slider_output)
-:footer: [Learn more »](#interactive_plots)
+:header: 📈 [Interactive Plots in Jupyter](./03_animating_plots.md#slider_output)
+:footer: [Learn more »](./03_animating_plots.md#interactive_plots)
 
 G3P in combination with [xwidgets](https://github.com/jupyter-xeus/xwidgets) can produce interactive plots in a [Jupyter Notebook](wiki:Project_Jupyter).
 :::
 
 :::{card}
-:header: 🔀 [C & C++ Conventions Support](#conventions_tab)
-:footer: [Learn more »](#conventions)
+:header: 🔀 [C & C++ Conventions Support](./01_the_basics.md#conventions_tab)
+:footer: [Learn more »](./01_the_basics.md#conventions)
 
-Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported. You can even [mix and match](#datablock_plot) them.
+Both [`C` (`%d`,`%f`, ...)](./01_the_basics.md#c_convention) and [`C++` (`<<`)](./01_the_basics.md#cpp_convention) conventions for passing arguments to <wiki:Gnuplot> are supported. You can even [mix and match](./02_embedding_plot_data.md#datablock_plot) them.
 :::
 
 ::::
@@ -127,6 +127,6 @@ Both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) c
 - 🏫 Easy to learn. If you know <wiki:Gnuplot>, you're already set.
 - 📥 Easily integrates with existing libraries and code (via <wiki:CMake> configs)
 - ➡️ Support [fluent interface](https://en.wikipedia.org/wiki/Fluent_interface)
-- 🔀 Support both [`C` (`%d`,`%f`, ...)](#c_convention) and [`C++` (`<<`)](#cpp_convention) conventions for passing arguments
+- 🔀 Support both [`C` (`%d`,`%f`, ...)](./01_the_basics.md#c_convention) and [`C++` (`<<`)](./01_the_basics.md#cpp_convention) conventions for passing arguments
 - 🧪 Include unit tests
 - 📖 Well documented
