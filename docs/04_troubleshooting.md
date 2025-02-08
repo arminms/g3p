@@ -17,9 +17,9 @@ While tinkering with a plot, there are times that you get an unexpected output o
 (auto-assertion)=
 ## Auto-assertion in Jupyter Notebook
 
-When you [display a plot](#display-the-plot) in a [Jupyter Notebook](wiki:Project_Jupyter), if there was an error reported by <wiki:Gnuplot>, G3P shows it as the output of the cell. Let's demonstrate this with an example.
+When you [display a plot](./01_the_basics.md#display-the-plot) in a [Jupyter Notebook](wiki:Project_Jupyter), if there was an error reported by <wiki:Gnuplot>, G3P shows it as the output of the cell. Let's demonstrate this with an example.
 
-One common mistake when using G3P's [C++ convention](#cpp_convention) is to forget the newline character at the end of a command. If that happens in a notebook's cell, G3P automatically asserts with an error message:
+One common mistake when using G3P's [C++ convention](./01_the_basics.md#cpp_convention) is to forget the newline character at the end of a command. If that happens in a notebook's cell, G3P automatically asserts with an error message:
 
 ```{code-cell} cpp
 #include <g3p/gnuplot>
@@ -37,9 +37,9 @@ gp << "set key left box"
 ```
 
 (log_function)=
-## `gnuplot::log()` function 
+## [`gnuplot`](./api_ref.md#class_gnuplot)`::`[`log`](./api_ref.md#gnuplot_log)`()` function 
 
-The above error doesn't tell you anything about where that happened. To find out what went wrong, you have to run [`g3p`](#namespace_g3p)`::`[`log`](#gnuplot_log)`()` function:
+The above error doesn't tell you anything about where that happened. To find out what went wrong, you have to run [`gnuplot`](./api_ref.md#class_gnuplot)`::`[`log`](./api_ref.md#gnuplot_log)`()` function:
 
 ```{code-cell} cpp
 :label: log_output
@@ -52,7 +52,7 @@ As you can see in the output there's a missing newline character between `box` a
 
 ## Getting `Gnuplot` version information
 
-Depending on the version of <wiki:Gnuplot>, the same sequence of commands may generate different plots. You can use [`g3p`](#namespace_g3p)`::`[`gnuplot`](#class_gnuplot)'s family of [`version`](#gnuplot_version)`()` functions to switch to the right sequence of commands accordingly (for example, see [version-based switching of terminals](#version-based-switching)):
+Depending on the version of <wiki:Gnuplot>, the same sequence of commands may generate different plots. You can use [`g3p`](./api_ref.md#namespace_g3p)`::`[`gnuplot`](./api_ref.md#class_gnuplot)'s family of [`version`](./api_ref.md#gnuplot_version)`()` functions to switch to the right sequence of commands accordingly (for example, see [version-based switching of terminals](./03_animating_plots.md#version-based-switching)):
 
 ```{code-cell} cpp
 :tags: [hide-output]
@@ -71,7 +71,7 @@ gp.patchlevel()
 
 ## Communicating with Gnuplot
 
-<wiki:Gnuplot> has a long list of [`show`](http://gnuplot.info/docs_6.0/loc10320.html) commands that report various settings and also a [`print`](http://gnuplot.info/docs_6.0/loc10069.html) command that can show the value of an expression. Using [`g3p`](#namespace_g3p)`::`[`gnuplot`](#class_gnuplot) overloaded [`>>`](#gnuplot_out_operator), you can extract the information you need.
+<wiki:Gnuplot> has a long list of [`show`](http://gnuplot.info/docs_6.0/loc10320.html) commands that report various settings and also a [`print`](http://gnuplot.info/docs_6.0/loc10069.html) command that can show the value of an expression. Using [`g3p`](./api_ref.md#namespace_g3p)`::`[`gnuplot`](./api_ref.md#class_gnuplot) overloaded [`>>`](./api_ref.md#gnuplot_out_operator), you can extract the information you need.
 
 For example, here's how you can find the current terminal:
 
