@@ -1,7 +1,7 @@
 ---
 title: G3P
-subtitle: The Modern C++ interface to Gnuplot
-description: G3P is a header-only Modern C++ interface library for gnuplot
+subtitle: The Modern C++ Interface to Gnuplot
+description: G3P is a header-only Modern C++ interface library for Gnuplot
 ---
 
 [![GitHub Release](https://img.shields.io/github/v/release/arminms/g3p?logo=github&logoColor=lightgray)](https://github.com/arminms/g3p/releases)
@@ -25,6 +25,7 @@ It's also one of few <wiki:C++> libraries to support embedding of plots in [Jupy
 :::{grid-item}
 
 ```{image} ./images/g3p_logo_bold.svg
+:label: g3p-logo-bold
 ```
 
 :::
@@ -93,26 +94,6 @@ Both [`C` (`%d`,`%f`, ...)](./01_the_basics.md#c_convention) and [`C++` (`<<`)](
 :::
 
 ::::
-
-:::::{aside}
-::::{note} Background 📚
-:class: dropdown
-:open:
-
-> The initial idea about G3P sparked in my mind back in 2022 after attending a SHARCNET's General Interest webinar by my colleague Ge Baolai about [realtime display with Gnuplot](https://youtu.be/A9YPibAEXEE)
->
-> -- Armin Sobhani
-
-````{seealso} Watch the video 📺
-:class: dropdown
-:open:
-
-```{iframe} https://www.youtube.com/embed/A9YPibAEXEE
-:width: 100%
-```
-````
-::::
-:::::
 
 ---
 
