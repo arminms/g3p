@@ -4,7 +4,7 @@ project:
   id: 32515b4b-1917-40eb-badc-c33afddfa0c3
   title: G3P Guide
   subject: g3p Guide
-  description: Modern C++ interface library for gnuplot
+  description: G3P (Modern C++ interface library for Gnuplot)
   keywords:
     - gnuplot
     - c++
@@ -25,11 +25,8 @@ project:
     mamba: https://mamba.readthedocs.io/en/latest
     jupyter-xc: https://armin.sobhani.me/xeus-cling-jupyter
     xwidgets: https://xwidgets.readthedocs.io/en/latest
-
   abbreviations:
     G3P: GnuPlot Plus Plus
-
-  # To autogenerate a Table of Contents, run "myst init --write-toc"
   toc:
     - file: index.md
     - file: quickstart.md
@@ -41,7 +38,7 @@ project:
         - file: 04_troubleshooting.md
     - file: gallery.md
     - file: api_ref.md
-  # To autogenerate a Table of Contents, run "myst init --write-toc"
+
 site:
   template: book-theme
   # hide_toc: true
@@ -51,7 +48,6 @@ site:
     logo_dark: ./images/g3p_logo_bold.svg
     logo_text: G3P
     analytics_google: G-3GVV5PE8PC
-
   nav:
     - title: Overview
       url: /g3p/index
