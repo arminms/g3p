@@ -51,7 +51,7 @@ gp("set term pop");
 
 Let's change the [Simple Plot](https://gnuplot.sourceforge.net/demo_5.4/simple.html) to show a moving sine wave using [gif terminal](http://gnuplot.info/docs_5.5/loc20476.html):
 
-::::{attention} Be patient ⏲️
+::::{attention} Be patient ⏳
 :class: dropdown
 
 Depending on the frame size and the number of frames, it may take a while for a GIF animation to appear in the notebook cell. No worries though, as the following example takes less than a second to appear. 😉
