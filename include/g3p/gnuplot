@@ -359,38 +359,39 @@ namespace g3p
     /// @param gp reference to the gnuplot instance
     /// @param c reference to the object to be converted to a data block
     /// @return a string representing the name of the data block 
-    template<typename T>
+    template<class T>
     inline std::string make_data_block(const gnuplot& gp, const T& c)
     {   std::string name{" $"};
         name += detail::random_name(8);
         name += ' ';
-        gp  ("%s<< EOD", name.c_str())
-            ("%s\nEOD", c(gp).c_str());
+        gp("%s<< EOD", name.c_str());
+        data_block(gp, c);
+        gp("\nEOD");
         return name;
     }
     /// @brief returns a data block for the gnuplot instance
-    /// @tparam T type of the container to be converted to a data block
+    /// @tparam Container type of the container to be converted to a data block
     /// @param gp reference to the gnuplot instance
     /// @param c reference to the container to be converted to a data block
     /// @param row number of elements in each row
     /// @param sep number of rows to separate the data block
     /// @return a string representing the name of the data block (default = 0)
-    template<typename T>
+    template<class Container>
     inline std::string make_data_block
     (   const gnuplot& gp
-    ,   const T& c
-    ,   typename T::size_type row 
-    ,   typename T::size_type sep = 0
+    ,   const Container& c
+    ,   typename Container::size_type row 
+    ,   typename Container::size_type sep = 0
     )
     {   std::string name{" $"};
         name += detail::random_name(8);
         name += ' ';
         gp("%s<< EOD", name.c_str());
         auto it = std::begin(c);
-        for (typename T::size_type i = 0; i < (c.size() / row); ++i)
+        for (typename Container::size_type i = 0; i < (c.size() / row); ++i)
         {   if (sep && 0 == i % sep && i)
                 gp.endl();
-            for (typename T::size_type j = 0; j < row; ++j, ++it)
+            for (typename Container::size_type j = 0; j < row; ++j, ++it)
                 gp << *it;
             gp.endl();
         }
