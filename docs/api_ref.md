@@ -27,8 +27,8 @@ The main namespace of G3P library.
 `static const std::string `[`endl`](#endl_manipulator) | `g3p::endl` manipulator
 `static const std::string `[`eod`](#eod_manipulator) | `g3p::eod` manipulator
 ` const std::string `[`flush`](#flush_manipulator) | `g3p::flush` manipulator
-`template<>`  <br/>`std::string `[`make_data_block`](#make_data_block_2)`(const `[`gnuplot`](#class_gnuplot)`& gp, const T& c)` | Returns a data block for the gnuplot instance
-`template<>`  <br/>`std::string `[`make_data_block`](#make_data_block_4)`(const `[`gnuplot`](#class_gnuplot)`& gp,const T& c, typename T::size_type row, typename T::size_type sep)` | Returns a data block for the gnuplot instance
+`template<>`  <br/>`std::string `[`make_data_block`](#make_data_block_2)`(const `[`gnuplot`](#class_gnuplot)`& gp, const T& c)` | Returns a data block for an object
+`template<>`  <br/>`std::string `[`make_data_block`](#make_data_block_4)`(const `[`gnuplot`](#class_gnuplot)`& gp,const T& c, typename T::size_type row, typename T::size_type sep)` | Returns a data block for a container
 `nlohmann::json `[`mime_bundle_repr`](#mime_bundle_repr)`(const `[`gnuplot`](#class_gnuplot)` & gp)` | Overloaded function for mime representation in a Jupyter Notebook's cell (_only available in `cling`_)
 `void `[`display`](#display_func)`(const `[`gnuplot`](#class_gnuplot)`& gp,bool clear_ouput)` | Displays the gnuplot in the notebook (_only available in `cling`_)
 `class `[`gnuplot`](#class_gnuplot) | Encapsulation of a <wiki:Gnuplot> instance
@@ -81,7 +81,7 @@ Manipulator for flushing the buffer.
 (make_data_block_2)=
 #### `template<T>`  <br/>`std::string `[`make_data_block`](#make_data_block_2)`(const `[`gnuplot`](#class_gnuplot)`& gp, const T& c)` 
 
-Helper function that returns a data block for the gnuplot instance.
+Helper function that returns a data block by passing an object. There should be a defined function named `data_block()` that accepts a constant reference to both [`gnuplot`](#class_gnuplot) and `c` (i.e. `void data_block(const g3p::gnuplot&, const T&)`) to send the data in a suitable form to [`gnuplot`](#class_gnuplot) instance.
 
 |Type Parameters||
 |-|-|
@@ -102,13 +102,13 @@ Helper function that returns a data block for the gnuplot instance.
 :open:
 
 (make_data_block_4)=
-#### `template<T>`  <br/>`std::string `[`make_data_block`](#make_data_block_4)`(const `[`gnuplot`](#class_gnuplot)`& gp, const T& c, typename T::size_type row, typename T::size_type sep)` 
+#### `template<Container>`  <br/>`std::string `[`make_data_block`](#make_data_block_4)`(const `[`gnuplot`](#class_gnuplot)`& gp, const Container& c, Container::size_type row, Container::size_type sep)` 
 
-Helper function that returns a data block for the gnuplot instance.
+Helper function that returns a data block for a container.
 
 |Type Parameters||
 |-|-|
-|`T`|Type of the container to be converted to a data block|
+|`Container`|Type of the container to be converted to a data block|
 
 |Parameters||
 |-|-|
