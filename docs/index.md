@@ -63,6 +63,18 @@ _Be advised sometimes it takes several minutes to start!_
 
 ## Cool G3P Features 🪄
 
+:::::{aside}
+
+````{seealso} Watch the video 📺
+:class: dropdown
+:open:
+
+```{iframe} https://www.youtube.com/embed/YPQUIkSIFhw?start=0
+:width: 100%
+```
+````
+:::::
+
 ::::{grid} 1 1 2 2
 
 :::{card}
